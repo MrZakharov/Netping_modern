@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/Adaptive_master.cshtml";
+}
+@model NetPing_modern.DAL.Model.UserManualModel
+
+<div class="header">
+    <h1>@Model.Title</h1>
+</div>
+
+<div style="margin-left: 10px;">
+    @foreach (var page in Model.Pages)
+    {
+        <a href="/UserGuide/@Model.Title.Replace("/", "")/@page.Title.Replace("/", "")/">@page.Title</a><br />
+        @*<div class="hidden">
+                @if (string.IsNullOrEmpty(page.Content) && page.Pages.Count > 0)
+                {
+                    foreach (var subpage in page.Pages)
+                    {
+                        <a href="#">@subpage.Title</a><br />
+                        <div class="hidden">@Html.Raw(subpage.Content)</div>
+                    }
+                } else
+                {
+                    @Html.Raw(page.Content)
+                }
+            </div>*@
+    }
+</div>

@@ -8,6 +8,9 @@ using NetPing_modern.ViewModels;
 using NetPing.Models;
 using System.Collections.Generic;
 using System;
+using System.Globalization;
+using System.Runtime.Serialization.Formatters.Binary;
+using NetPing_modern.DAL.Model;
 
 namespace NetPing_modern.Controllers
 {
@@ -176,6 +179,51 @@ namespace NetPing_modern.Controllers
             model.Devices = devices;
 
             return View(model);
+        }
+
+        public ActionResult UserGuide(string id, string page)
+        {
+            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+
+            UserManualModel model = null;
+            if(System.IO.File.Exists(file_name))
+            {
+                try
+                {
+                    var stream = System.IO.File.OpenRead(file_name);
+                    BinaryFormatter binaryWrite = new BinaryFormatter();
+                    model = binaryWrite.Deserialize(stream) as UserManualModel;
+
+                    if (string.IsNullOrEmpty(page))
+                        return View("~/Views/Products/UserGuide.cshtml", model);
+                    else
+                    {
+                        var m = model.Pages.SingleOrDefault(p => p.Title == page);
+                        Session["page"] = m;
+                        return View("~/Views/Products/UserGuidePage.cshtml", m);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    throw;
+                }
+            }
+
+            return View("~/Views/Products/UserGuide.cshtml", model);
+        }
+
+        public ActionResult UserGuideSubPage(string page, string subPage)
+        {
+            var model = Session["page"] as PageModel;
+            if(model != null)
+            {
+                model = model.Pages.SingleOrDefault(p => p.Title == page);
+                if (!string.IsNullOrEmpty(subPage))
+                    model = model.Pages.SingleOrDefault(p => p.Title == subPage);
+                return View("~/Views/Products/UserGuidePage.cshtml", model);
+            }
+
+            return HttpNotFound();
         }
     }
 }

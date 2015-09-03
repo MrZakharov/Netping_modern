@@ -179,6 +179,8 @@
     <Compile Include="DAL\DevicesTree.cs" />
     <Compile Include="DAL\DeviceTreeNode.cs" />
     <Compile Include="DAL\Errors.cs" />
+    <Compile Include="DAL\Model\PageModel.cs" />
+    <Compile Include="DAL\Model\UserManualModel.cs" />
     <Compile Include="DAL\SortOrdersCollection.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\SPOnlineRepository.cs" />
@@ -200,6 +202,11 @@
     <Compile Include="Mappers\PostViewModelMapper.cs" />
     <Compile Include="Models\ProductsModel.cs" />
     <Compile Include="Models\SectionModel.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Blog\Faq.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -617,6 +624,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Themes\bootstrap\bootstrap-theme.css.map" />
     <Content Include="Content\Themes\bootstrap\bootstrap.css.map" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -642,6 +653,8 @@
     <Content Include="Views\Products\Adaptive_Index.cshtml" />
     <Content Include="Views\InnerPages\UCacheAsync.cshtml" />
     <Content Include="Views\Products\Archive.cshtml" />
+    <Content Include="Views\Products\UserGuide.cshtml" />
+    <Content Include="Views\Products\UserGuidePage.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
