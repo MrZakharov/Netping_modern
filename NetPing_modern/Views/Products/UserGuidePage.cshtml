@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/Adaptive_master.cshtml";
+}
+@model NetPing_modern.DAL.Model.PageModel
+
+<div class="header">
+    <h1 style="margin-left: 10px;">@Model.Title</h1>
+</div>
+
+<div style="margin-left: 10px;">
+    @foreach (var page in Model.Pages)
+    {
+        <h2>@page.Title</h2>
+
+        foreach(var p in page.Pages)
+        {
+            <a href="/page/@page.Title/@p.Title/">@p.Title</a><br />
+        }
+        
+        <div>
+            @Html.Raw(page.Content.Replace("https://netping.atlassian.net", "").Replace("/wiki", "https://netping.atlassian.net/wiki"))
+        </div>
+       
+    }
+</div>
+<div style="margin-left: 10px;">
+    @Html.Raw(Model.Content.Replace("https://netping.atlassian.net", "").Replace("/wiki", "https://netping.atlassian.net/wiki"))
+</div>

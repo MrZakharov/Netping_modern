@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NetPing.Global.Config;
 using Newtonsoft.Json.Linq;
+using NetPing_modern.DAL.Model;
 
 namespace NetPing_modern.Services.Confluence
 {
@@ -42,6 +43,9 @@ namespace NetPing_modern.Services.Confluence
                 return parser(id, _cache[id]);
             }
 
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(string.Format("{0}:{1}", _config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password));
+            var base64Auth = System.Convert.ToBase64String(plainTextBytes);
+
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
             var handler = new HttpClientHandler { Credentials = credential };
             using (var client = new HttpClient(handler))
@@ -49,6 +53,7 @@ namespace NetPing_modern.Services.Confluence
                 client.BaseAddress = new Uri(_config.ConfluenceSettings.Url);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Auth);
 
                 var response =
                     client.GetAsync(string.Format("wiki/rest/api/content/{0}?expand=body.view&os_authType=basic", id));
@@ -267,6 +272,140 @@ namespace NetPing_modern.Services.Confluence
             return null;
         }
 
+        public UserManualModel GetUserManual(int id)
+        {
+            var userManual = new UserManualModel();
+            NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
+            var handler = new HttpClientHandler { Credentials = credential };
+            using (var client = new HttpClient(handler))
+            {
+                client.BaseAddress = new Uri(_config.ConfluenceSettings.Url);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                var response =
+                    client.GetAsync(string.Format("wiki/rest/api/content/{0}?os_authType=basic", id));
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    StreamContent content = (StreamContent)response.Result.Content;
+                    var task = content.ReadAsStringAsync();
+                    string stringContent = task.Result;
+                    dynamic results = JObject.Parse(stringContent);
+                    if(results.id != null && !string.IsNullOrEmpty(results.title.Value))
+                    {
+                        userManual.Id = int.Parse(results.id.Value);
+                        userManual.Title = results.title.Value;
+                        userManual.Pages = GetUserManualPages(userManual.Id);
+                    }
+                }
+            }
+
+            return userManual;
+        }
+
+        private ICollection<PageModel> GetUserManualPages(int id)
+        {
+            var pages = new List<PageModel>();
+            NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
+            var handler = new HttpClientHandler { Credentials = credential };
+            using (var client = new HttpClient(handler))
+            {
+                client.BaseAddress = new Uri(_config.ConfluenceSettings.Url);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response =
+                    client.GetAsync(string.Format("wiki/rest/api/content/{0}/child/page?os_authType=basic", id));
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    StreamContent content = (StreamContent)response.Result.Content;
+                    var task = content.ReadAsStringAsync();
+                    string stringContent = task.Result;
+                    dynamic results = JObject.Parse(stringContent);
+                    if (results.results != null)
+                    {
+                        if (results.results.Type == JTokenType.Array && results.results.Count > 0)
+                        {
+                           foreach(var result in results.results)
+                           {
+                               var pageId = int.Parse(result.id.Value);
+                               var pageTitle = result.title.Value;
+                               var subPages = new List<PageModel>();
+                               var pageContent = string.Empty;
+                               if (IsTreePage(pageId))
+                                   subPages = GetUserManualPages(pageId);
+                               else
+                                   pageContent = GetUserManualPageContent(pageId);
+
+                               pages.Add(new PageModel
+                                   {
+                                       Content = pageContent,
+                                       Id = pageId,
+                                       Title = pageTitle,
+                                       Pages = subPages
+                                   });
+                           }
+                        }
+                    }
+                }
+            }
+            return pages;
+        }
+
+        private string GetUserManualPageContent(int id)
+        {
+            NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
+            var handler = new HttpClientHandler { Credentials = credential };
+            using (var client = new HttpClient(handler))
+            {
+                client.BaseAddress = new Uri(_config.ConfluenceSettings.Url);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response =
+                    client.GetAsync(string.Format("wiki/rest/api/content/{0}?os_authType=basic&expand=body.view", id));
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    StreamContent content = (StreamContent)response.Result.Content;
+                    var task = content.ReadAsStringAsync();
+                    string stringContent = task.Result;
+                    dynamic results = JObject.Parse(stringContent);
+                    if (results.body != null && results.body.view != null && results.body.view.value != null)
+                    {
+                        return results.body.view.value.Value;
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
+        private bool IsTreePage(int id)
+        {
+            NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
+            var handler = new HttpClientHandler { Credentials = credential };
+            using (var client = new HttpClient(handler))
+            {
+                client.BaseAddress = new Uri(_config.ConfluenceSettings.Url);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response =
+                    client.GetAsync(string.Format("wiki/rest/api/content/{0}/child/page?os_authType=basic", id));
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    StreamContent content = (StreamContent)response.Result.Content;
+                    var task = content.ReadAsStringAsync();
+                    string stringContent = task.Result;
+                    dynamic results = JObject.Parse(stringContent);
+                    if (results.size != null)
+                    {
+                        return results.size.Value > 0;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }
