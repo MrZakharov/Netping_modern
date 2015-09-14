@@ -56,7 +56,7 @@
 <div class="header contacts row">
 
     <div class="header_contacts clearfix">
-        <div class="col-sm-5 col-md-4 col-lg-3 header_contacts_item">
+        <div class="col-sm-4 col-md-3 col-lg-3 header_contacts_item">
             <div class="header_contacts_title">
                 <!--<a href="/zakaz.aspx">@Header.Header_to_buy </a>-->
                 @Header.Header_to_buy
@@ -68,7 +68,7 @@
                 <span>e-mail:</span><a href="mailto:@Header.Header_email_sales">@Header.Header_email_sales</a>
             </div>
         </div>
-        <div class="col-sm-6 col-md-5 col-lg-4 @(NetpingHelpers.Helpers.IsCultureEng ? "pull-right" : "") header_contacts_item">
+        <div class="col-sm-4 col-md-3 col-lg-3 @(NetpingHelpers.Helpers.IsCultureEng ? "pull-right" : "") header_contacts_item">
             <div class="header_contacts_title">
                 <!--<a href="/zakaz.aspx">@Header.Header_ask</a>-->
                 @Header.Header_ask
@@ -81,11 +81,16 @@
             </div>
         </div>
 
-
         @if (!NetpingHelpers.Helpers.IsCultureEng)
         {
-            <div class="col-md-4 cart">
-                <span class="cart-icon"></span><span class="cart-text"> @Header.Header_goods_in_basket</span><span class="cart-count">0</span>
+            <div class="col-sm-4 col-md-3  col-lg-3 cart">
+                <span class="cart-icon"></span><span class="cart-text">@Header.Header_goods_in_basket</span><span class="cart-count">0</span>
+            </div>
+            <div class="col-md-3 col-lg-3 text-right hidden-sm hidden-xs">
+                <div class="delivery-banner">
+                    Доставка по России<br />
+                    <span>бесплатно</span>
+                </div>
             </div>
         }
     </div>
@@ -96,14 +101,20 @@
     <div class="main-header clearfix">
 
         <div class="logo-wrapper col-sm-12 col-md-5 col-lg-5">
-            <a class="logo col-md-6" href="/">
+            <a class="logo col-md-6 col-sm-4 col-sm-offset-1 col-md-offset-0" href="/">
                 <img src="~/Content/Images/logo_text.png" alt="Netping logo" />
             </a>
-            <div class="logo-text col-md-6">
-                @Header.Logo_Title
+            <div class="logo-text col-md-6 col-sm-5">
+               @Html.Raw(Header.Logo_Title)
+            </div>
+            <div class="col-sm-3 text-right hidden-md hidden-lg">
+                <div class="delivery-banner">
+                    Доставка по России<br />
+                    <span>бесплатно</span>
+                </div>
             </div>
         </div>
-        <div class="nav col-xs-8 col-sm-7 col-md-5 col-lg-5">
+        <div class="nav col-xs-8 col-sm-8 col-md-5 col-lg-5">
             <ul>
                 <li class="nav_li">
                     <a class="@(Request.RawUrl.ToLower().Contains("/products") == true ? "nav_element active" : "nav_element")" href="/products/monitoring-servernoj">@Header.Products</a>
@@ -184,6 +195,6 @@
                 <input type="submit" value="Найти" />
             </div>
         </form>
-</div>
+    </div>
     <div class="clear"></div>
 </div>

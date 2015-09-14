@@ -11,13 +11,13 @@
     margin: 0 auto;
 }
 
-.header .header_contacts a {
-    font-size: 14px;
-}
+    .header .header_contacts a {
+        font-size: 12px;
+    }
 
-.header .header_contacts span {
-    font-size: 14px;
-}
+    .header .header_contacts span {
+        font-size: 12px;
+    }
 
 .header.main-header-wrapper {
     background-color: #e6f8e5;
@@ -48,7 +48,7 @@
 .header .logo {
     background: none;
     width: 190px;
-    margin-left: 0;
+    /*margin-left: 0;*/
     display: inline-block;
 }
 
@@ -59,6 +59,7 @@
     /*width: 250px;*/
     display: inline-block;
     vertical-align: middle;
+    white-space: nowrap;
 }
 
 .header .logo img {
@@ -161,6 +162,7 @@
 
 .header .header_contacts_item {
     display: inline-block;
+    white-space: nowrap;
 }
 
 
@@ -178,6 +180,7 @@
     vertical-align: middle;
     line-height: 16px;
     font-weight: 700;
+    font-size: 12px;
 }
 
 .header .header_content_border {
@@ -372,4 +375,25 @@
 
     .footer .links > ul > li > a {
         font-weight: 700;
+    }
+
+.header .delivery-banner {
+    text-align: center;
+    color: #fff;
+    background: #fc5658;
+    display: inline-block;
+    padding: 2px 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+    .header .delivery-banner span {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .main-header .delivery-banner{
+        margin-top:10px;
+        margin-right: -15px;
     }

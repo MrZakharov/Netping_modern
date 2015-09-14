@@ -44,6 +44,7 @@ button.compare:hover{
 
     .header .cart .cart-text {
         text-decoration: underline;
+        font-size: 14px;
     }
 
     .header .cart .cart-count {
@@ -52,6 +53,7 @@ button.compare:hover{
         margin-left: 8px;
         font-size: 18px;
         font-weight: 700;
+        white-space: nowrap;
     }
 
 
