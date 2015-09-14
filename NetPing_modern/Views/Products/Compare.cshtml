@@ -16,11 +16,14 @@
 
     <link href="/Content/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="~/Content/Themes/reset.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/Themes/header-footer.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/Themes/CatalogPageStyle.css">
+    @*<link rel="stylesheet" type="text/css" href="~/Content/Themes/header-footer.css">*@
+    @*<link rel="stylesheet" type="text/css" href="~/Content/Themes/CatalogPageStyle.css">*@
+    <link rel="stylesheet" type="text/css" href="~/Content/Themes/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/Themes/compare.css" />
     <link href="~/Content/Themes/responsiveslides.css" rel="stylesheet" />
     <link rel='stylesheet' type='text/css' href='~/Content/Themes/cart/cart.css'>
+    <link rel="stylesheet" type="text/css" href="~/Content/Themes/adaptive.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Themes/adaptive-header-footer.css" />
 
     <script src="~/Content/JavaScript/jquery1.8.3min.js"></script>
     <script src="~/Content/JavaScript/modernizr.js"></script>
@@ -45,7 +48,7 @@
 <body>
     <div class="page">
         <div class="main">
-            @RenderPage("../Shared/Header.cshtml")
+            @RenderPage("../Shared/Adaptive-Header.cshtml")
             <div class="content">
                 @*<div class="top-scroll">
 
@@ -63,7 +66,8 @@
                                     <tr>
                                         <th class="back-button">
                                             @Compare.Compare_str
-                                            @Html.ActionLink(@Compare.Back, "Index")
+                                            @*@Html.ActionLink(@Compare.Back, "Index")*@
+                                            <a href="@Request.UrlReferrer">@Compare.Back</a>
                                         </th>
                                         @foreach (var device in Model.Devices)
                                         {
@@ -124,18 +128,29 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach (var parameter in Model.Parameters)
+                                    @foreach (var parameter in Model.Parameters.Where(p => p.Name != null))
                                     {
                                         <tr>
                                             <td>@parameter.Name.Name</td>
                                             @foreach (var device in Model.Devices)
                                             {
-
-                                                var devParam = device.DeviceParameters.FirstOrDefault(p => p.Name.OwnNameFromPath == parameter.Name.OwnNameFromPath);
+                                                dynamic devParam = new object();
+                                                foreach(var param in device.DeviceParameters)
+                                                {
+                                                    if (param != null && param.Name != null && param.Name.OwnNameFromPath != null && param.Name.OwnNameFromPath == parameter.Name.OwnNameFromPath)
+                                                    {
+                                                        devParam = param;
+                                                        break;   
+                                                    }
+                                                }
+                                                //var devParam = device.DeviceParameters.FirstOrDefault(p => p.Name.OwnNameFromPath == parameter.Name.OwnNameFromPath);
+                                                if(devParam.GetType() != typeof(Object))
+                                                { 
                                                 var value = devParam == null ? " - " : devParam.Value;
                                                 <td>
                                                     @value
                                                 </td>
+                                                }
                                             }
                                         </tr>
                                     }
