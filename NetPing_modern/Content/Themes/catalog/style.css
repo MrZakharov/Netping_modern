@@ -88,8 +88,11 @@
     border-color: #a0a0a0;
 }
 
-.device-catalog-item:hover {
-    /*background: #fafff9;*/
+.device-catalog-item .device-item-content {
+    margin-top: -20px;
+    padding-top: 20px;
+    margin-bottom: -20px;
+    padding-bottom: 20px;
 }
 
 .device-catalog-item .device-item-content:hover{

@@ -147,4 +147,8 @@
         .page .main .content .content_right .content_right_a {
             color: #249038;
         }
+
+        .fancybox-title-float{
+            left: 25px !important;
+        }
 /*end content*/
