@@ -204,7 +204,7 @@ img.shopPopupItemImg {
     display: inline-block;
 }
 
-#userInfo input[type="text"] {
+#userInfo input[type="text"], #userInfo textarea {
     border: 1px solid #ccc;
     padding: 5px 10px;
     width: 300px;
@@ -276,4 +276,14 @@ img.shopPopupItemImg {
     height: 25px;
     display: block;
     vertical-align: middle;
+}
+
+#cartAbout .delivery{
+    font-size: 14px;
+    color: #f6635e;
+}
+
+#cartAbout .accept{
+    width: 100%;
+    margin: 10px 0;
 }

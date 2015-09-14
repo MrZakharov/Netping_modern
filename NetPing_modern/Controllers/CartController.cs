@@ -68,7 +68,7 @@ namespace NetPing_modern.Controllers
                         <table border=1 style='border: 1px solid #000; width: 100%; border-collapse: collapse'>
                         <tr><th></th><th>Наименование</th><th>Цена</th><th>Количество</th><th>Стоимость</th></tr>
                         {6}</table>
-                        </html>", cart.Name, cart.Address, cart.Shipping, cart.Phone, cart.Requisites, sum, items);
+                        </html>", cart.Name, cart.Address, "Бесплатная доставка", cart.Phone, cart.Requisites, sum, items);
                 var htmlView = AlternateView.CreateAlternateViewFromString(cont, null, "text/html");
                 mail.AlternateViews.Add(htmlView);
                 client.Send(mail);

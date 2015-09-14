@@ -35,7 +35,7 @@
 <div id="cartPopup">
     <input type="button" class="btn btn-info remove left" id="backCartButton" value="@Cart.Back" style="display: none;" />
     <input type="button" class="btn btn-primary accept right" id="continueCartButton" value="@Cart.Checkout" />
-    <input type="button" class="btn btn-primary accept right" id="sendDataCartButton" value="@Cart.Done" style="display: none;" />
+    @*<input type="button" class="btn btn-primary accept right" id="sendDataCartButton" value="@Cart.Done" style="display: none;" />*@
     <input type="button" class="btn btn-info accept left" id="closeCartButton" value="@Cart.ContinueShopping" />
     <div class="clear"></div>
     <div id="cartCost"><span class="subtotal">@Cart.Subtotal</span> <span id="cartCostValue"> </span>@Cart.Currency</div>
@@ -48,13 +48,13 @@
             <input type="text" id="emailK" placeholder="@Cart.EMail" />
             <input type="text" id="addressK" placeholder="@Cart.ShippingAddress" />
             <input type="text" id="phone" placeholder="@Cart.Phone" />
-            <input type="text" id="requisites" placeholder="@Cart.InvoiceDetails" />
+            <textarea id="requisites" rows="10" placeholder="@Cart.InvoiceDetails"></textarea>
             <div class="clear"></div>
-            <h2>@Cart.DeliveryMethod</h2>
-            <label><input type="radio" value="ЕМС Почта России" name="shipping" checked="checked" />@Cart.EMSRussianPost</label>
-            <label><input type="radio" value="Гарантпост" name="shipping" />@Cart.GarantPost</label>
-            <label><input type="radio" value="Самовывоз" name="shipping" />@Cart.SelfDelivery</label>
+            <div class="delivery">
+                Доставка по России бесплатно!
+            </div>
         </div>
+        <input type="button" class="btn btn-primary accept" id="sendDataCartButton" value="@Cart.Done" />
     </div>
     <div id="cartItems" class="k1"></div>
     <div class="arrow"></div>
