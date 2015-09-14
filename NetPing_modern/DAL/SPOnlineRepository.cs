@@ -477,24 +477,31 @@ namespace NetPing.DAL
                         PushUserGuideToCache(content);
                         //TODO: Save url to file as Url param
                         //var url = new UrlHelper().Action("UserGuide", "Products", new { id = contentId.Value });
-                        var url = "/UserGuide/" + content.Title.Replace("/", "");
-                        result.Add(new SFile
+                        try
                         {
-                            Id = item.Id
-                           ,
-                            Name = item["FileLeafRef"] as string
-                           ,
-                            Title = item["Title"] as string
-                           ,
-                            Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
-                           ,
-                            File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes)
-                           ,
-                            Created = (DateTime)item["Created"]
-                           ,
-                            Url = url
+                            var url = "/UserGuide/" + content.Title.Replace("/", "");
+                            result.Add(new SFile
+                            {
+                                Id = item.Id
+                               ,
+                                Name = item["FileLeafRef"] as string
+                               ,
+                                Title = item["Title"] as string
+                               ,
+                                Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
+                               ,
+                                File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes)
+                               ,
+                                Created = (DateTime)item["Created"]
+                               ,
+                                Url = url
 
-                        });
+                            });
+                        }
+                        catch(Exception ex)
+                        {
+                            //toDo log exception to log file
+                        }
                     }
                     
                 }
@@ -980,20 +987,27 @@ namespace NetPing.DAL
 
         public void PushUserGuideToCache(UserManualModel model)
         {
-            HttpRuntime.Cache.Insert(model.Title, model, new TimerCacheDependency());
-
-            string file_name = HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/" + model.Title.Replace("/", "") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
-            Stream streamWrite = null;
             try
             {
-                streamWrite = File.Create(file_name);
-                BinaryFormatter binaryWrite = new BinaryFormatter();
-                binaryWrite.Serialize(streamWrite, model);
-                streamWrite.Close();
+                HttpRuntime.Cache.Insert(model.Title, model, new TimerCacheDependency());
+
+                string file_name = HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/" + model.Title.Replace("/", "") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+                Stream streamWrite = null;
+                try
+                {
+                    streamWrite = File.Create(file_name);
+                    BinaryFormatter binaryWrite = new BinaryFormatter();
+                    binaryWrite.Serialize(streamWrite, model);
+                    streamWrite.Close();
+                }
+                catch (Exception ex)
+                {
+                    if (streamWrite != null) streamWrite.Close();
+                    //toDo log exception to log file
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                if (streamWrite != null) streamWrite.Close();
                 //toDo log exception to log file
             }
         }
