@@ -109,7 +109,7 @@ namespace NetPing_modern.Controllers
 
         public ActionResult Index(string group, string id)
         {
-            var devices = _repository.Devices.Where(d => !d.Name.IsGroup() && !d.IsInArchive);
+            var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
             if (group == null) return HttpNotFound();
             var g = _repository.Devices.FirstOrDefault(d => d.Url == @group);
             if (g != null)
@@ -148,7 +148,7 @@ namespace NetPing_modern.Controllers
             {
                 model.ActiveSection.Sections.First().IsSelected = true;
             }
-            model.Devices = devices;
+            model.Devices = devices.Where(d => !d.IsInArchive);
             model.ActiveSection.IsSelected = true;
             var sections = NavigationProvider.GetAllSections().Where(m => m.Url != model.ActiveSection.Url);
             sections.ForEach(m => model.Sections.Add(m));
@@ -161,7 +161,7 @@ namespace NetPing_modern.Controllers
 
         public ActionResult Archive()
         {
-            var devices = _repository.Devices.Where(d => !d.Name.IsGroup() && d.IsInArchive);
+            var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
 
             var model = new ProductsModel
                         {
@@ -173,7 +173,7 @@ namespace NetPing_modern.Controllers
                                     Description = NetPing_modern.Resources.Views.Catalog.Index.Sec_archive_desc
                                 }
                         };
-            model.Devices = devices;
+            model.Devices = devices.Where(d => d.IsInArchive);
 
             return View(model);
         }

@@ -12,7 +12,14 @@ namespace NetPing_modern.ViewModels
 
         public int GetHashCode(DeviceParameter obj)
         {
-            return obj.Name.OwnNameFromPath.GetHashCode();
+            try
+            {
+                return obj.Name.OwnNameFromPath.GetHashCode();
+            }
+            catch
+            {
+                return obj.Device.OwnNameFromPath.GetHashCode();
+            }
         }
     }
 }

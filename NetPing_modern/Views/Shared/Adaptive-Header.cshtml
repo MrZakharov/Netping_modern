@@ -56,7 +56,7 @@
 <div class="header contacts row">
 
     <div class="header_contacts clearfix">
-        <div class="col-sm-5 col-md-4 col-lg-3 header_contacts_item">
+        <div class="col-sm-5 col-md-4 col-lg-3 header_contacts_item bye">
             <div class="header_contacts_title">
                 <!--<a href="/zakaz.aspx">@Header.Header_to_buy </a>-->
                 @Header.Header_to_buy
@@ -68,7 +68,7 @@
                 <span>e-mail:</span><a href="mailto:@Header.Header_email_sales">@Header.Header_email_sales</a>
             </div>
         </div>
-        <div class="col-sm-6 col-md-5 col-lg-4 @(NetpingHelpers.Helpers.IsCultureEng ? "pull-right" : "") header_contacts_item">
+        <div class="col-sm-6 col-md-5 col-lg-4 @(NetpingHelpers.Helpers.IsCultureEng ? "pull-right" : "") header_contacts_item question">
             <div class="header_contacts_title">
                 <!--<a href="/zakaz.aspx">@Header.Header_ask</a>-->
                 @Header.Header_ask
@@ -84,7 +84,7 @@
 
         @if (!NetpingHelpers.Helpers.IsCultureEng)
         {
-            <div class="col-md-4 cart">
+            <div class="col-md-4 cart pull-right">
                 <span class="cart-icon"></span><span class="cart-text"> @Header.Header_goods_in_basket</span><span class="cart-count">0</span>
             </div>
         }
@@ -96,14 +96,14 @@
     <div class="main-header clearfix">
 
         <div class="logo-wrapper col-sm-12 col-md-5 col-lg-5">
-            <a class="logo col-md-6" href="/">
+            <a class="logo col-md-6" href="/" style="padding: 1px;">
                 <img src="~/Content/Images/logo_text.png" alt="Netping logo" />
             </a>
-            <div class="logo-text col-md-6">
+            <div class="logo-text col-md-5">
                 @Header.Logo_Title
             </div>
         </div>
-        <div class="nav col-xs-8 col-sm-7 col-md-5 col-lg-5">
+        <div class="nav menu col-xs-8 col-sm-8 col-md-6 col-lg-6">
             <ul>
                 <li class="nav_li">
                     <a class="@(Request.RawUrl.ToLower().Contains("/products") == true ? "nav_element active" : "nav_element")" href="/products/monitoring-servernoj">@Header.Products</a>
@@ -146,11 +146,11 @@
                 </li>
 
                 <!--
-                <li class="nav_li">
-                    <a class=@(Request.RawUrl.ToLower().Contains("/contacts") == true ? "nav_element active" : "nav_element") href="/contacts">@Header.Menu_contacts</a>
-                    <div class="nav_element_border"></div>
-                </li>
-                    -->
+            <li class="nav_li">
+                <a class=@(Request.RawUrl.ToLower().Contains("/contacts") == true ? "nav_element active" : "nav_element") href="/contacts">@Header.Menu_contacts</a>
+                <div class="nav_element_border"></div>
+            </li>
+                -->
                 <li class="nav_li">
                     <a class="@(Request.RawUrl.ToLower().Contains("/support") == true ? "nav_element active" : "nav_element")" href="/support">@Header.Menu_support</a>
                     <div class="nav_element_border"></div>
@@ -176,14 +176,14 @@
             </ul>
 
         </div>
-        <form class="search" name="search" action="http://www.google.com/cse" target="_blank">
-            <div class="search col-xs-4 col-sm-3 col-md-2 col-lg-2 pull-right">
+        <div class="search col-xs-4 col-sm-3 col-md-2 col-lg-2 pull-right top">
+            <form class="search" name="search" action="http://www.google.com/cse" target="_blank">
                 <input type="text" placeholder="Поиск по сайту" name="q" />
                 <input type="hidden" name="cx" value="006534849235046585456:eqktuqsoi58" />
                 <input name="ie" type="hidden" value="UTF-8" />
                 <input type="submit" value="Найти" />
-            </div>
-        </form>
+            </form>
+        </div>
 </div>
     <div class="clear"></div>
 </div>
