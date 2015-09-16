@@ -118,7 +118,7 @@
 }
 
 .device-catalog-item .device-item-content p, .device-catalog-item .device-item-content strong {
-    font-weight: 400;
+    font-weight: 700;
 }
 
 .device-catalog-item .device-item-content ul {
@@ -263,6 +263,14 @@
     .btn.btn-default {
         background: #144e5a;
         color: #fff;
+    }
+
+    .device-catalog-item .block-title{
+        background: #e5f8e4;
+        font-size: 22px;
+        color: #144e5a;
+        margin: 40px -15px 20px;
+        padding: 8px 15px; 
     }
 
 @media screen and (max-width: 1199px) {

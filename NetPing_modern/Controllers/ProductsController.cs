@@ -75,7 +75,7 @@ namespace NetPing_modern.Controllers
             ViewBag.Title = device.Name.Name;
             ViewBag.Description = device.Name.Name;
             ViewBag.Keywords = device.Name.Name;
-            return View("Device_view", device);
+            return View("Adaptive_device_view", device);
         }
 
         public ActionResult Solutions()

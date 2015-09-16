@@ -4,6 +4,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <meta charset="utf-8">
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" content="@ViewBag.Keywords" />
     <link href="/Content/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="~/Content/Themes/reset.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Themes/bootstrap/bootstrap.css" rel="stylesheet" />
@@ -26,6 +28,7 @@
     <script src="~/Content/JavaScript/modernizr.js"></script>
     <script src="~/Content/JavaScript/jquery.siblingsshutter.js"></script>
     <script src="~/Content/JavaScript/main.js"></script>
+    @RenderSection("Head_Scripts", false)
 </head>
 <body>
     <div class="container-fluid header-container">

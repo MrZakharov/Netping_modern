@@ -1,0 +1,321 @@
+﻿@using NetPing.Models
+@using System.Globalization
+@using NetPing_modern.Resources.Views.Product_item
+@model Device
+
+@{
+    Layout = "~/Views/Shared/Adaptive_master.cshtml";
+}
+
+@section Head_Css{
+    <link href="~/Content/Themes/catalog/style.css" rel="stylesheet" />
+    <link href="~/Content/Themes/catalog/device.css" rel="stylesheet" />
+
+    @if (NetpingHelpers.Helpers.IsCultureEng)
+    {
+        <link href="~/Content/Themes/catalog/style.en.css" rel="stylesheet" />
+    }
+
+    @if (NetpingHelpers.Helpers.IsCultureEng)
+    {
+        <link rel="stylesheet" type="text/css" href="~/Content/Themes/shutter_eng.css">
+    }
+    else
+    {
+        <link rel="stylesheet" type="text/css" href="~/Content/Themes/shutter.css">
+    }
+}
+
+@section Head_Scripts{
+<script src="~/Content/JavaScript/device-view/script.js"></script>
+    <script src="~/Content/JavaScript/device-view/navigation.js"></script>
+}
+
+@helper GetPrice(double? price)
+{
+    if (price != null && price > 0)
+    {
+        string str = string.Format(new CultureInfo(1035), "{0:N0} ", price);
+        @str
+    }
+}
+
+
+
+<div class="container-fluid device-catalog-item">
+
+    <div class="row">
+        <div class="col-xs-12 breadcrumbs">
+            <a href="/" class="root">@Index.Path_main</a>
+            >
+            <a href="@ViewBag.grp_url" class="node">
+                @ViewBag.grp_name
+            </a>
+            >
+            <a href="javascript:void(0)" class="page">
+                @Model.Name.Name
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <ul class="device-item-menu col-xs-12">
+            <li><a href="#description"><span class="device-catalog-item-menu-icon description"></span> Описание</a></li>
+            <li><a href="#specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</a></li>
+            <li><a href="#files"><span class="device-catalog-item-menu-icon files"></span> Документация и файлы</a></li>
+            <li><a href="#usage"><span class="device-catalog-item-menu-icon usage"></span> Примеры применения устройства</a></li>
+            <li><a href="#connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</a></li>
+        </ul>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row" id="main-row">
+                <div class="col-lg-5 col-md-12 main-info cat_item">
+                    <div style="display: none">
+                        <p class="Price">
+                            @Model.Price
+                        </p>
+                        <p class="ID">
+                            @Model.Name.Id
+                        </p>
+                        <p class="Name">
+                            @Model.Name.Name
+                        </p>
+                        <p class="Key">
+                            @Model.Url
+                        </p>
+                        <p class="PhotoURL">
+                            @Model.GetCoverPhoto(false).Url
+                        </p>
+                    </div>
+                    <div class="row">
+                        <div id="slider3-pager-nav" class="col-sm-3">
+                            <ul id="slider3-pager">
+                                @foreach (DevicePhoto photo in Model.DevicePhotos.Where(p => !p.IsBig))
+                                {
+                                    <li><a href="#"><img class="thumb-image" src="@photo.Url" alt=""></a></li>
+                                }
+                            </ul>
+                        </div>
+                        <ul class="rslides col-sm-9" id="slider3">
+                            @foreach (DevicePhoto photo in Model.DevicePhotos.Where(p => p.IsBig))
+                            {
+                                <li><img class="bigImageSize" src="@photo.Url" alt="" title="" /></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="device-item-buttons">
+                        <div class="price">
+                            <span>@GetPrice(Model.Price)</span> @Model.GetCurrency
+                        </div>
+
+                        <div class="to-cart button-block text-right ">
+                            <input type="text" class="btn btn-info counter" data-device-id="@Model.Name.Id" value="1" />
+                            <div class="add-remove">
+                                <button data-device-id="@Model.Name.Id" class="btn btn-info count-button add">+</button>
+                                <button data-device-id="@Model.Name.Id" class="btn btn-info count-button remove">-</button>
+                            </div>
+                            <div @(Model.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@Model.Name.Id" class="btn btn-primary buy-button"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-12">
+                    <h1>
+                        @Model.Name.Name
+                    </h1>
+                    <div class="device-item-content">
+                        @Html.Raw(Model.Short_description)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="block-title" id="description" data-nav="description"><span class="device-catalog-item-menu-icon description"></span> Описание</div>
+            <div class="block-content long-description">
+                @Html.Raw(Model.Long_description)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="block-title" id="specs" data-nav="specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</div>
+            <div class="block-content parameters">
+                @{
+                    if (Model.DeviceParameters.Count != 0)
+                    {
+                        foreach (dynamic grp in ViewBag.Parameter_groups)
+                        {
+                            IEnumerable<DeviceParameter> parameters = Model.DeviceParameters.Where(par => par.Name != null && par.Name.Path.Contains(grp.OwnNameFromPath));
+                            if (parameters.Any())
+                            {
+                                <div class="t-title">@grp.Name.Substring(2)</div>
+                            }
+                            <table class="table ">
+                                @foreach (DeviceParameter par in parameters.ToList())
+                                {
+                                    <tr>
+                                        <th>
+                                            @par.Name.Name
+                                        </th>
+                                        <td>
+                                            @par.Value
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="block-title" id="files" data-nav="files"><span class="device-catalog-item-menu-icon files"></span> Документация и файлы</div>
+            <div class="block-content files">
+                @if (Model.SFiles.Count != 0)
+                {
+                    foreach (dynamic grp in ViewBag.Files_groups)
+                    {
+                        IEnumerable<SFile> files = Model.SFiles.Where(type => type.File_type.Id == grp.Id);
+                        if (files.Any())
+                        {
+                            <div class="t-title">@grp.Name</div>
+                            <div>
+                                <ul>
+                                    @foreach (SFile file in files.ToList())
+                                    {
+                                        <li> <a rel="nofollow" target="_blank" href="@file.Url" class="file doc">@file.Name</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="block-title" id="usage" data-nav="usage"><span class="device-catalog-item-menu-icon usage"></span> Примеры применения устройства</div>
+            <div class="block-content usage">
+                <ul>
+                    @{
+                        foreach (Post post in Model.Posts.Where(pst => pst.Category.OwnNameFromPath == "Tutorial").Take(15))
+                        {
+                            <li>
+                                <a href='@post.Url_name'>@post.Title</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="block-title" id="connected-device" data-nav="connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</div>
+            <div class="block-content connected-devices">
+                <div class="row">
+                    @foreach (Device dev in ViewBag.Connected_devices_sensors)
+                    {
+                        <div class="col-lg-3 col-md-6">
+                            <div class="connected-device cat_item">
+                                <div style="display: none">
+                                    <p class="Price">
+                                        @dev.Price
+                                    </p>
+                                    <p class="ID">
+                                        @dev.Name.Id
+                                    </p>
+                                    <p class="Name">
+                                        @dev.Name.Name
+                                    </p>
+                                    <p class="Key">
+                                        @dev.Url
+                                    </p>
+                                    <p class="PhotoURL">
+                                        @dev.GetCoverPhoto(false).Url
+                                    </p>
+                                </div>
+                                <img src="@dev.GetCoverPhoto(false).Url" alt="" title="" />
+                                <a href="/products/@dev.Url" class="item">@dev.Name.Name</a>
+                                <div class="device-item-buttons">
+                                    <div class="row">
+                                        <div class="price">
+                                            <span>@GetPrice(dev.Price)</span> @dev.GetCurrency
+                                        </div>
+                                        <div class="to-cart button-block text-right ">
+                                            <input type="text" class="btn btn-info counter" data-device-id="@dev.Name.Id" value="1" />
+                                            <div class="add-remove">
+                                                <button data-device-id="@dev.Name.Id" class="btn btn-info count-button add">+</button>
+                                                <button data-device-id="@dev.Name.Id" class="btn btn-info count-button remove">-</button>
+                                            </div>
+                                            <div @(Model.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@dev.Name.Id" class="btn btn-primary buy-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                    @foreach (Device dev in ViewBag.Connected_devices_accessuars)
+                    {
+
+                        <div class="col-lg-3 col-md-6">
+                            <div class="connected-device cat_item">
+                                <div style="display: none">
+                                    <p class="Price">
+                                        @dev.Price
+                                    </p>
+                                    <p class="ID">
+                                        @dev.Name.Id
+                                    </p>
+                                    <p class="Name">
+                                        @dev.Name.Name
+                                    </p>
+                                    <p class="Key">
+                                        @dev.Url
+                                    </p>
+                                    <p class="PhotoURL">
+                                        @dev.GetCoverPhoto(false).Url
+                                    </p>
+                                </div>
+                                <img src="@dev.GetCoverPhoto(false).Url" alt="" title="" />
+                                <a href="/products/@dev.Url" class="item">@dev.Name.Name</a>
+                                <div class="device-item-buttons">
+                                    <div class="row">
+                                        <div class="price">
+                                            <span>@GetPrice(dev.Price)</span> @dev.GetCurrency
+                                        </div>
+                                        <div class="to-cart button-block text-right ">
+                                            <input type="text" class="btn btn-info counter" data-device-id="@dev.Name.Id" value="1" />
+                                            <div class="add-remove">
+                                                <button data-device-id="@dev.Name.Id" class="btn btn-info count-button add">+</button>
+                                                <button data-device-id="@dev.Name.Id" class="btn btn-info count-button remove">-</button>
+                                            </div>
+                                            <div @(Model.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@dev.Name.Id" class="btn btn-primary buy-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="device-item-menu col-xs-12 floating-menu" style="display:none;">
+        <li><a href="#description"><span class="device-catalog-item-menu-icon description"></span> Описание</a></li>
+        <li><a href="#specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</a></li>
+        <li><a href="#files"><span class="device-catalog-item-menu-icon files"></span> Документация и файлы</a></li>
+        <li><a href="#usage"><span class="device-catalog-item-menu-icon usage"></span> Примеры применения устройства</a></li>
+        <li><a href="#connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</a></li>
+    </ul>
+</div>
