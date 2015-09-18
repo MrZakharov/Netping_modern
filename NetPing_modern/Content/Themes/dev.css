@@ -23,10 +23,17 @@ body {
     background: #fff;
 }
 
+.development li {
+    list-style: initial;
+    list-style-position: inside;
+}
 
-    .content a {
-        /*color: #4ab27d;*/
-    }
+
+.content a {
+    /*color: #4ab27d;*/
+    font-size: 14px;
+    font-weight: 400;
+}
 
 .title {
     font-size: 18px;
@@ -299,6 +306,7 @@ body {
         text-align: center;
         margin: 12px 0;
         font-weight: 700;
+        white-space: nowrap;
     }
 
         .preorder .preorder-text .preorder-price div {
@@ -431,7 +439,9 @@ body {
         }
 
         .content .tabs-desc .tab-c.longdescription h2 {
-            margin: 10px 0;
+            margin-top: 1em;
+            margin-bottom: 0.8em;
+            font-size: 30px;
         }
 
 .content .comments-invite {
@@ -446,3 +456,10 @@ img.confluence-embedded-image.image-center {
     text-align: center;
     margin: 0 auto;
     display: block;
+}
+
+.text.development > p:first-child > strong {
+    display: inline-block;
+    font-size: 18px;
+    margin-bottom: 5px;
+}

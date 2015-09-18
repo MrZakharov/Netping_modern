@@ -18,13 +18,13 @@ namespace NetPing_modern.Helpers
         {
             var sections = new List<SectionModel>();
 
-                sections.Add(new SectionModel
-                                {
-                                    Description = Index.Sec_monitoring_descr,
-                                    ImageUrl = "../../Content/Images/present_left_img1.png",
-                                    Title = Index.Sec_monitoring,
-                                    Url = Groups.Monitoring,
-                                    Sections = new List<SectionModel>
+            sections.Add(new SectionModel
+            {
+                Description = Index.Sec_monitoring_descr,
+                ImageUrl = "../../Content/Images/present_left_img1.png",
+                Title = Index.Sec_monitoring,
+                Url = Groups.Monitoring,
+                Sections = new List<SectionModel>
                                                 {
                                                     new SectionModel
                                                     {
@@ -51,15 +51,15 @@ namespace NetPing_modern.Helpers
                                                         FullUrl="solutions/monitoring-servernoj/dlja-servernyh-komnat-i-6kafov"
                                                     }
                                                 }
-                                });
+            });
 
-                sections.Add(new SectionModel
-                                {
-                                    Description = Index.Sec_power_descr,
-                                    ImageUrl = "../../Content/Images/present_left_img2.png",
-                                    Title = Index.Sec_power,
-                                    Url = Groups.Power,
-                                    Sections = new List<SectionModel>
+            sections.Add(new SectionModel
+            {
+                Description = Index.Sec_power_descr,
+                ImageUrl = "../../Content/Images/present_left_img2.png",
+                Title = Index.Sec_power,
+                Url = Groups.Power,
+                Sections = new List<SectionModel>
                                                 {
                                                     new SectionModel
                                                     {
@@ -86,15 +86,15 @@ namespace NetPing_modern.Helpers
                                                         FullUrl="solutions/upravljaemye-rozetki-ip-pdu/udaljonnoe-upravlenie-jelektropitaniem"
                                                     }
                                                 }
-                                });
+            });
 
-                sections.Add(new SectionModel
-                {
-                    Description = Index.Sec_switch_descr,
-                    ImageUrl = "../../Content/Images/present_left_img3.png",
-                    Title = Index.Sec_switch,
-                    Url = Groups.Switch,
-                    Sections = new List<SectionModel>
+            sections.Add(new SectionModel
+            {
+                Description = Index.Sec_switch_descr,
+                ImageUrl = "../../Content/Images/present_left_img3.png",
+                Title = Index.Sec_switch,
+                Url = Groups.Switch,
+                Sections = new List<SectionModel>
                                                 {
                                                     new SectionModel
                                                     {
@@ -115,7 +115,13 @@ namespace NetPing_modern.Helpers
                                                         FullUrl="solutions/kommutatory-ethernet/re6enija-na-osnove-POE"
                                                     }
                                                 }
-                });
+            });
+            sections.Add(new SectionModel
+            {
+                Description = Index.Sec_dev_descr,
+                Title = Index.Sec_dev,
+                Url = "development"
+            });
             return sections;
         }
     }

@@ -1,4 +1,8 @@
-﻿body{
+﻿@-ms-viewport {
+  width: auto !important;
+}
+
+body{
     min-width: 800px;
 }
 

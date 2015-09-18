@@ -122,6 +122,23 @@ namespace NetPing_modern.Controllers
             return View("Dev", device);
         }
 
+        public ActionResult Development()
+        {
+            var devices = _repository.Devices.Where(d => !d.Name.IsGroup() && d.Name.Path.Contains("Development"));
+
+            var model = new ProductsModel
+            {
+                ActiveSection =
+                             NavigationProvider.GetAllSections().FirstOrDefault(m => m.Url == "development")
+            };
+
+            ViewBag.Title = ViewBag.Description = ViewBag.Keywords = model.ActiveSection.FormattedTitle;
+
+            model.Devices = devices;
+
+            return View("Adaptive_Index", model);
+        }
+
         public ActionResult Index(string group, string id)
         {
             var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
