@@ -186,4 +186,7 @@
   <data name="OrderSent" xml:space="preserve">
     <value>Your order has been sent for processing</value>
   </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
 </root>

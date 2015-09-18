@@ -38,64 +38,58 @@ namespace NetPing_modern.Controllers
                 var cartId = timeStamp.Contains(',') ? timeStamp.Remove(timeStamp.IndexOf(','), 1) : timeStamp;
                 cartId = cartId.Contains('.') ? cartId.Remove(timeStamp.IndexOf('.'), 1) : cartId;
 
-                mail.From = new MailAddress("shop@netping.ru");
+                mail.From = new MailAddress("shop_dev@netping.ru");
                 mail.To.Add("sales@netping.ru");
                 mail.ReplyToList.Add(cart.EMail);
-                mail.Subject = "Заказ № \"" + cartId + "\"";
                 string items = "";
-                var sum = 0;
+                var devicesString = string.Empty;
                 foreach (var cartitem in cart.Data)
                 {
                     var itemrow = "";
-                    var itemprice = Int32.Parse(((string)cartitem["price"]));
-                    var itemcount = Int32.Parse(((string)cartitem["count"]));
-                    itemrow = String.Format(@"<tr><td><img src='{0}' width=200/></td>
-                        <td>{1}</td>
-                        <td>{2} руб.</td>
-                        <td>{3}</td>
-                        <td>{4} руб.</td></tr>",
-                            cartitem["photoURL"], cartitem["name"], cartitem["price"], cartitem["count"], itemprice * itemcount);
+                    itemrow = String.Format(@"<tr><td>{0}</td></tr>",
+                            cartitem["name"]);
                     items += itemrow;
-                    sum += itemprice * itemcount;
+                    devicesString += cartitem["name"] + ", ";
                 }
-                var cont = String.Format(@"<html><h2>{0}</h2>
-                        <h2>Адрес доставки: {1}</h2>
-                        <h2>Способ доставки: {2}</h2>
-                        <h2>Телефон: {3}</h2>
-                        <h2>Реквизиты: {4}</h2>
-                        <h2>Сумма заказа: {5} руб.</h2>
-                        <h2>Состав заказа</h2>
-                        <table border=1 style='border: 1px solid #000; width: 100%; border-collapse: collapse'>
-                        <tr><th></th><th>Наименование</th><th>Цена</th><th>Количество</th><th>Стоимость</th></tr>
-                        {6}</table>
-                        </html>", cart.Name, cart.Address, cart.Shipping, cart.Phone, cart.Requisites, sum, items);
+                devicesString.Substring(devicesString.LastIndexOf(','), 2);
+                mail.Subject = "DEV предварительный заказ №\"" + cartId + "\" на устройство " + devicesString;
+
+
+                var cont = String.Format(@"<html>
+                        <h2>Устройства: </h2>
+                        <table border=0 style='border-collapse: collapse'>
+                        {0}</table>
+                        <h2>Для: {1} {2}</h2>
+                        <h2>Дата: {3}</h2>
+                        <h2>Комментарий: {4}</h2>
+                        </html>", items, cart.Name, cart.EMail, DateTime.Now.ToShortDateString(), cart.Comment);
                 var htmlView = AlternateView.CreateAlternateViewFromString(cont, null, "text/html");
                 mail.AlternateViews.Add(htmlView);
                 client.Send(mail);
 
 
 
-                mail.To.Clear();
-                mail.To.Add(cart.EMail);
-                mail.ReplyToList.Clear();
-                mail.ReplyToList.Add("sales@netping.ru");
+                //mail.To.Clear();
+                //mail.To.Add(cart.EMail);
+                //mail.ReplyToList.Clear();
+                //mail.ReplyToList.Add("sales@netping.ru");
 
-                cont = String.Format(@"<html><h2>Ваш заказ был получен, ждите ответа менеджера нашей компании</h2>
-                        <h2>{0}</h2>
-                        <h2>Адрес доставки: {1}</h2>
-                        <h2>Способ доставки: {2}</h2>
-                        <h2>Телефон: {3}</h2>
-                        <h2>Реквизиты: {4}</h2>
-                        <h2>Сумма заказа: {5} руб.</h2>
-                        <h2>Состав заказа</h2>
-                        <table border=1 style='border: 1px solid #000; width: 100%; border-collapse: collapse'>
-                        <tr><th></th><th>Наименование</th><th>Цена</th><th>Количество</th><th>Стоимость</th></tr>
-                        {6}</table>
-                        </html>", cart.Name, cart.Address, cart.Shipping, cart.Phone, cart.Requisites, sum, items);
-                htmlView = AlternateView.CreateAlternateViewFromString(cont, null, "text/html");
-                mail.AlternateViews.Clear();
-                mail.AlternateViews.Add(htmlView);
-                client.Send(mail);
+                //cont = String.Format(@"<html><h2>Ваш заказ был получен, ждите ответа менеджера нашей компании</h2>
+                //        <h2>{0}</h2>
+                //        <h2>Адрес доставки: {1}</h2>
+                //        <h2>Способ доставки: {2}</h2>
+                //        <h2>Телефон: {3}</h2>
+                //        <h2>Реквизиты: {4}</h2>
+                //        <h2>Сумма заказа: {5} руб.</h2>
+                //        <h2>Состав заказа</h2>
+                //        <table border=1 style='border: 1px solid #000; width: 100%; border-collapse: collapse'>
+                //        <tr><th></th><th>Наименование</th><th>Цена</th><th>Количество</th><th>Стоимость</th></tr>
+                //        {6}</table>
+                //        </html>", cart.Name, cart.Address, cart.Shipping, cart.Phone, cart.Requisites, sum, items);
+                //htmlView = AlternateView.CreateAlternateViewFromString(cont, null, "text/html");
+                //mail.AlternateViews.Clear();
+                //mail.AlternateViews.Add(htmlView);
+                //client.Send(mail);
 
 
                 /*
