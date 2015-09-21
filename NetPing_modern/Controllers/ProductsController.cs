@@ -185,20 +185,27 @@ namespace NetPing_modern.Controllers
         {
             string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
 
-            UserManualModel model = null;
+            UserManualViewModel model = null;
             if(System.IO.File.Exists(file_name))
             {
                 try
                 {
                     var stream = System.IO.File.OpenRead(file_name);
                     BinaryFormatter binaryWrite = new BinaryFormatter();
-                    model = binaryWrite.Deserialize(stream) as UserManualModel;
+                    var guide = binaryWrite.Deserialize(stream) as UserManualModel;
+
+                    model = new UserManualViewModel
+                    {
+                        Id = guide.Id,
+                        Title = guide.Title,
+                        Pages = guide.Pages.OrderBy(p => p.Title, new NaturalComparer(CultureInfo.CurrentCulture))
+                    };
 
                     if (string.IsNullOrEmpty(page))
                         return View("~/Views/Products/UserGuide.cshtml", model);
                     else
                     {
-                        var m = model.Pages.SingleOrDefault(p => p.Title == page);
+                        var m = guide.Pages.SingleOrDefault(p => p.Title == page);
                         Session["page"] = m;
                         return View("~/Views/Products/UserGuidePage.cshtml", m);
                     }
@@ -224,6 +231,25 @@ namespace NetPing_modern.Controllers
             }
 
             return HttpNotFound();
+        }
+
+        public ActionResult GetSubPage(string id, string page, string subPage)
+        {
+            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+
+            PageModel model = null;
+            if(System.IO.File.Exists(file_name))
+            {
+                var stream = System.IO.File.OpenRead(file_name);
+                BinaryFormatter binaryWrite = new BinaryFormatter();
+                var guide = binaryWrite.Deserialize(stream) as UserManualModel;
+                var pg = guide.Pages.SingleOrDefault(p => p.Title == page);
+                model = pg.Pages.SingleOrDefault(p => p.Title == subPage);
+
+                return View("~/Views/Products/UserGuidePage.cshtml", model);
+            }
+
+            return new EmptyResult();
         }
     }
 }

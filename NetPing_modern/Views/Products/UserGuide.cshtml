@@ -1,28 +1,257 @@
-﻿@{
+﻿@using System.Globalization
+@using NetpingHelpers
+@using NetPing.Models
+@using NetPing_modern.Helpers
+@using NetPing_modern.Resources.Views.MainPage
+
+@{
     Layout = "~/Views/Shared/Adaptive_master.cshtml";
 }
-@model NetPing_modern.DAL.Model.UserManualModel
+@model NetPing_modern.ViewModels.UserManualViewModel
 
-<div class="header">
-    <h1>@Model.Title</h1>
-</div>
+@section Head_Css{
+    <style>
+        .container{
+            margin-left: 0px;
+            margin-right: 0px;
+            width: 100%;
+        }
 
-<div style="margin-left: 10px;">
-    @foreach (var page in Model.Pages)
-    {
-        <a href="/UserGuide/@Model.Title.Replace("/", "")/@page.Title.Replace("/", "")/">@page.Title</a><br />
-        @*<div class="hidden">
-                @if (string.IsNullOrEmpty(page.Content) && page.Pages.Count > 0)
+        .content_best_sales, .content_best_inwork {
+            background-image: url(/Content/Images/best_sales.png);
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 25px;
+            background-color: #e5f8e4;
+            color: #144e5a;
+            font-size: 24px;
+            padding-left: 57px;
+            line-height: 35px;
+        }
+
+        .content_doc{
+            background-image: url(/Content/Images/best_sales.png);
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 25px;
+            background-color: #e5f8e4;
+            color: #144e5a;
+            font-size: 24px;
+            padding-left: 57px;
+            line-height: 35px;
+        }
+
+        .content_news_header {
+            background-color: #e5f8e4;
+        }
+
+        .content_best_inwork {
+            background-image: url(/Content/Images/inwork.png);
+            margin-top: 60px;
+        }
+
+        .content_news {
+            float: left;
+            width: 100%;
+        }
+
+        .content_news_header {
+            background-color: #e5f8e4;
+            height: 35px;
+        }
+
+        .content_news_latest {
+            float: left;
+            background-image: url(/Content/Images/content_news.png);
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 25px;
+            color: #144e5a;
+            font-size: 22px;
+            padding-left: 57px;
+            line-height: 35px;
+        }
+
+        .content_news_latest_rrs {
+            background-image: url(/Content/Images/content_news_latest_rrs.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            float: right;
+            display: block;
+            height: 35px;
+            width: 35px;
+        }
+
+        .content_news_latest_border {
+            margin-top: 10px;
+            border-bottom: 1px solid #000;
+        }
+
+        .content_news_latest_date {
+            margin-top: 20px;
+        }
+
+        .content_news_latest_date_span {
+            display: block;
+            color: #144e5a;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .content_news_latest_date_a {
+            display: block;
+            color: #2f2f2f;
+            font-size: 16px;
+            text-decoration: underline;
+        }
+
+        .content_news_latest_date .content_news_latest_date_span:after {
+            color: #fff;
+            margin-left: 15px;
+            font-weight: 500;
+            padding: 4px 8px;
+            width: 115px;
+            display: inline-block;
+        }
+
+        .content_news_latest_date.News .content_news_latest_date_span:after {
+            content: "Новость";
+            background: #144e5a;
+        }
+
+         .content_news_latest_date.News.Eng .content_news_latest_date_span:after {
+            content: "News";
+            background: #144e5a;
+        }
+
+        .content_news_latest_date.Tutorial .content_news_latest_date_span:after {
+            content: "Руководство";
+            background: #4ab27d;
+        }
+
+        .content_news_latest_date.Tutorial.Eng .content_news_latest_date_span:after {
+            content: "Turtorial";
+            background: #4ab27d;
+        }
+
+        .content_news_latest_date.FAQ .content_news_latest_date_span:after {
+            content: "Ответ на вопрос";
+            background: #8e8e8e;
+        }
+
+        .content_news_latest_date.FAQ.Eng .content_news_latest_date_span:after {
+            content: "FAQ";
+            background: #8e8e8e;
+        }
+
+        .caret {
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid #000000;
+            display: inline-block;
+            height: 0;
+            opacity: 0.3;
+            vertical-align: baseline;
+            width: 0;
+            margin-left: 0px;
+        }
+
+        .right-caret {
+            border-bottom: 4px solid transparent;
+            border-top: 4px solid transparent;
+            border-left: 4px solid #000000;
+            display: inline-block;
+            height: 0;
+            opacity: 0.3;
+            vertical-align: baseline;
+            width: 0;
+            margin-left: 0px;
+        }
+
+        div.subMenu{
+            margin-left: 25px;
+        }
+
+        img{
+            width: 100%;
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="col-md-12">
+        NetPing > Документация > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-3">
+        <div class="content_doc"><span>@Index.Title_doc</span></div>
+        @foreach (var item in Model.Pages)
+        {
+            <div>
+                <a href="javascript:void(0)" class="menuItem"><b class="right-caret"></b> @item.Title</a>
+                @if(item.Pages != null && item.Pages.Any())
                 {
-                    foreach (var subpage in page.Pages)
+                <div class="hidden subMenu">
+                    @foreach (var subItem in item.Pages)
                     {
-                        <a href="#">@subpage.Title</a><br />
-                        <div class="hidden">@Html.Raw(subpage.Content)</div>
+                        <div><a href="javascript:void(0)" class="subMenuItem"><b class="right-caret"></b> @subItem.Title</a></div>
                     }
-                } else
-                {
-                    @Html.Raw(page.Content)
+                </div>
                 }
-            </div>*@
-    }
+            </div>
+        }
+    </div>
+    <div class="col-sm-8 col-md-6 col-lg-6">
+        <div class="header">
+            <h1>@Model.Title</h1>
+        </div>
+        <div class="docContent">
+            @foreach (var page in Model.Pages)
+            {
+                <a href="/UserGuide/@Model.Title.Replace("/", "")/@page.Title.Replace("/", "")/">@page.Title</a><br />
+            }
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-3">
+        <div class="content_news">
+            <div class="content_news_header">
+                <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
+            </div>
+        </div>
+        
+        <div class="clear"></div>
+        <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
+        <div class="clear"></div>
+        <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
+    </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('a.menuItem').click(function (e) {
+            $('div.subMenu').addClass('hidden');
+            $('b.caret').removeClass('caret').addClass('right-caret');
+            $(e.target).parent().children('div.hidden').removeClass('hidden');
+            $(e.target).children('b.right-caret').removeClass('right-caret').addClass('caret');
+
+            var item = $.trim($(e.target).text());
+            var url = "/UserGuide/@Model.Title/" + item + "/";
+                $.get(url, null, function (data) {
+                    $('div.docContent').empty();
+                    $('div.docContent').append(data);
+                });
+            });
+
+        $('a.subMenuItem').click(function (e) {
+            var item = $.trim($(e.target).parent().parent().parent().children('a.menuItem').text());
+            var subItem = $.trim($(e.target).text());
+            var url = "/GetSubPage/@Model.Title/" + item + "/" + subItem + "/";
+            $.get(url, null, function (data) {
+                $('div.docContent').empty();
+                $('div.docContent').append(data);
+            });
+        });
+    });
+    </script>
+}
