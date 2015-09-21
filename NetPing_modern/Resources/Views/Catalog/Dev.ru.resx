@@ -135,11 +135,17 @@
   <data name="Planing" xml:space="preserve">
     <value>Планируем</value>
   </data>
+  <data name="Preorder_form_comment_placeholder" xml:space="preserve">
+    <value>Комментарий к заказу</value>
+  </data>
   <data name="Preorder_form_email_placeholder" xml:space="preserve">
     <value>Введите e-mail</value>
   </data>
   <data name="Preorder_form_name_placeholder" xml:space="preserve">
     <value>Введите ваше имя</value>
+  </data>
+  <data name="Preorder_form_submit" xml:space="preserve">
+    <value>Отправить заказ</value>
   </data>
   <data name="Preorder_form_title" xml:space="preserve">
     <value>Сделать предварительный заказ</value>

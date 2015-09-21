@@ -16,7 +16,7 @@ namespace NetPing
             routes.MapRoute("contacts", "contacts", new { controller = "InnerPages", action = "Contacts" });
             routes.MapRoute("vacancy", "vacancy", new { controller = "InnerPages", action = "Vacancy" });
             routes.MapRoute("support", "support", new { controller = "InnerPages", action = "Support" });
-            routes.MapRoute("dev", "dev", new { controller = "InnerPages", action = "Dev" });
+            routes.MapRoute("dev", "development", new { controller = "Products", action = "Development" });
 
             //routes.MapRoute("buy", "buy", new { controller = "InnerPages", action = "Buy" });
 

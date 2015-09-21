@@ -279,7 +279,7 @@ body {
             box-sizing: border-box;
         }
 
-            .preorder .preorder-form form input[type="text"], .preorder .preorder-form form input[type="email"] {
+            .preorder .preorder-form form input[type="text"], .preorder .preorder-form form input[type="email"], .preorder .preorder-form textarea {
                 width: 100%;
                 margin: 0 0 5px 0;
                 -moz-box-sizing: border-box;
@@ -288,7 +288,28 @@ body {
                 font-size: 12px;
                 padding: 6px 10px;
                 border: none;
+                resize: none;
+                color: #000;
             }
+
+            .preorder .preorder-form form input.input-validation-error {
+                border: 1px solid #f00;
+            }
+
+        .preorder .preorder-form .preorder-submit {
+            width: 100%;
+            display: block;
+            background: #144e5a;
+            border: none;
+            margin-bottom: 4px;
+            padding: 8px 0;
+        }
+
+        .preorder .preorder-form .message {
+            margin: 4px 0;
+            color: #fff;
+            font-weight: 700;
+        }
 
         .preorder .preorder-form .preorder-email {
             position: relative;
@@ -459,7 +480,12 @@ img.confluence-embedded-image.image-center {
 }
 
 .text.development > p:first-child > strong {
-    display: inline-block;
+    /*display: inline-block;*/
     font-size: 18px;
     margin-bottom: 5px;
 }
+
+    .text.development > p:first-child > strong a {
+        font-size: 18px;
+        font-weight: 700;
+    }

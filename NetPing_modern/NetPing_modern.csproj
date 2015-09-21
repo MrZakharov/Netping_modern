@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -169,6 +170,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\InnerPagesController.cs" />
     <Compile Include="Controllers\MainPageController.cs" />
+    <Compile Include="Controllers\PreorderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\Product_itemController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Mappers\DefaultMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\PostViewModelMapper.cs" />
+    <Compile Include="Models\PreorderModel.cs" />
     <Compile Include="Models\ProductsModel.cs" />
     <Compile Include="Models\SectionModel.cs" />
     <Compile Include="Resources\Views\Blog\Faq.Designer.cs">
@@ -227,6 +230,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Dev.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\Catalog\Dev.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dev.ru.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Views\Error\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -625,6 +633,13 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="yandex_582f0c5a998f9328.txt" />
     <None Include="Properties\PublishProfiles\Local public.pubxml" />
@@ -644,6 +659,7 @@
     <Content Include="Views\Shared\Adaptive-Header.cshtml" />
     <Content Include="Views\Products\Adaptive_Index.cshtml" />
     <Content Include="Views\InnerPages\UCacheAsync.cshtml" />
+    <Content Include="Views\Shared\PreorderForm.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -678,6 +694,7 @@
     <Folder Include="Pub\Files\" />
     <Folder Include="Pub\Photos\" />
     <Folder Include="Views\Cart\" />
+    <Folder Include="Views\Preorder\" />
     <Folder Include="Views\Product_item\" />
   </ItemGroup>
   <ItemGroup>

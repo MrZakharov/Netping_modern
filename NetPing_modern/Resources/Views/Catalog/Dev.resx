@@ -135,10 +135,16 @@
   <data name="Planing" xml:space="preserve">
     <value />
   </data>
+  <data name="Preorder_form_comment_placeholder" xml:space="preserve">
+    <value />
+  </data>
   <data name="Preorder_form_email_placeholder" xml:space="preserve">
     <value />
   </data>
   <data name="Preorder_form_name_placeholder" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Preorder_form_submit" xml:space="preserve">
     <value />
   </data>
   <data name="Preorder_form_title" xml:space="preserve">

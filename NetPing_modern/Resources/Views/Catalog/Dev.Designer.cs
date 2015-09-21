@@ -117,6 +117,15 @@ namespace NetPing_modern.Resources.Views.Catalog {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string Preorder_form_comment_placeholder {
+            get {
+                return ResourceManager.GetString("Preorder_form_comment_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string Preorder_form_email_placeholder {
             get {
                 return ResourceManager.GetString("Preorder_form_email_placeholder", resourceCulture);
@@ -129,6 +138,15 @@ namespace NetPing_modern.Resources.Views.Catalog {
         public static string Preorder_form_name_placeholder {
             get {
                 return ResourceManager.GetString("Preorder_form_name_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Preorder_form_submit {
+            get {
+                return ResourceManager.GetString("Preorder_form_submit", resourceCulture);
             }
         }
         

@@ -9,7 +9,7 @@
 
 @section Head_Css{
     <link href="~/Content/Themes/responsiveslides.css" rel="stylesheet" />
-<link href="~/Content/Themes/slide.css" rel="stylesheet" />
+    <link href="~/Content/Themes/slide.css" rel="stylesheet" />
     <link href="~/Content/Themes/dev.css" rel="stylesheet" />
 }
 
@@ -78,12 +78,7 @@
         </div>
         <div class="preorder-form">
             @Dev.Preorder_form_title
-            <form>
-                <input type="text" placeholder="@Dev.Preorder_form_name_placeholder" />
-                <div class="preorder-email">
-                    <input type="email" placeholder="@Dev.Preorder_form_email_placeholder" /><input class="subscribe_image" type="image" src="~/Content/Images/subscribe_button.png"></input>
-                </div>
-            </form>
+            @Html.Partial("PreorderForm", new NetPing_modern.Models.PreorderModel { Device = Model })
         </div>
         <div class="clear"></div>
     </div>

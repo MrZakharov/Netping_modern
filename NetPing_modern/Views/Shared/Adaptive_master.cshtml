@@ -23,6 +23,9 @@
     }
     <link href="~/Content/Themes/tinycarousel.css" rel="stylesheet" />
     <script src="~/Content/JavaScript/jquery1.8.3min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Content/JavaScript/modernizr.js"></script>
     <script src="~/Content/JavaScript/jquery.siblingsshutter.js"></script>
     <script src="~/Content/JavaScript/main.js"></script>
@@ -32,7 +35,7 @@
         @RenderPage("../Shared/Adaptive-Header.cshtml")
     </div>
     @RenderBody()
-    
+
 
     @RenderPage("../Shared/Adaptive-Footer.cshtml")
     <div class="overlay"></div>

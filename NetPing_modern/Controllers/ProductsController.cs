@@ -83,10 +83,10 @@ namespace NetPing_modern.Controllers
         {
             var solutionsNames = new[] { "dlja-servernyh-komnat-i-6kafov", "udaljonnoe-upravlenie-jelektropitaniem", "re6enija-na-osnove-POE" };
             var model = new ProductsModel
-                      {
-                          ActiveSection =
+            {
+                ActiveSection =
                              NavigationProvider.GetAllSections().First()
-                      };
+            };
             var devices = new List<Device>();
             foreach (var solutionName in solutionsNames)
             {
@@ -158,10 +158,10 @@ namespace NetPing_modern.Controllers
             ViewBag.Keywords = g.Name.Name;
 
             var model = new ProductsModel
-                        {
-                            ActiveSection =
+            {
+                ActiveSection =
                                 NavigationProvider.GetAllSections().FirstOrDefault(m => m.Url == @group)
-                        };
+            };
 
 
             if (!string.IsNullOrEmpty(id))
@@ -192,5 +192,7 @@ namespace NetPing_modern.Controllers
 
             return View("Adaptive_Index", model);
         }
+
     }
+
 }
