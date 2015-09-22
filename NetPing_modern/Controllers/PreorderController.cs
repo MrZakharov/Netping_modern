@@ -73,13 +73,30 @@ namespace NetPing_modern.Controllers
                 mail.Subject = "DEV предварительный заказ № \"" + cartId + "\" на устройство \"" + device.Name.Name + "\"";
                 var cont = String.Format(@"
                         <h2>Название устройства: {0}</h2>
-                        <h2>Для: {1}</h2>
-                        <h2>Дата заказа: {2}</h2>
-                        <h2>Комментарий: {3}</h2>
-                        </html>", device.Name.Name, model.Name, DateTime.Now.ToShortDateString(), model.Comment);
+                        <h2>Для: {1} {2}</h2>
+                        <h2>Дата заказа: {3}</h2>
+                        <h2>Комментарий: {4}</h2>
+                        </html>", device.Name.Name, model.Name, model.Email, DateTime.Now.ToShortDateString(), model.Comment);
                 var htmlView = AlternateView.CreateAlternateViewFromString(cont, null, "text/html");
                 mail.AlternateViews.Add(htmlView);
                 client.Send(mail);
+
+                mail.To.Clear();
+                mail.To.Add(model.Email);
+                mail.ReplyToList.Clear();
+                mail.ReplyToList.Add("sales@netping.ru");
+
+                cont = String.Format(@"<html><h2>Ваш предварительный заказ размещён!</h2>
+                        <h2>Название устройства: {0}</h2>
+                        <h2>Для: {1} {2}</h2>
+                        <h2>Дата заказа: {3}</h2>
+                        <h2>Комментарий: {4}</h2>
+                        </html>", device.Name.Name, model.Name, model.Email, DateTime.Now.ToShortDateString(), model.Comment);
+                htmlView = AlternateView.CreateAlternateViewFromString(cont, null, "text/html");
+                mail.AlternateViews.Clear();
+                mail.AlternateViews.Add(htmlView);
+                client.Send(mail);
+
             }
             catch (Exception e) //post failure
             {
