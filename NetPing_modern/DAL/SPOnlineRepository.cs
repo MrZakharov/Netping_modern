@@ -1009,6 +1009,29 @@ namespace NetPing.DAL
             }
         }
 
+        private void ReadHTMLInjection()
+        {
+            var _context = new ClientContext("https://netpingeastcoltd.sharepoint.com/dev/");
+            _context.Credentials = new SharePointOnlineCredentials(_config.SPSettings.Login, _config.SPSettings.Password.ToSecureString());
+            _context.ExecuteQuery();
+            var list = _context.Web.Lists.GetByTitle("HTML_injection");
+            CamlQuery camlquery = new CamlQuery();
+
+            camlquery.ViewXml = NetPing_modern.Resources.Camls.Caml_HTMLInjection;
+            var items = list.GetItems(camlquery);
+            _context.Load(list);
+            _context.Load(items);
+            _context.ExecuteQuery();
+
+            foreach(var item in items)
+            {
+                var title = item["Title"];
+                var page = item["Page"];
+                var section = item["Section"];
+                var html = item["HTML"];
+            }
+        }
+
         #region SharePoint Context
 
 

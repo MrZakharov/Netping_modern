@@ -198,6 +198,7 @@
     <Compile Include="Mappers\DefaultMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\PostViewModelMapper.cs" />
+    <Compile Include="Models\HTMLInjection.cs" />
     <Compile Include="Models\ProductsModel.cs" />
     <Compile Include="Models\SectionModel.cs" />
     <Compile Include="Resources\Views\Blog\Faq.Designer.cs">
