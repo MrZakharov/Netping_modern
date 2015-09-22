@@ -56,8 +56,8 @@
         if (data.length == 0) return;
         var fio = $("#FIOK").val().trim();
         var email = $("#emailK").val().trim();
-        var comment = $("#commentK").val().trim();
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var address = $("#addressK").val().trim();
         var isvalid = true;
         if (!regex.test(email)) {
             isvalid = false;
@@ -67,13 +67,23 @@
             isvalid = false;
             $("#FIOK").addClass('invalid');
         }
+        if (address.length == 0) {
+            isvalid = false;
+            $("#addressK").addClass('invalid');
+        }
         if (!isvalid)
             return;
+        var requisites = $("#requisites").val();
+        var phone = $("#phone").val().trim();
+        var shipping = $("input:radio[name=shipping]:checked").val();
         var requestData = {
             Name: fio,
             EMail: email,
-            Comment: comment,
-            Data: data
+            Address: address,
+            Requisites: requisites,
+            Shipping: shipping,
+            Data: data,
+            Phone: phone
         };
 
         $('#cartPopup').append('<div id="cart-preloader" class="cart-preloader"></div>');

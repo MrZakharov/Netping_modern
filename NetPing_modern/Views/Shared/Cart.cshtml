@@ -35,6 +35,7 @@
 <div id="cartPopup">
     <input type="button" class="btn btn-info remove left" id="backCartButton" value="@Cart.Back" style="display: none;" />
     <input type="button" class="btn btn-primary accept right" id="continueCartButton" value="@Cart.Checkout" />
+    <input type="button" class="btn btn-primary accept right" id="sendDataCartButton" value="@Cart.Done" style="display: none;" />
     <input type="button" class="btn btn-info accept left" id="closeCartButton" value="@Cart.ContinueShopping" />
     <div class="clear"></div>
     <div id="cartCost"><span class="subtotal">@Cart.Subtotal</span> <span id="cartCostValue"> </span>@Cart.Currency</div>
@@ -45,16 +46,14 @@
             <h2>@Cart.OrderData</h2>
             <input type="text" id="FIOK" placeholder="@Cart.FullName" />
             <input type="text" id="emailK" placeholder="@Cart.EMail" />
-            <textarea id="commentK" placeholder="@Cart.Comment"></textarea>
-            @*<input type="text" id="addressK" placeholder="@Cart.ShippingAddress" />
+            <input type="text" id="addressK" placeholder="@Cart.ShippingAddress" />
             <input type="text" id="phone" placeholder="@Cart.Phone" />
-            <input type="text" id="requisites" placeholder="@Cart.InvoiceDetails" />*@
+            <input type="text" id="requisites" placeholder="@Cart.InvoiceDetails" />
             <div class="clear"></div>
-            @*<h2>@Cart.DeliveryMethod</h2>
+            <h2>@Cart.DeliveryMethod</h2>
             <label><input type="radio" value="ЕМС Почта России" name="shipping" checked="checked" />@Cart.EMSRussianPost</label>
             <label><input type="radio" value="Гарантпост" name="shipping" />@Cart.GarantPost</label>
-            <label><input type="radio" value="Самовывоз" name="shipping" />@Cart.SelfDelivery</label>*@
-            <input type="button" class="btn btn-primary accept right" id="sendDataCartButton" value="@Cart.Done" style="display: none;" />
+            <label><input type="radio" value="Самовывоз" name="shipping" />@Cart.SelfDelivery</label>
         </div>
     </div>
     <div id="cartItems" class="k1"></div>

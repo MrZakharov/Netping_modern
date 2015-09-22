@@ -408,6 +408,3 @@ C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\N
 C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Buy.ru.resources
 C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Partnership.ru.resources
 C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Support.ru.resources
-C:\Users\chipsergik\Documents\GitHub\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.dll
-C:\Users\chipsergik\Documents\GitHub\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.Runtime.dll
-C:\Users\chipsergik\Documents\GitHub\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.Taxonomy.dll

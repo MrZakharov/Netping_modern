@@ -133,7 +133,7 @@
     <value>Способ доставки</value>
   </data>
   <data name="Done" xml:space="preserve">
-    <value>Отправить заказ</value>
+    <value>Готово</value>
   </data>
   <data name="EMail" xml:space="preserve">
     <value>E-Mail</value>
@@ -184,9 +184,6 @@
     <value>Что-то пошло не так</value>
   </data>
   <data name="OrderSent" xml:space="preserve">
-    <value>Ваш предварительный заказ размещён!</value>
-  </data>
-  <data name="Comment" xml:space="preserve">
-    <value>Комментарий к заказу</value>
+    <value>Ваш заказ отправлен в обработку</value>
   </data>
 </root>
