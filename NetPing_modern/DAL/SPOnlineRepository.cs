@@ -1000,6 +1000,12 @@ namespace NetPing.DAL
                     binaryWrite.Serialize(streamWrite, model);
                     streamWrite.Close();
                 }
+                catch(DirectoryNotFoundException)
+                {
+                    var result = Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/"));
+                    if (result.Exists)
+                        PushUserGuideToCache(model);
+                }
                 catch (Exception ex)
                 {
                     if (streamWrite != null) streamWrite.Close();
