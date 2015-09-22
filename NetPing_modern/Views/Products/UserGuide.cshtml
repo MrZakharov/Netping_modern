@@ -9,6 +9,15 @@
 }
 @model NetPing_modern.ViewModels.UserManualViewModel
 
+@helper GetPrice(double? price)
+{
+    if (price != null && price > 0)
+    {
+        string str = string.Format(new CultureInfo(1035), "{0:N0}", price);
+        @str
+    }
+}
+
 @section Head_Css{
     <style>
         .container{
@@ -169,6 +178,19 @@
             margin-left: 0px;
         }
 
+        .square {
+            border-bottom: 2px solid #000000;
+            border-top: 2px solid #000000;
+            border-left: 2px solid #000000;
+            border-right: 2px solid #000000;
+            display: inline-block;
+            height: 0;
+            opacity: 0.3;
+            vertical-align: baseline;
+            width: 0;
+            margin-left: 0px;
+        }
+
         div.subMenu{
             margin-left: 25px;
         }
@@ -176,16 +198,100 @@
         img{
             width: 100%;
         }
+
+        .content_best_sales_description {
+            /*height: 129px;*/
+            margin-top: 20px;
+            background-image: url(/Content/Images/content_description.png);
+            background-repeat: no-repeat;
+            background-position: left;
+            padding-left: 160px;
+        }
+
+        .content_best_sales_description_a {
+            font-size: 18px;
+            color: #2f2f2f;
+            text-decoration: underline;
+        }
+
+        .content_best_sales_description_p {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #2f2f2f;
+        }
+
+        .content_best_sales_description_see {
+            color: #144e5a;
+            text-decoration: underline;
+            font-size: 18px;
+            font-style: italic;
+            margin-left: 453px;
+        }
+
+        .content_best_sales_description .price {
+            color: #eb6e0e;
+            font-size: 22px;
+        }
+
+        .deviceItem{
+            margin-left: 15px;
+        }
+        .guideItem{
+            margin-left: 30px;
+        } 
+        .pageItem{
+            margin-left: 45px;
+        } 
+        .subPageItem{
+            margin-left: 60px;
+        }
     </style>
 }
 
 <div class="container">
-    <div class="col-md-12">
+    <div class="col-md-12" id="breadcrump">
         NetPing > Документация > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
     </div>
     <div class="col-sm-4 col-md-3 col-lg-3">
         <div class="content_doc"><span>@Index.Title_doc</span></div>
-        @foreach (var item in Model.Pages)
+        @foreach (var sec in Model.Sections)
+        {
+            <div>
+                <a href="javascript:void(0)" class="sectionItem"><b class="right-caret"></b> @sec.Name</a>
+                @foreach(var device in sec.Devices)
+                {
+                    <div class="hidden">
+                        <a href="javascript:void(0)" class="deviceItem"><b class="right-caret"></b> @device.Name</a>
+                        @foreach (var guide in device.UserGuides)
+                        {
+                            <div class="hidden">
+                                <a href="@guide.Url" class="guideItem" id="@guide.Id"><b class="@(guide.Id == Model.ItemId ? "caret" : "right-caret")"></b> @guide.Title</a>
+                                @if (guide.Id == Model.ItemId)
+                                {
+                                    foreach(var page in Model.Pages)
+                                    { 
+                                        <div>
+                                            <a href="javascript:void(0)" class="pageItem"><b class="@(page.Pages.Any() ? "right-caret" : "square")"></b> @page.Title</a>
+                                            @if(page.Pages.Any())
+                                            {
+                                                foreach(var subPage in page.Pages)
+                                                {
+                                                    <div class="hidden">
+                                                        <a href="javascript:void(0)" class="subPageItem"><b class="square"></b> @subPage.Title</a>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        
+        @*@foreach (var item in Model.Pages)
         {
             <div>
                 <a href="javascript:void(0)" class="menuItem"><b class="right-caret"></b> @item.Title</a>
@@ -199,7 +305,7 @@
                 </div>
                 }
             </div>
-        }
+        }*@
     </div>
     <div class="col-sm-8 col-md-6 col-lg-6">
         <div class="header">
@@ -208,50 +314,191 @@
         <div class="docContent">
             @foreach (var page in Model.Pages)
             {
-                <a href="/UserGuide/@Model.Title.Replace("/", "")/@page.Title.Replace("/", "")/">@page.Title</a><br />
+                @*<a href="/UserGuide/@Model.Title.Replace("/", "")/@page.Title.Replace("/", "")/">@page.Title</a><br />*@
+                <a href="javascript:void(0)" class="pageItem">@page.Title</a><br />
             }
         </div>
     </div>
-    <div class="col-sm-4 col-md-3 col-lg-3">
+    <div class="col-sm-4 col-md-3 col-lg-3 hidden-sm">
         <div class="content_news">
             <div class="content_news_header">
                 <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
             </div>
         </div>
+        @{
+            int i = 0;
+            foreach (Post post in ViewBag.Posts)
+            {
+
+                if (NetpingHelpers.Helpers.IsCultureEng)
+                {
+                    <div class="content_news_latest_date @post.Category.OwnNameFromPath Eng">
+                        <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>
+                        <a class="content_news_latest_date_a" href="@post.Url_name">@post.Title</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="content_news_latest_date @post.Category.OwnNameFromPath">
+                        <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>
+                        <a class="content_news_latest_date_a" href="@post.Url_name">@post.Title</a>
+                    </div>
+                }
+
+                if (++i == 7)
+                {
+                    break;
+                }
+            }
+        }
         
         <div class="clear"></div>
         <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
+        @foreach (Device device in ViewBag.Devices)
+        {
+            <div class="content_best_sales_description" style="background-image: url(@device.GetCoverPhoto(false).Url);">
+                <a class="content_best_sales_description_a" href="@("/products/" + device.Url)">@device.Name.Name</a>
+                <p class="content_best_sales_description_p">
+
+                    @Html.Raw(device.Short_description.ToShortTextHTML("/products/" + device.Url))
+
+                    <br />
+                    Цена:
+                    <span class="price">@GetPrice(device.Price)&nbsp;@device.GetCurrency</span>
+                </p>
+            </div>
+        }
         <div class="clear"></div>
         <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
+    </div>
+    <div class="row col-sm-12 hidden-lg hidden-md hidden-xs">
+        <div class="col-sm-5">
+        <div class="content_news">
+            <div class="content_news_header">
+                <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
+            </div>
+        </div>
+        @{
+            int i1 = 0;
+            foreach (Post post in ViewBag.Posts)
+            {
+
+                if (NetpingHelpers.Helpers.IsCultureEng)
+                {
+                    <div class="content_news_latest_date @post.Category.OwnNameFromPath Eng">
+                        <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>
+                        <a class="content_news_latest_date_a" href="@post.Url_name">@post.Title</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="content_news_latest_date @post.Category.OwnNameFromPath">
+                        <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>
+                        <a class="content_news_latest_date_a" href="@post.Url_name">@post.Title</a>
+                    </div>
+                }
+
+                if (++i1 == 7)
+                {
+                    break;
+                }
+            }
+        }
+
+        </div>
+        <div class="col-sm-7">
+            <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
+            @foreach (Device device in ViewBag.Devices)
+            {
+                <div class="content_best_sales_description" style="background-image: url(@device.GetCoverPhoto(false).Url);">
+                    <a class="content_best_sales_description_a" href="@("/products/" + device.Url)">@device.Name.Name</a>
+                    <p class="content_best_sales_description_p">
+
+                        @Html.Raw(device.Short_description.ToShortTextHTML("/products/" + device.Url))
+
+                        <br />
+                        Цена:
+                        <span class="price">@GetPrice(device.Price)&nbsp;@device.GetCurrency</span>
+                    </p>
+                </div>
+            }
+            <div class="clear"></div>
+            <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
+        </div>
     </div>
 </div>
 
 @section scripts{
     <script type="text/javascript">
     $(document).ready(function () {
-        $('a.menuItem').click(function (e) {
-            $('div.subMenu').addClass('hidden');
-            $('b.caret').removeClass('caret').addClass('right-caret');
-            $(e.target).parent().children('div.hidden').removeClass('hidden');
-            $(e.target).children('b.right-caret').removeClass('right-caret').addClass('caret');
+        var breadcrumpMain = 'NetPing > @Index.Title_doc > ';
+        var sectionName = $('a#@Model.ItemId').parent().parent().parent().children('a').text();
+        var deviceName = $('a#@Model.ItemId').parent().parent().children('a').text();
+        breadcrumpMain += sectionName + ' > ' + deviceName + ' > ' + '@Model.Title';
+        $('#breadcrump').text(breadcrumpMain);
+
+        $('a#@Model.ItemId').parent().removeClass('hidden');
+        $('a#@Model.ItemId').parent().parent().removeClass('hidden');
+        $('a#@Model.ItemId').parent().parent().children('div.hidden').removeClass('hidden');
+
+        $('a.guideItem').click(function (e) {
+            if ($(e.target).parent().children('div').length > 0 && $(e.target).parent().children('div.hidden').length == 0) {
+                $(e.target).parent().children('div').addClass('hidden');
+                $(e.target).children('b').removeClass('caret').addClass('right-caret');
+
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+        $('a.sectionItem').click(function (e) {
+            openClose(e);
+        });
+
+        $('a.deviceItem').click(function (e) {
+            openClose(e);
+        });
+
+        $('a.pageItem').click(function (e) {
+            //if ($(e.target).parent().children('div.hidden').length == 0) {
+            //    $(e.target).parent().children('div').addClass('hidden');
+            //    $(e.target).children('b').removeClass('caret').addClass('right-caret');
+            //} else {
+            //    $('div.subPageItem').addClass('hidden');
+            //    $('b.caret').removeClass('caret').addClass('right-caret');
+            //    $(e.target).parent().children('div.hidden').removeClass('hidden');
+            //    $(e.target).children('b.right-caret').removeClass('right-caret').addClass('caret');
+            //}
+            openClose(e);
 
             var item = $.trim($(e.target).text());
-            var url = "/UserGuide/@Model.Title/" + item + "/";
-                $.get(url, null, function (data) {
-                    $('div.docContent').empty();
-                    $('div.docContent').append(data);
-                });
+            var url = "/UserGuide/@Model.Title.Replace("/", "")/" + item + "/";
+            $.get(url, null, function (data) {
+                $('div.docContent').empty();
+                $('div.docContent').append(data);
             });
+        });
 
-        $('a.subMenuItem').click(function (e) {
-            var item = $.trim($(e.target).parent().parent().parent().children('a.menuItem').text());
+        $('a.subPageItem').click(function (e) {
+            var item = $.trim($(e.target).parent().parent().children('a.pageItem').text());
             var subItem = $.trim($(e.target).text());
-            var url = "/GetSubPage/@Model.Title/" + item + "/" + subItem + "/";
+            var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
             $.get(url, null, function (data) {
                 $('div.docContent').empty();
                 $('div.docContent').append(data);
             });
         });
     });
-    </script>
+
+    function openClose(e) {
+        if ($(e.target).parent().children('div.hidden').length == 0) {
+            $(e.target).parent().children('div').addClass('hidden');
+            $(e.target).children('b').removeClass('caret').addClass('right-caret');
+        } else {
+            $('b.caret').removeClass('caret').addClass('right-caret');
+            $(e.target).parent().children('div.hidden').removeClass('hidden');
+            $(e.target).children('b.right-caret').removeClass('right-caret').addClass('caret');
+        }
+    }
+</script>
 }

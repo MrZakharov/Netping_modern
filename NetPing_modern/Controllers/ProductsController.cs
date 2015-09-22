@@ -11,6 +11,7 @@ using System;
 using System.Globalization;
 using System.Runtime.Serialization.Formatters.Binary;
 using NetPing_modern.DAL.Model;
+using Microsoft.SharePoint.Client;
 
 namespace NetPing_modern.Controllers
 {
@@ -183,7 +184,50 @@ namespace NetPing_modern.Controllers
 
         public ActionResult UserGuide(string id, string page)
         {
+            ViewBag.Posts = NetpingHelpers.Helpers.GetTopPosts();
+            ViewBag.Devices = NetpingHelpers.Helpers.GetNewDevices();
+
             string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+
+            var sections = NavigationProvider.GetAllSections();
+            var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
+
+            var secs = new List<UserManualSectionViewModel>();
+            foreach(var section in sections)
+            {
+                var group = _repository.Devices.FirstOrDefault(d => d.Url == section.Url);
+                if(group != null)
+                {
+                    var devsList = new List<UserManualDeviceViewModel>();
+                    var devs = devices.Where(d => d.Name.IsUnderOther(group.Name));
+                    foreach(var device in devs)
+                    {
+                        var guides = new List<UserManualFiles>();
+                        foreach(var guide in device.SFiles.Where(um => um.File_type.OwnNameFromPath == "User guide"))
+                        {
+                            guides.Add(new UserManualFiles
+                                {
+                                    Title = guide.Title,
+                                    Url = guide.Url,
+                                    Id = guide.Id,
+                                    Name = guide.Name
+                                });
+                        }
+
+                        devsList.Add(new UserManualDeviceViewModel
+                        {
+                            Name = device.Name.Name,
+                            UserGuides = guides
+                        });
+                    }
+
+                    secs.Add(new UserManualSectionViewModel
+                        {
+                            Name = section.FormattedTitle,
+                            Devices = devsList
+                        });
+                }
+            }
 
             UserManualViewModel model = null;
             if(System.IO.File.Exists(file_name))
@@ -198,14 +242,17 @@ namespace NetPing_modern.Controllers
                     {
                         Id = guide.Id,
                         Title = guide.Title,
-                        Pages = guide.Pages.OrderBy(p => p.Title, new NaturalComparer(CultureInfo.CurrentCulture))
+                        Name = guide.Name,
+                        Pages = guide.Pages.OrderBy(p => p.Title, new NaturalComparer(CultureInfo.CurrentCulture)),
+                        Sections = secs,
+                        ItemId = guide.ItemId
                     };
 
                     if (string.IsNullOrEmpty(page))
                         return View("~/Views/Products/UserGuide.cshtml", model);
                     else
                     {
-                        var m = guide.Pages.SingleOrDefault(p => p.Title == page);
+                        var m = guide.Pages.SingleOrDefault(p => p.Title.Contains(page));
                         Session["page"] = m;
                         return View("~/Views/Products/UserGuidePage.cshtml", m);
                     }
@@ -244,7 +291,7 @@ namespace NetPing_modern.Controllers
                 BinaryFormatter binaryWrite = new BinaryFormatter();
                 var guide = binaryWrite.Deserialize(stream) as UserManualModel;
                 var pg = guide.Pages.SingleOrDefault(p => p.Title == page);
-                model = pg.Pages.SingleOrDefault(p => p.Title == subPage);
+                model = pg.Pages.SingleOrDefault(p => p.Title.Contains(subPage));
 
                 return View("~/Views/Products/UserGuidePage.cshtml", model);
             }

@@ -473,7 +473,7 @@ namespace NetPing.DAL
                     var contentId = confluenceClient.GetContentIdFromUrl(fileUrl);
                     if(contentId.HasValue)
                     {
-                        var content = confluenceClient.GetUserManual(contentId.Value);
+                        var content = confluenceClient.GetUserManual(contentId.Value, item.Id);
                         PushUserGuideToCache(content);
                         //TODO: Save url to file as Url param
                         //var url = new UrlHelper().Action("UserGuide", "Products", new { id = contentId.Value });

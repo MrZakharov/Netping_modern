@@ -272,9 +272,10 @@ namespace NetPing_modern.Services.Confluence
             return null;
         }
 
-        public UserManualModel GetUserManual(int id)
+        public UserManualModel GetUserManual(int id, int itemId)
         {
             var userManual = new UserManualModel();
+            userManual.ItemId = itemId;
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
             var handler = new HttpClientHandler { Credentials = credential };
             using (var client = new HttpClient(handler))
