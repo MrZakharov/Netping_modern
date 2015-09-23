@@ -272,9 +272,10 @@ namespace NetPing_modern.Services.Confluence
             return null;
         }
 
-        public UserManualModel GetUserManual(int id)
+        public UserManualModel GetUserManual(int id, int itemId)
         {
             var userManual = new UserManualModel();
+            userManual.ItemId = itemId;
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
             var handler = new HttpClientHandler { Credentials = credential };
             using (var client = new HttpClient(handler))
@@ -294,7 +295,7 @@ namespace NetPing_modern.Services.Confluence
                     if(results.id != null && !string.IsNullOrEmpty(results.title.Value))
                     {
                         userManual.Id = int.Parse(results.id.Value);
-                        userManual.Title = results.title.Value;
+                        userManual.Title = (results.title.Value as string).Replace(".", "");
                         userManual.Pages = GetUserManualPages(userManual.Id);
                     }
                 }
@@ -329,7 +330,7 @@ namespace NetPing_modern.Services.Confluence
                            foreach(var result in results.results)
                            {
                                var pageId = int.Parse(result.id.Value);
-                               var pageTitle = result.title.Value;
+                               var pageTitle = (result.title.Value as string).Replace(".", "");
                                var subPages = new List<PageModel>();
                                var pageContent = string.Empty;
                                if (IsTreePage(pageId))

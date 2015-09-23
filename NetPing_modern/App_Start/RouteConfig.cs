@@ -96,6 +96,13 @@ namespace NetPing
             );
 
             routes.MapRoute(
+                name: "UserGuideSubPage",
+                url: "GetSubPage/{id}/{page}/{subPage}",
+                defaults: new { controller = "Products", action = "GetSubPage" },
+                constraints: new { controller = "Products" }
+            );
+
+            routes.MapRoute(
                 name: "UserGuidePage",
                 url: "page/{page}/{subPage}",
                 defaults: new { controller = "Products", action = "UserGuideSubPage", page = UrlParameter.Optional, subPage = UrlParameter.Optional },
