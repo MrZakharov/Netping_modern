@@ -135,7 +135,6 @@ button.compare:hover{
 
 #cartPopup {
     position: absolute;
-    right: 0;
     margin-top: 10px;
     display: none;
     background: #fff;
@@ -147,9 +146,8 @@ button.compare:hover{
     box-sizing: border-box;
 }
 
-div#cartPopup:after {
+div#cartPopup > .arrow {
     bottom: 100%;
-    left: 85%;
     border: solid transparent;
     content: " ";
     height: 0;
@@ -159,7 +157,6 @@ div#cartPopup:after {
     border-color: rgba(96, 175, 110, 0);
     border-bottom-color: #60af6e;
     border-width: 14px;
-    margin-left: -14px;
 }
 
 div#cartPopup .closePopup {

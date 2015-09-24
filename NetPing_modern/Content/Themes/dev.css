@@ -8,136 +8,115 @@ body {
     font: 14px sans-serif;
 }
 
-/* слегка доработанный, универсальный clearfix хак */
-
-.clearfix:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-}
-
-.clearfix {
-    display: inline-block;
-}
-
-/* start commented backslash hack \*/
-
-* html .clearfix {
-    height: 1%;
-}
-
-.clearfix {
-    display: block;
-}
-
-/* close commented backslash hack */
 
 #wrapper1 {
     margin-right: 20px;
 }
 
-.page {
+.content {
     /*float: left;*/
     max-width: 1260px;
     min-width: 800px;
     margin: 0px auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #fff;
 }
 
-    /*content*/
-    .page .main .content {
-        margin-bottom: 50px;
-        padding-left: 10px;
-        padding-right: 10px;
-        background-color: #fff;
-    }
+.development li {
+    list-style: initial;
+    list-style-position: inside;
+}
 
-        .page .main .content a {
-            /*color: #4ab27d;*/
-        }
 
-    .page .main .title {
-        font-size: 18px;
-        font-weight: 700;
-        text-align: center;
+.content a {
+    /*color: #4ab27d;*/
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    background-color: #eb6e0e;
+    padding: 8px 0;
+    margin: 8px -10px;
+}
+
+    .title h1 {
+        margin-top: 8px;
+        font-size: 30px;
+        margin-bottom: 0;
         color: #fff;
-        background-color: #eb6e0e;
-        padding: 8px 0;
-        margin: 8px -10px;
     }
 
-        .page .main .title h1 {
-            margin-top: 8px;
-            font-size: 30px;
+.steps {
+    background-color: #bddfc1;
+    margin: 0 -10px;
+    margin-bottom: 8px;
+}
+
+    .steps li {
+        float: left;
+        width: 33.3333%;
+        text-align: center;
+        font-size: 18px;
+        padding: 12px 0 8px 0;
+        position: relative;
+        height: 44px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+        .steps li:nth-child(1) {
+            text-align: right;
+            color: #144e5a;
+            padding-right: 30px;
         }
 
-    .page .main .steps {
-        background-color: #bddfc1;
-        margin: 0 -10px;
-        margin-bottom: 8px;
-    }
+        .steps li.done:after {
+            content: "";
+            background: url("../Images/check.png");
+            display: inline-block;
+            height: 16px;
+            width: 19px;
+            margin-left: 15px;
+            vertical-align: middle;
+        }
 
-        .page .main .steps li {
-            float: left;
-            width: 33.3333%;
-            text-align: center;
-            font-size: 18px;
-            padding: 12px 0 8px 0;
-            position: relative;
+        .steps li:nth-child(2) {
+            background-color: #208e35;
+            color: #fff;
+        }
+
+            .steps li:nth-child(2):before {
+                content: "";
+                background: url("../Images/step2_left.png");
+                width: 38px;
+                height: 44px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+        .steps li:nth-child(3):before {
+            content: "";
+            background: url("../Images/step2_right.png");
+            width: 38px;
             height: 44px;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: -38px;
         }
 
-            .page .main .steps li:nth-child(1) {
-                text-align: right;
-                color: #144e5a;
-                padding-right: 30px;
-            }
-
-                .page .main .steps li:nth-child(1):after {
-                    content: "";
-                    background: url("../Images/check.png");
-                    display: inline-block;
-                    height: 16px;
-                    width: 19px;
-                    margin-left: 15px;
-                    vertical-align: middle;
-                }
-
-            .page .main .steps li:nth-child(2) {
-                background-color: #208e35;
-                color: #fff;
-            }
-
-                .page .main .steps li:nth-child(2):before {
-                    content: "";
-                    background: url("../Images/step2_left.png");
-                    width: 38px;
-                    height: 44px;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                }
-
-                .page .main .steps li:nth-child(2):after {
-                    content: "";
-                    background: url("../Images/step2_right.png");
-                    width: 38px;
-                    height: 44px;
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                }
-
-            .page .main .steps li:nth-child(3) {
-                text-align: left;
-                color: #9a9a9a;
-                padding-left: 40px;
-            }
+        .steps li:nth-child(3) {
+            text-align: left;
+            color: #9a9a9a;
+            padding-left: 40px;
+        }
 
 .smalImageSize {
     width: 48px;
@@ -251,7 +230,7 @@ body {
         color: #bddfc1;
     }
 
-.page .main .preorder-invite {
+.preorder-invite {
     font-size: 16px;
     line-height: 2em;
     background: #144e5a;
@@ -260,13 +239,13 @@ body {
     color: #fff;
 }
 
-.page .main .preorder {
+.preorder {
     background: #e5f8e4;
     margin: 0 -10px 20px;
     padding: 15px 0;
 }
 
-    .page .main .preorder .preorder-text {
+    .preorder .preorder-text {
         margin: 0 20px 0 50px;
         color: #144e5a;
         float: left;
@@ -275,13 +254,13 @@ body {
         font-weight: 700;
     }
 
-        .page .main .preorder .preorder-text span {
+        .preorder .preorder-text span {
             color: #eb6e0e;
             font-weight: 700;
         }
 
 
-    .page .main .preorder .preorder-form {
+    .preorder .preorder-form {
         background: #eb6e0e;
         color: #fff;
         float: left;
@@ -291,7 +270,7 @@ body {
         font-size: 14px;
     }
 
-        .page .main .preorder .preorder-form form {
+        .preorder .preorder-form form {
             width: 100%;
             margin: 8px 0 0;
             padding: 0 5px;
@@ -300,7 +279,7 @@ body {
             box-sizing: border-box;
         }
 
-            .page .main .preorder .preorder-form form input[type="text"], .page .main .preorder .preorder-form form input[type="email"] {
+            .preorder .preorder-form form input[type="text"], .preorder .preorder-form form input[type="email"], .preorder .preorder-form textarea {
                 width: 100%;
                 margin: 0 0 5px 0;
                 -moz-box-sizing: border-box;
@@ -309,13 +288,34 @@ body {
                 font-size: 12px;
                 padding: 6px 10px;
                 border: none;
+                resize: none;
+                color: #000;
             }
 
-        .page .main .preorder .preorder-form .preorder-email {
+            .preorder .preorder-form form input.input-validation-error {
+                border: 1px solid #f00;
+            }
+
+        .preorder .preorder-form .preorder-submit {
+            width: 100%;
+            display: block;
+            background: #144e5a;
+            border: none;
+            margin-bottom: 4px;
+            padding: 8px 0;
+        }
+
+        .preorder .preorder-form .message {
+            margin: 4px 0;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .preorder .preorder-form .preorder-email {
             position: relative;
         }
 
-        .page .main .preorder .preorder-form .subscribe_image {
+        .preorder .preorder-form .subscribe_image {
             vertical-align: middle;
             position: absolute;
             right: 10px;
@@ -323,31 +323,32 @@ body {
             margin-top: -11px;
         }
 
-    .page .main .preorder .preorder-text .preorder-price {
+    .preorder .preorder-text .preorder-price {
         text-align: center;
         margin: 12px 0;
         font-weight: 700;
+        white-space: nowrap;
     }
 
-        .page .main .preorder .preorder-text .preorder-price div {
+        .preorder .preorder-text .preorder-price div {
             vertical-align: middle;
             display: inline-block;
         }
 
 
-    .page .main .preorder .preorder-text .preorder-price-old {
+    .preorder .preorder-text .preorder-price-old {
         font-size: 36px;
         text-decoration: line-through;
     }
 
-    .page .main .preorder .preorder-text .preorder-price-new {
+    .preorder .preorder-text .preorder-price-new {
         text-decoration: none;
         font-size: 30px;
         color: #eb6e0e;
         margin-left: 15px;
     }
 
-    .page .main .preorder .preorder-text .preorder-only-for {
+    .preorder .preorder-text .preorder-only-for {
         text-align: center;
         font-size: 14px;
         color: #000;
@@ -459,7 +460,9 @@ body {
         }
 
         .content .tabs-desc .tab-c.longdescription h2 {
-            margin: 10px 0;
+            margin-top: 1em;
+            margin-bottom: 0.8em;
+            font-size: 30px;
         }
 
 .content .comments-invite {
@@ -470,6 +473,19 @@ body {
     font-weight: 700;
 }
 
-.page .main .footer_left {
-    background-image: none;
+img.confluence-embedded-image.image-center {
+    text-align: center;
+    margin: 0 auto;
+    display: block;
 }
+
+.text.development > p:first-child > strong {
+    /*display: inline-block;*/
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+    .text.development > p:first-child > strong a {
+        font-size: 18px;
+        font-weight: 700;
+    }

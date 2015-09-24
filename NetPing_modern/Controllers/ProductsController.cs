@@ -61,6 +61,8 @@ namespace NetPing_modern.Controllers
 
             if (device == null) return Redirect("/products");  // if key incorrect go to /products
 
+            if (device.Name.Path.Contains("Development")) return Device_in_development(device);
+
             //Create list of connected devices
             var connected_devices = device.Connected_devices.Select(d => _repository.Devices.Where(dv => dv.Name == d).FirstOrDefault()).ToList();
             ViewBag.Connected_devices_accessuars = connected_devices.Where(d => d != null && !d.Name.Path.Contains("Sensors")).ToList();
@@ -79,7 +81,7 @@ namespace NetPing_modern.Controllers
             ViewBag.Title = device.Name.Name;
             ViewBag.Description = device.Name.Name;
             ViewBag.Keywords = device.Name.Name;
-            return View("Device_view", device);
+            return View("Adaptive_device_view", device);
         }
 
         public ActionResult Solutions()
@@ -111,9 +113,41 @@ namespace NetPing_modern.Controllers
             return View("Adaptive_Index", model);
         }
 
+        public ActionResult Device_in_development(Device device)
+        {
+            ViewBag.Title = device.Name.Name;
+            ViewBag.Description = device.Name.Name;
+            ViewBag.Keywords = device.Name.Name;
+
+            ViewBag.Parameter_groups = _repository.TermsDeviceParameters.Where(par => par.Level == 0).ToList();
+            ViewBag.Files_groups = _repository.TermsFileTypes.Where(type => type.Level == 0).ToList();
+
+            ViewBag.Step = device.Label.OwnNameFromPath;
+
+            return View("Dev", device);
+        }
+
+        public ActionResult Development()
+        {
+            var devices = _repository.Devices.Where(d => !d.Name.IsGroup() && d.Name.Path.Contains("Development"));
+
+            var model = new ProductsModel
+            {
+                ActiveSection =
+                             NavigationProvider.GetAllSections().FirstOrDefault(m => m.Url == "development")
+            };
+
+            ViewBag.Title = ViewBag.Description = ViewBag.Keywords = model.ActiveSection.FormattedTitle;
+
+            model.Devices = devices;
+
+            return View("Adaptive_Index", model);
+        }
+
         public ActionResult Index(string group, string id)
         {
-            var devices = _repository.Devices.Where(d => !d.Name.IsGroup() && !d.IsInArchive);
+            var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
+            var groups = _repository.Devices.Where(d => d.Name.IsGroup());
             if (group == null) return HttpNotFound();
             var g = _repository.Devices.FirstOrDefault(d => d.Url == @group);
             if (g != null)
@@ -121,17 +155,18 @@ namespace NetPing_modern.Controllers
                 if (!g.Name.IsGroup()) return Device_view(group);  // Open device page
                 devices = devices.Where(d => !d.Name.IsGroup() && d.Name.IsUnderOther(g.Name));
             }
-            else { return HttpNotFound(); }
+            else
+            { return HttpNotFound(); }
 
             ViewBag.Title = g.Name.Name;
             ViewBag.Description = g.Name.Name;
             ViewBag.Keywords = g.Name.Name;
 
             var model = new ProductsModel
-                        {
-                            ActiveSection =
-                                NavigationProvider.GetAllSections().First(m => m.Url == @group)
-                        };
+            {
+                ActiveSection =
+                                NavigationProvider.GetAllSections().FirstOrDefault(m => m.Url == @group)
+            };
 
 
             if (!string.IsNullOrEmpty(id))
@@ -152,7 +187,7 @@ namespace NetPing_modern.Controllers
             {
                 model.ActiveSection.Sections.First().IsSelected = true;
             }
-            model.Devices = devices;
+            model.Devices = devices.Where(d => !d.IsInArchive);
             model.ActiveSection.IsSelected = true;
             var sections = NavigationProvider.GetAllSections().Where(m => m.Url != model.ActiveSection.Url);
             sections.ForEach(m => model.Sections.Add(m));
@@ -165,7 +200,7 @@ namespace NetPing_modern.Controllers
 
         public ActionResult Archive()
         {
-            var devices = _repository.Devices.Where(d => !d.Name.IsGroup() && d.IsInArchive);
+            var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
 
             var model = new ProductsModel
                         {
@@ -177,7 +212,7 @@ namespace NetPing_modern.Controllers
                                     Description = NetPing_modern.Resources.Views.Catalog.Index.Sec_archive_desc
                                 }
                         };
-            model.Devices = devices;
+            model.Devices = devices.Where(d => d.IsInArchive);
 
             return View(model);
         }
@@ -299,4 +334,5 @@ namespace NetPing_modern.Controllers
             return new EmptyResult();
         }
     }
+
 }

@@ -404,3 +404,23 @@ C:\Users\panchenko.TST\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\
 C:\Users\panchenko.TST\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\ru\NetPing_modern.resources.dll
 C:\Users\panchenko.TST\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.dll
 C:\Users\panchenko.TST\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.pdb
+<<<<<<< HEAD
+=======
+C:\Users\chipsergik\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Catalog.Dev.ru.resources
+C:\Users\chipsergik\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Catalog.Dev.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\bin\Base32.dll
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Blog.Faq.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Blog.News.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Blog.Tutorial.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Catalog.Dev.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Buy.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Partnership.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Support.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Blog.Faq.ru.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Blog.News.ru.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Blog.Tutorial.ru.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.Catalog.Dev.ru.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Buy.ru.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Partnership.ru.resources
+C:\Users\Сергей\Documents\GitHub\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.Resources.Views.InnerPages.Support.ru.resources
+>>>>>>> master

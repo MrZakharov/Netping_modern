@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <UseGlobalApplicationHostFile />
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -170,6 +171,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\InnerPagesController.cs" />
     <Compile Include="Controllers\MainPageController.cs" />
+    <Compile Include="Controllers\PreorderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\Product_itemController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
@@ -200,6 +202,7 @@
     <Compile Include="Mappers\DefaultMapper.cs" />
     <Compile Include="Mappers\IMapper.cs" />
     <Compile Include="Mappers\PostViewModelMapper.cs" />
+    <Compile Include="Models\PreorderModel.cs" />
     <Compile Include="Models\ProductsModel.cs" />
     <Compile Include="Models\SectionModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -231,6 +234,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Tutorial.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\Catalog\Dev.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dev.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\Catalog\Dev.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dev.ru.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Views\Error\ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -588,7 +601,7 @@
     <Content Include="Content\JavaScript\slider1.js" />
     <Content Include="Content\Themes\adaptive-header-footer.css" />
     <Content Include="Content\Themes\adaptive.css" />
-    <Content Include="Content\Themes\adaptive_master.css" />
+    <Content Include="Content\Themes\dev.css" />
     <Content Include="Content\Themes\blog.css" />
     <Content Include="Content\Themes\bootstrap\bootstrap-theme.css" />
     <Content Include="Content\Themes\bootstrap\bootstrap-theme.min.css" />
@@ -598,6 +611,7 @@
     <Content Include="Content\JavaScript\slider1.js" />
     <Content Include="Content\Themes\base.css" />
     <Content Include="Content\Themes\cart\cart.css" />
+    <Content Include="Content\Themes\catalog\device.css" />
     <Content Include="Content\Themes\catalog\style.en.css" />
     <Content Include="Content\Themes\CatalogPageStyle.css" />
     <Content Include="Content\Themes\catalog\style.css" />
@@ -636,9 +650,15 @@
     </None>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="yandex_582f0c5a998f9328.txt" />
     <None Include="Properties\PublishProfiles\Local public.pubxml" />
@@ -652,16 +672,19 @@
     <Content Include="Views\Products\UserGuides.cshtml" />
     <Content Include="Views\InnerPages\UCacheAsync.cshtml" />
     <Content Include="Views\Shared\Adaptive_master.cshtml" />
-    <Content Include="Views\InnerPages\Dev.cshtml" />
+    <Content Include="Views\Products\Dev.cshtml" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Shared\Adaptive-Footer.cshtml" />
     <Content Include="Views\Shared\Adaptive-Header.cshtml" />
     <Content Include="Views\Products\Adaptive_Index.cshtml" />
     <Content Include="Views\InnerPages\UCacheAsync.cshtml" />
+    <Content Include="Views\Products\Adaptive_device_view.cshtml" />
     <Content Include="Views\Products\Archive.cshtml" />
     <Content Include="Views\Products\UserGuide.cshtml" />
     <Content Include="Views\Products\UserGuidePage.cshtml" />
     <Content Include="Views\Shared\_UserGuideMenu.cshtml" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Views\Shared\PreorderForm.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -696,6 +719,7 @@
     <Folder Include="Pub\Files\" />
     <Folder Include="Pub\Photos\" />
     <Folder Include="Views\Cart\" />
+    <Folder Include="Views\Preorder\" />
     <Folder Include="Views\Product_item\" />
   </ItemGroup>
   <ItemGroup>
@@ -753,12 +777,20 @@
       <LastGenOutput>Compare.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Catalog\Compare.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Catalog\Dev.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dev.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Catalog\Index.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Catalog\Index.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Catalog\Dev.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dev.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Error\ErrorMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>

@@ -1,0 +1,36 @@
+﻿@model NetPing_modern.Models.PreorderModel
+@using NetPing_modern.Resources.Views.Catalog;
+
+@{
+    TempData["Device"] = Model.Device;
+}
+
+<div class="message"> @ViewData["Message"]</div>
+
+@using (Ajax.BeginForm("SubmitPreorder", "Preorder", new { }, new AjaxOptions
+{
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "Post",
+    UpdateTargetId = "preorder-form",
+    Url = Url.Action("SubmitPreorderAjax", "Preorder"),
+    OnSuccess = "SuccessFunction"
+}, new { id = "preorder-form" }))
+{
+    @Html.TextBoxFor(model => Model.Name, new { placeholder = Dev.Preorder_form_name_placeholder })
+    @*<input type="text" name="name" placeholder="@Dev.Preorder_form_name_placeholder" />*@
+    <div class="preorder-email">
+        @Html.TextBoxFor(model => Model.Email, new { placeholder = Dev.Preorder_form_email_placeholder })
+        @*<input type="email" name="email" placeholder="@Dev.Preorder_form_email_placeholder" />*@
+    </div>
+    @Html.TextAreaFor(model => Model.Comment, new { placeholder = Dev.Preorder_form_comment_placeholder, rows = 3 })
+    @*<textarea name="comment" placeholder="@Dev.Preorder_form_comment_placeholder" rows="3"></textarea>*@
+    <input type="submit" value="@Dev.Preorder_form_submit" class="preorder-submit" />
+}
+
+<script>
+    function SuccessFunction() {
+        alert("@ViewData["Message"]");
+        $('#preorder-form').find("input[type=text], textarea").val("");
+    }
+</script>
+

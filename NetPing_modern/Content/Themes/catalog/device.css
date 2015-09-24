@@ -1,0 +1,225 @@
+﻿.device-catalog-item {
+    max-width: 1280px;
+    margin: auto;
+}
+
+.device-catalog-item-menu-icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    background: center center no-repeat no-repeat;
+}
+
+    .device-catalog-item-menu-icon.description {
+        background-image: url('../../Images/icons/description.png');
+    }
+
+    .device-catalog-item-menu-icon.usage {
+        background-image: url('../../Images/icons/usage.png');
+    }
+
+    .device-catalog-item-menu-icon.files {
+        background-image: url('../../Images/icons/popular.png');
+    }
+
+    .device-catalog-item-menu-icon.specs {
+        background-image: url('../../Images/icons/specs.png');
+    }
+
+    .device-catalog-item-menu-icon.connected-device {
+        background-image: url('../../Images/icons/sensor.png');
+    }
+
+
+
+
+.device-catalog-item .breadcrumbs {
+    margin-bottom: 0;
+}
+
+.device-catalog-item .device-item-content p strong {
+    color: #144e5a;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.device-item-menu {
+    background-color: #93ebaa;
+    margin: 10px 0 20px;
+    text-align: center;
+}
+
+    .device-item-menu li {
+        display: inline-block;
+        margin: 12px;
+    }
+
+        .device-item-menu li a {
+            font-size: 18px;
+            line-height: 24px;
+            color: #144e5a;
+        }
+
+.device-catalog-item .thumb-image {
+    width: auto;
+    border: 1px solid #535353;
+    margin-bottom: 8px;
+}
+
+.connected-devices .connected-device {
+    border: 1px solid #535353;
+    margin-bottom: 15px;
+    height: 256px;
+    text-align: center;
+}
+
+    .connected-devices .connected-device img {
+        height: 100px;
+        width: auto;
+        display: block;
+        margin: 10px auto;
+    }
+
+    .connected-devices .connected-device a {
+        font-size: 16px;
+        color: #144e5a;
+        width: 90%;
+        text-decoration: underline;
+        display: block;
+        margin: 0 auto;
+        height: 65px;
+    }
+
+.device-catalog-item .main-info .device-item-buttons {
+    text-align: right;
+}
+
+.device-catalog-item .device-item-buttons .price {
+    display: inline-block;
+    font-size: 24px;
+    line-height: 37px;
+}
+
+.device-catalog-item .device-item-buttons .to-cart {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+    .device-catalog-item .device-item-buttons .to-cart .btn.counter {
+        padding: 0;
+    }
+
+.device-catalog-item .device-item-buttons .buy-button {
+    font-size: 18px;
+    font-weight: 400;
+    width: auto;
+}
+
+.long-description a {
+    font-size: inherit;
+    color: inherit;
+}
+
+.long-description li {
+    list-style-image: url('../../Images/icons/li-closed.png');
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.long-description img {
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+}
+
+.long-description h2, .long-description h3{
+    font-size: 18px;
+}
+
+.parameters .t-title, .files .t-title {
+    background: #e6f8e5;
+    font-size: 16px;
+    color: #144e5a;
+    font-weight: 700;
+    margin: 15px -15px 0;
+    padding: 2px 15px;
+}
+
+.parameters table {
+    margin: auto -15px;
+}
+
+    .parameters table tbody tr th, .parameters table tbody tr td {
+        border-top: 0;
+        border-bottom: 1px solid #a0a0a0;
+        vertical-align: middle;
+    }
+
+    .parameters table tbody tr td {
+        padding: 15px 40px;
+        color: #ff0000;
+    }
+
+    .parameters table tbody tr th {
+        padding: 15px 15px;
+        width: 40%;
+        font-weight: 400;
+        color: #144e5a;
+        font-size: 14px;
+        border-right: 1px solid #a0a0a0;
+    }
+
+.files .t-title {
+    margin-bottom: 15px;
+}
+
+
+.files .file {
+    line-height: 29px;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 10px 0;
+    display: block;
+}
+
+    .files .file:before {
+        content: " ";
+        width: 23px;
+        height: 29px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 12px;
+    }
+
+    .files .file.doc:before {
+        background-image: url('../../Images/icons/file-doc.png');
+    }
+
+.usage ul li {
+    list-style-image: url('../../Images/icons/li-closed.png');
+    margin: .3em 15px;
+}
+
+    .usage ul li a {
+        font-weight: 700;
+        font-size: 14px;
+    }
+
+.rslides_nav.rslides1_nav.prev, .rslides_nav.rslides1_nav.next {
+    display: none;
+}
+
+.rslides_tabs li, rslides li{
+    list-style: none !important;
+}
+
+.floating-menu{
+    position: fixed;
+    top: 0;
+    left:0;
+    right:0;
+    z-index:2;
+    margin: 0;
+}
