@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using NetPing.DAL;
+using NetPing_modern.Controllers;
 
 namespace NetPing.Controllers
 {
-    public class MainPageController : Controller
+    public class MainPageController : BaseController
     {
         private readonly IRepository _repository;
 

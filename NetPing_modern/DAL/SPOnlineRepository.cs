@@ -1009,27 +1009,67 @@ namespace NetPing.DAL
             }
         }
 
-        private void ReadHTMLInjection()
+        //private IEnumerable<HTMLInjection> _htmlInjections;
+        public IEnumerable<HTMLInjection> HtmlInjections
         {
-            var _context = new ClientContext("https://netpingeastcoltd.sharepoint.com/dev/");
-            _context.Credentials = new SharePointOnlineCredentials(_config.SPSettings.Login, _config.SPSettings.Password.ToSecureString());
-            _context.ExecuteQuery();
-            var list = _context.Web.Lists.GetByTitle("HTML_injection");
-            CamlQuery camlquery = new CamlQuery();
+            get
+            {
+                var _htmlInjections = HttpRuntime.Cache.Get("HtmlInjection");
 
-            camlquery.ViewXml = NetPing_modern.Resources.Camls.Caml_HTMLInjection;
-            var items = list.GetItems(camlquery);
-            _context.Load(list);
-            _context.Load(items);
-            _context.ExecuteQuery();
+                if (_htmlInjections == null)
+                {
+                    _htmlInjections = ReadHTMLInjection();
+                    HttpRuntime.Cache.Insert("HtmlInjection", _htmlInjections, new TimerCacheDependency());
+                }
 
+                return _htmlInjections as IEnumerable<HTMLInjection>;
+            }
+        }
+
+        private IEnumerable<HTMLInjection> ReadHTMLInjection()
+        {
+            //var _context = new ClientContext("https://netpingeastcoltd.sharepoint.com/dev/");
+            //_context.Credentials = new SharePointOnlineCredentials(_config.SPSettings.Login, _config.SPSettings.Password.ToSecureString());
+            //_context.ExecuteQuery();
+            //var list = _context.Web.Lists.GetByTitle("HTML_injection");
+            //CamlQuery camlquery = new CamlQuery();
+
+            //camlquery.ViewXml = NetPing_modern.Resources.Camls.Caml_HTMLInjection;
+            //var items = list.GetItems(camlquery);
+            //_context.Load(list);
+            //_context.Load(items);
+            //_context.ExecuteQuery();
+
+            var items = ReadSPList("HTML_injection", NetPing_modern.Resources.Camls.Caml_HTMLInjection);
+
+            var list = new List<HTMLInjection>();
             foreach(var item in items)
             {
-                var title = item["Title"];
-                var page = item["Page"];
-                var section = item["Section"];
-                var html = item["HTML"];
+                list.Add(new HTMLInjection
+                    {
+                        HTML = item["HTML"].ToString(),
+                        Page = item["Page"].ToString(),
+                        Section = item["Section"].ToString(),
+                        Title = item["Title"].ToString(),
+                    });
             }
+
+            return list;
+
+            //foreach(var item in items)
+            //{
+            //    var title = item["Title"];
+            //    var page = item["Page"];
+            //    var section = item["Section"];
+            //    var html = item["HTML"];
+
+
+            //}
+        }
+
+        public string GetHtmlInjectionForPage(string name, string page, string section = "Head")
+        {
+            return HtmlInjections.FirstOrDefault(x => x.Title == name && x.Page == page && x.Section == section).HTML;
         }
 
         #region SharePoint Context
