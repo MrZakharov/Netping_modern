@@ -460,18 +460,11 @@
         });
 
         $('a.pageItem').click(function (e) {
-            //if ($(e.target).parent().children('div.hidden').length == 0) {
-            //    $(e.target).parent().children('div').addClass('hidden');
-            //    $(e.target).children('b').removeClass('caret').addClass('right-caret');
-            //} else {
-            //    $('div.subPageItem').addClass('hidden');
-            //    $('b.caret').removeClass('caret').addClass('right-caret');
-            //    $(e.target).parent().children('div.hidden').removeClass('hidden');
-            //    $(e.target).children('b.right-caret').removeClass('right-caret').addClass('caret');
-            //}
             openClose(e);
 
-            var item = $.trim($(e.target).text());
+            var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+            var item = $.trim($(target).text());
             var url = "/UserGuide/@Model.Title.Replace("/", "")/" + item + "/";
             $.get(url, null, function (data) {
                 $('div.docContent').empty();
@@ -480,8 +473,10 @@
         });
 
         $('a.subPageItem').click(function (e) {
-            var item = $.trim($(e.target).parent().parent().children('a.pageItem').text());
-            var subItem = $.trim($(e.target).text());
+            var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+            var item = $.trim($(target).parent().parent().children('a.pageItem').text());
+            var subItem = $.trim($(target).text());
             var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
             $.get(url, null, function (data) {
                 $('div.docContent').empty();
@@ -491,13 +486,15 @@
     });
 
     function openClose(e) {
-        if ($(e.target).parent().children('div.hidden').length == 0) {
-            $(e.target).parent().children('div').addClass('hidden');
-            $(e.target).children('b').removeClass('caret').addClass('right-caret');
+        var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+        if ($(target).parent().children('div.hidden').length == 0) {
+            $(target).parent().children('div').addClass('hidden');
+            $(target).children('b').removeClass('caret').addClass('right-caret');
         } else {
-            $('b.caret').removeClass('caret').addClass('right-caret');
-            $(e.target).parent().children('div.hidden').removeClass('hidden');
-            $(e.target).children('b.right-caret').removeClass('right-caret').addClass('caret');
+            //$('b.caret').removeClass('caret').addClass('right-caret');
+            $(target).parent().children('div.hidden').removeClass('hidden');
+            $(target).children('b.right-caret').removeClass('right-caret').addClass('caret');
         }
     }
 </script>
