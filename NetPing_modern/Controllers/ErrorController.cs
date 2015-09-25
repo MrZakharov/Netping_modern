@@ -2,7 +2,7 @@
 
 namespace NetPing_modern.Controllers
 {
-    public class ErrorController : Controller
+    public class ErrorController : BaseController
     {
         public ViewResult NotFound()
         {

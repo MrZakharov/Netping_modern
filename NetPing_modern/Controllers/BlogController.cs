@@ -11,7 +11,7 @@ using System.Resources;
 
 namespace NetPing_modern.Controllers
 {
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
         private readonly IRepository _repository;
         private readonly IMapper<Post, PostViewModel> _postMapper;

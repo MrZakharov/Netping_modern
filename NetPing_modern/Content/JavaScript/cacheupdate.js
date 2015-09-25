@@ -36,7 +36,7 @@ function updateInvoke(itemId) {
         success: function (response) {
             $('#' + operationName).text('Task ' + operationName
             + " completed with message: " + response);
-            if (++itemId < taskNames.length)
+            if (response == "OK" && ++itemId < taskNames.length)
                 updateInvoke(itemId);
             else
             {
