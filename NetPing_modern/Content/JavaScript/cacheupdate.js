@@ -12,7 +12,8 @@
     "SFiles",
     "Posts",
     "Devices",
-    "GenerateYml"
+    "GenerateYml",
+    "PushAll"
 ];
 
 $(document).ready(function () {
