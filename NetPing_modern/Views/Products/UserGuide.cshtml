@@ -440,6 +440,7 @@
         $('a#@Model.ItemId').parent().removeClass('hidden');
         $('a#@Model.ItemId').parent().parent().removeClass('hidden');
         $('a#@Model.ItemId').parent().parent().children('div.hidden').removeClass('hidden');
+        $('a#@Model.ItemId').parent().parent().parent().children('div.hidden').removeClass('hidden');
 
         $('a.guideItem').click(function (e) {
             if ($(e.target).parent().children('div').length > 0 && $(e.target).parent().children('div.hidden').length == 0) {
@@ -491,6 +492,7 @@
         if ($(target).parent().children('div.hidden').length == 0) {
             $(target).parent().children('div').addClass('hidden');
             $(target).children('b').removeClass('caret').addClass('right-caret');
+            $(target).parent().parent().children('div.hidden').removeClass('hidden');
         } else {
             //$('b.caret').removeClass('caret').addClass('right-caret');
             $(target).parent().children('div.hidden').removeClass('hidden');
