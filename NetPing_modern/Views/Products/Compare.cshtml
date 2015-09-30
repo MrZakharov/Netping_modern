@@ -43,7 +43,7 @@
             });
         });
     </script>
-    @Html.GoogleAnalytics()
+    @Html.Raw(ViewBag.HeadInjections)
 </head>
 <body>
     <div class="page">
@@ -166,5 +166,6 @@
         </div>
     </div>
     @RenderPage("../Shared/Cart.cshtml")
+    @Html.Raw(ViewBag.BodyInjections)
 </body>
 </html>

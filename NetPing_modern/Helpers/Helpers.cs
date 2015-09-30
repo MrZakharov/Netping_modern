@@ -17,6 +17,14 @@ namespace NetpingHelpers
 {
     public static class Helpers
     {
+        public static IEnumerable<HTMLInjection> GetHtmlInjections(IRepository repository = null)
+        {
+            if(repository == null)
+                repository = new SPOnlineRepository(new ConfluenceClient(new Config()));
+
+            return repository.HtmlInjections;
+        }
+
         public static IEnumerable<Device> GetNewDevices()
         {
             // should be removed

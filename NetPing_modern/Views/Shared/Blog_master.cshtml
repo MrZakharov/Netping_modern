@@ -70,6 +70,7 @@
     @Html.GoogleAnalytics()
     @RenderSection("Head_Css", false)
     @RenderSection("Head", false)
+    @Html.Raw(ViewBag.HeadInjections)
 </head>
 <body>
 <div class="header_background">
@@ -206,5 +207,6 @@
 
     </div>
 </div>
+    @Html.Raw(ViewBag.BodyInjections)
 </body>
 </html>

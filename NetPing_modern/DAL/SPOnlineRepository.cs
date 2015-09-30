@@ -649,69 +649,84 @@ namespace NetPing.DAL
 
         public string UpdateAllAsync(string name)
         {
-            IEnumerable<SPTerm> terms, termsDeviceParameters, termsFileTypes, termsCategories, termsDestinations, termsLabels;
-            IEnumerable<Post> posts;
-            IEnumerable<SFile> sFiles;
-            IEnumerable<DevicePhoto> devicePhotos;
-            IEnumerable<DeviceParameter> devicesParameters;
+            IEnumerable<SPTerm> terms = null, termsDeviceParameters = null, termsFileTypes = null, termsCategories = null, termsDestinations = null, termsLabels = null;
+            IEnumerable<Post> posts = null;
+            IEnumerable<SFile> sFiles = null;
+            IEnumerable<DevicePhoto> devicePhotos = null;
+            IEnumerable<DeviceParameter> devicesParameters = null;
+            IEnumerable<PubFiles> pubFiles = null;
+            IEnumerable<Device> devices = null;
+            IEnumerable<SiteText> siteTexts = null;
 
             switch (name)
             {
                 case "TermsFileTypes":
                     termsFileTypes = TermsFileTypes_Read();
-                    PushToCache("TermsFileTypes", termsFileTypes);
+                    HttpRuntime.Cache.Insert("TermsFileTypes", termsFileTypes);
+                    //PushToCache("TermsFileTypes", termsFileTypes);
                     break;
                 case "Terms":
                     terms = Terms_Read();
-                    PushToCache("Terms", terms);
+                    HttpRuntime.Cache.Insert("Terms", terms);
+                    //PushToCache("Terms", terms);
                     break;
                 case "SiteTexts":
-                    var siteTexts = SiteTexts_Read();
-                    PushToCache("SiteTexts", siteTexts);
+                    siteTexts = SiteTexts_Read();
+                    HttpRuntime.Cache.Insert("SiteTexts", siteTexts);
+                    //PushToCache("SiteTexts", siteTexts);
                     break;
                 case "TermsLabels":
                     termsLabels = TermsLabels_Read();
-                    PushToCache("TermsLabels", termsLabels);
+                    HttpRuntime.Cache.Insert("TermsLabels", termsLabels);
+                    //PushToCache("TermsLabels", termsLabels);
                     break;
                 case "TermsDeviceParameters":
                     termsDeviceParameters = TermsDeviceParameters_Read();
-                    PushToCache("TermsDeviceParameters", termsDeviceParameters);
+                    HttpRuntime.Cache.Insert("TermsDeviceParameters", termsDeviceParameters);
+                    //PushToCache("TermsDeviceParameters", termsDeviceParameters);
                     break;
                 case "TermsCategories":
                     termsCategories = TermsCategories_Read();
-                    PushToCache(TermsCategoriesCacheName, termsCategories);
+                    HttpRuntime.Cache.Insert("TermsCategories", termsCategories);
+                    //PushToCache(TermsCategoriesCacheName, termsCategories);
                     break;
                 case "TermsDestinations":
                     termsDestinations = TermsDestinations_Read();
-                    PushToCache("TermsDestinations", termsDestinations);
+                    HttpRuntime.Cache.Insert("TermsDestinations", termsDestinations);
+                    //PushToCache("TermsDestinations", termsDestinations);
                     break;
                 case "DevicesParameters":
                     terms = Terms;
                     termsDeviceParameters = TermsDeviceParameters;
                     devicesParameters = DevicesParameters_Read(termsDeviceParameters, terms);
-                    PushToCache("DevicesParameters", devicesParameters);
+                    HttpRuntime.Cache.Insert("DevicesParameters", devicesParameters);
+                    //PushToCache("DevicesParameters", devicesParameters);
                     break;
                 case "DevicePhotos":
                     terms = Terms;
                     devicePhotos = DevicePhotos_Read(terms);
-                    PushToCache("DevicePhotos", devicePhotos);
+                    HttpRuntime.Cache.Insert("DevicePhotos", devicePhotos);
+                    //PushToCache("DevicePhotos", devicePhotos);
                     break;
                 case "PubFiles":
                     termsFileTypes = TermsFileTypes;
-                    var pubFiles = PubFiles_Read(termsFileTypes);
-                    PushToCache("PubFiles", pubFiles);
+                    pubFiles = PubFiles_Read(termsFileTypes);
+                    HttpRuntime.Cache.Insert("PubFiles", pubFiles);
+                    //PushToCache("PubFiles", pubFiles);
                     break;
                 case "SFiles":
                     terms = Terms;
                     termsFileTypes = TermsFileTypes;
                     sFiles = SFiles_Read(termsFileTypes, terms);
-                    PushToCache("SFiles", sFiles);
+                    HttpRuntime.Cache.Insert("SFiles", sFiles);
+                    //PushToCache("SFiles", sFiles);
                     break;
                 case "Posts":
                     terms = Terms;
                     termsCategories = TermsCategories;
                     posts = Posts_Read(terms, termsCategories);
-                    PushToCache("Posts", posts);
+                    HttpRuntime.Cache.Insert("Posts", posts);
+                    //PushToCache("Posts", posts);
                     break;
                 case "Devices":
                     terms = Terms;
@@ -724,8 +739,9 @@ namespace NetPing.DAL
                     devicesParameters = DevicesParameters;
                     termsDestinations = TermsDestinations;
                     termsLabels = TermsLabels;
-                    var devices = Devices_Read(posts, sFiles, devicePhotos, devicesParameters, terms, termsDestinations, termsLabels);
-                    PushToCache("Devices", devices);
+                    devices = Devices_Read(posts, sFiles, devicePhotos, devicesParameters, terms, termsDestinations, termsLabels);
+                    HttpRuntime.Cache.Insert("Devices", devices);
+                    //PushToCache("Devices", devices);
                     break;
                 case "GenerateYml":
                     if (Helpers.IsCultureRus)
@@ -733,6 +749,21 @@ namespace NetPing.DAL
                         //   GeneratePriceList();
                         GenerateYml();
                     }
+                    break;
+                case "PushAll":
+                    PushToCache("TermsFileTypes", TermsFileTypes);
+                    PushToCache("Terms", Terms);
+                    PushToCache("SiteTexts", SiteTexts);
+                    PushToCache("TermsLabels", TermsLabels);
+                    PushToCache("TermsDeviceParameters", TermsDeviceParameters);
+                    PushToCache(TermsCategoriesCacheName, TermsCategories);
+                    PushToCache("TermsDestinations", TermsDestinations);
+                    PushToCache("DevicesParameters", DevicesParameters);
+                    PushToCache("DevicePhotos", DevicePhotos);
+                    PushToCache("PubFiles", PubFiles);
+                    PushToCache("SFiles", SFiles);
+                    PushToCache("Posts", Posts);
+                    PushToCache("Devices", Devices);
                     break;
                 default:
                     return "404";
@@ -1008,6 +1039,69 @@ namespace NetPing.DAL
             {
                 BuildTree(dev.AddChild(child), list);
             }
+        }
+
+        //private IEnumerable<HTMLInjection> _htmlInjections;
+        public IEnumerable<HTMLInjection> HtmlInjections
+        {
+            get
+            {
+                var _htmlInjections = HttpRuntime.Cache.Get("HtmlInjection");
+
+                if (_htmlInjections == null)
+                {
+                    _htmlInjections = ReadHTMLInjection();
+                    HttpRuntime.Cache.Insert("HtmlInjection", _htmlInjections, new TimerCacheDependency());
+                }
+
+                return _htmlInjections as IEnumerable<HTMLInjection>;
+            }
+        }
+
+        private IEnumerable<HTMLInjection> ReadHTMLInjection()
+        {
+            //var _context = new ClientContext("https://netpingeastcoltd.sharepoint.com/dev/");
+            //_context.Credentials = new SharePointOnlineCredentials(_config.SPSettings.Login, _config.SPSettings.Password.ToSecureString());
+            //_context.ExecuteQuery();
+            //var list = _context.Web.Lists.GetByTitle("HTML_injection");
+            //CamlQuery camlquery = new CamlQuery();
+
+            //camlquery.ViewXml = NetPing_modern.Resources.Camls.Caml_HTMLInjection;
+            //var items = list.GetItems(camlquery);
+            //_context.Load(list);
+            //_context.Load(items);
+            //_context.ExecuteQuery();
+
+            var items = ReadSPList("HTML_injection", NetPing_modern.Resources.Camls.Caml_HTMLInjection);
+
+            var list = new List<HTMLInjection>();
+            foreach(var item in items)
+            {
+                list.Add(new HTMLInjection
+                    {
+                        HTML = item["HTML"].ToString(),
+                        Page = item["Page"].ToString(),
+                        Section = item["Section"].ToString(),
+                        Title = item["Title"].ToString(),
+                    });
+            }
+
+            return list;
+
+            //foreach(var item in items)
+            //{
+            //    var title = item["Title"];
+            //    var page = item["Page"];
+            //    var section = item["Section"];
+            //    var html = item["HTML"];
+
+
+            //}
+        }
+
+        public string GetHtmlInjectionForPage(string name, string page, string section = "Head")
+        {
+            return HtmlInjections.FirstOrDefault(x => x.Title == name && x.Page == page && x.Section == section).HTML;
         }
 
         #region SharePoint Context
