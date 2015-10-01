@@ -193,7 +193,7 @@
     <value>Продукты</value>
   </data>
   <data name="Logo_Title" xml:space="preserve">
-    <value>Устройства мониторинга серверных комнат и удаленного управления электропитанием</value>
+    <value>Устройства мониторинга серверных комнат&lt;br /&gt;и удаленного управления электропитанием</value>
   </data>
   <data name="Dev" xml:space="preserve">
     <value>Разрабатываемые устройства</value>

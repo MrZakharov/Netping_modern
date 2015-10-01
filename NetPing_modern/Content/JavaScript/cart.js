@@ -82,13 +82,13 @@
             return;
         var requisites = $("#requisites").val();
         var phone = $("#phone").val().trim();
-        var shipping = $("input:radio[name=shipping]:checked").val();
+        //var shipping = $("input:radio[name=shipping]:checked").val();
         var requestData = {
             Name: fio,
             EMail: email,
             Address: address,
             Requisites: requisites,
-            Shipping: shipping,
+            //Shipping: shipping,
             Data: data,
             Phone: phone
         };
