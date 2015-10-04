@@ -240,21 +240,21 @@
             margin-left: 30px;
         } 
         .pageItem{
-            margin-left: 45px;
+            /*margin-left: 45px;*/
         } 
         .subPageItem{
-            margin-left: 60px;
+            /*margin-left: 60px;*/
         }
     </style>
 }
 
 <div class="container">
     <div class="col-md-12" id="breadcrump">
-        NetPing > Документация > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
+        <a href="/">NetPing</a> > Документация > <a href="/products/@Model.Section.Url">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
     </div>
     <div class="col-sm-4 col-md-3 col-lg-3">
         <div class="content_doc"><span>@Index.Title_doc</span></div>
-        @foreach (var sec in Model.Sections)
+        @*@foreach (var sec in Model.Sections)
         {
             <div>
                 <a href="javascript:void(0)" class="sectionItem"><b class="right-caret"></b> @sec.Name</a>
@@ -289,23 +289,23 @@
                     </div>
                 }
             </div>
-        }
+        }*@
         
-        @*@foreach (var item in Model.Pages)
+        @foreach (var item in Model.Pages)
         {
             <div>
-                <a href="javascript:void(0)" class="menuItem"><b class="right-caret"></b> @item.Title</a>
+                <a href="javascript:void(0)" class="pageItem"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title</a>
                 @if(item.Pages != null && item.Pages.Any())
                 {
                 <div class="hidden subMenu">
                     @foreach (var subItem in item.Pages)
                     {
-                        <div><a href="javascript:void(0)" class="subMenuItem"><b class="right-caret"></b> @subItem.Title</a></div>
+                        <div><a href="javascript:void(0)" class="subPageItem"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title</a></div>
                     }
                 </div>
                 }
             </div>
-        }*@
+        }
     </div>
     <div class="col-sm-8 col-md-6 col-lg-6">
         <div class="header">
@@ -435,7 +435,7 @@
         var sectionName = $('a#@Model.ItemId').parent().parent().parent().children('a').text();
         var deviceName = $('a#@Model.ItemId').parent().parent().children('a').text();
         breadcrumpMain += sectionName + ' > ' + deviceName + ' > ' + '@Model.Title';
-        $('#breadcrump').text(breadcrumpMain);
+        //$('#breadcrump').text(breadcrumpMain);
 
         $('a#@Model.ItemId').parent().removeClass('hidden');
         $('a#@Model.ItemId').parent().parent().removeClass('hidden');
@@ -476,8 +476,9 @@
         $('a.subPageItem').click(function (e) {
             var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
 
-            var item = $.trim($(target).parent().parent().children('a.pageItem').text());
-            var subItem = $.trim($(target).text());
+            //var item = $.trim($(target).parent().parent().children('a.pageItem').text());
+            var item = $.trim($(target).parent().parent().parent().children('a.pageItem').text()).replace('?', '');
+            var subItem = $.trim($(target).text()).replace('?', '');
             var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
             $.get(url, null, function (data) {
                 $('div.docContent').empty();

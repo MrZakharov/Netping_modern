@@ -295,7 +295,7 @@ namespace NetPing_modern.Services.Confluence
                     if(results.id != null && !string.IsNullOrEmpty(results.title.Value))
                     {
                         userManual.Id = int.Parse(results.id.Value);
-                        userManual.Title = (results.title.Value as string).Replace(".", "");
+                        userManual.Title = (results.title.Value as string).Replace(".", "%2E");
                         userManual.Pages = GetUserManualPages(userManual.Id);
                     }
                 }
@@ -330,7 +330,7 @@ namespace NetPing_modern.Services.Confluence
                            foreach(var result in results.results)
                            {
                                var pageId = int.Parse(result.id.Value);
-                               var pageTitle = (result.title.Value as string).Replace(".", "");
+                               var pageTitle = (result.title.Value as string).Replace(".", "%2E");
                                var subPages = new List<PageModel>();
                                var pageContent = string.Empty;
                                if (IsTreePage(pageId))

@@ -1,4 +1,6 @@
-﻿using NetPing_modern.DAL.Model;
+﻿using NetPing.Models;
+using NetPing_modern.DAL.Model;
+using NetPing_modern.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,9 @@ namespace NetPing_modern.ViewModels
         public string Title { get; set; }
         public IOrderedEnumerable<PageModel> Pages { get; set; }
 
-        public IEnumerable<UserManualSectionViewModel> Sections { get; set; }
+        //public IEnumerable<UserManualSectionViewModel> Sections { get; set; }
+        public Device Device { get; set; }
+        public SectionModel Section { get; set; }
     }
 
     public class UserManualSectionViewModel
