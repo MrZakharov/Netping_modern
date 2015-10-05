@@ -247,7 +247,11 @@ namespace NetPing_modern.Controllers
                         ItemId = guide.ItemId
                     };
 
-                    var device = devices.FirstOrDefault(d => d.SFiles.Any(f => id.Contains(f.Title)));
+                    Device device = null;
+                    if(model.ItemId > 0)
+                        device = devices.FirstOrDefault(d => d.SFiles.Any(sf => sf.Id == model.ItemId));
+                    else
+                        device = devices.FirstOrDefault(d => d.SFiles.Any(f => id.Contains(f.Title)));
                     var group = _repository.Devices.FirstOrDefault(d => d.Name.IsGroup() && d.Name.IsIncludeOther(device.Name) && !string.IsNullOrEmpty(d.Url));
                     var section = sections.FirstOrDefault(s => s.Url == group.Url);
 
