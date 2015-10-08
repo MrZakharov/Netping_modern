@@ -8,7 +8,7 @@
     @{
         foreach (SFile file in Model)
         {
-            <li><a href="@file.Url/" class="doc"><b>@file.Title.Replace(".docx", "").Replace(".doc", "")</b></a> </li>
+            <li><a href="@file.Url/" class="file doc"><b>@file.Title.Replace(".docx", "").Replace(".doc", "")</b></a> </li>
         }
     }
 </ul>
