@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="col-lg-7 col-md-12">
                     <h1>
@@ -312,11 +312,28 @@
             </div>
         </div>
     </div>
-    <ul class="device-item-menu col-xs-12 floating-menu" style="display:none;">
-        <li><a href="#description"><span class="device-catalog-item-menu-icon description"></span> Описание</a></li>
-        <li><a href="#specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</a></li>
-        <li><a href="#files"><span class="device-catalog-item-menu-icon files"></span> Документация и файлы</a></li>
-        <li><a href="#usage"><span class="device-catalog-item-menu-icon usage"></span> Примеры применения устройства</a></li>
-        <li><a href="#connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</a></li>
+
+    <div class="floating-menu" style="display:none;">
+        <div class="header contacts row"></div>
+        <div class="col-xs-12 breadcrumbs" style="background-color: #93ebaa; margin-top: 0px;"></div>
+        <ul class="device-item-menu col-xs-12" style="margin-top: 0px;">
+            <li><a href="#description"><span class="device-catalog-item-menu-icon description"></span> Описание</a></li>
+            <li><a href="#specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</a></li>
+            <li><a href="#files"><span class="device-catalog-item-menu-icon files"></span> Документация и файлы</a></li>
+            <li><a href="#usage"><span class="device-catalog-item-menu-icon usage"></span> Примеры применения устройства</a></li>
+            <li><a href="#connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</a></li>
+    </div>
     </ul>
 </div>
+
+@section scripts{
+<script type="text/javascript">
+    $(document).ready(function () {
+        var header = $($('div.header.contacts')[0]).html();
+        $($('div.header.contacts')[1]).html(header);
+
+        var breadcrumbs = $($('div.breadcrumbs')[0]).html();
+        $($('div.breadcrumbs')[1]).html(breadcrumbs);
+    });
+</script>
+}
