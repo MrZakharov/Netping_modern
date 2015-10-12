@@ -96,14 +96,18 @@
                             <ul id="slider3-pager">
                                 @foreach (DevicePhoto photo in Model.DevicePhotos.Where(p => !p.IsBig))
                                 {
-                                    <li><a href="#"><img class="thumb-image" src="@photo.Url" alt=""></a></li>
+                                    <li style="list-style: none;">
+                                        <a href="#"><img class="thumb-image" src="@photo.Url" alt=""></a>
+                                    </li>
                                 }
                             </ul>
                         </div>
                         <ul class="rslides col-sm-9" id="slider3">
                             @foreach (DevicePhoto photo in Model.DevicePhotos.Where(p => p.IsBig))
                             {
-                                <li><img class="bigImageSize" src="@photo.Url" alt="" title="" /></li>
+                                <li style="list-style: none;">
+                                    <img class="bigImageSize" src="@photo.Url" alt="" title="" />
+                                </li>
                             }
                         </ul>
                         <div class="device-item-buttons">
