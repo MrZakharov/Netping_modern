@@ -106,21 +106,22 @@
                                 <li><img class="bigImageSize" src="@photo.Url" alt="" title="" /></li>
                             }
                         </ul>
-                    </div>
-                    <div class="device-item-buttons">
-                        <div class="price">
-                            <span>@GetPrice(Model.Price)</span> @Model.GetCurrency
-                        </div>
-
-                        <div class="to-cart button-block text-right ">
-                            <input type="text" class="btn btn-info counter" data-device-id="@Model.Name.Id" value="1" />
-                            <div class="add-remove">
-                                <button data-device-id="@Model.Name.Id" class="btn btn-info count-button add">+</button>
-                                <button data-device-id="@Model.Name.Id" class="btn btn-info count-button remove">-</button>
+                        <div class="device-item-buttons">
+                            <div class="price">
+                                <span>@GetPrice(Model.Price)</span> @Model.GetCurrency
                             </div>
-                            <div @(Model.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@Model.Name.Id" class="btn btn-primary buy-button"></div>
+
+                            <div class="to-cart button-block text-right ">
+                                <input type="text" class="btn btn-info counter" data-device-id="@Model.Name.Id" value="1" />
+                                <div class="add-remove">
+                                    <button data-device-id="@Model.Name.Id" class="btn btn-info count-button add">+</button>
+                                    <button data-device-id="@Model.Name.Id" class="btn btn-info count-button remove">-</button>
+                                </div>
+                                <div @(Model.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@Model.Name.Id" class="btn btn-primary buy-button"></div>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
                 <div class="col-lg-7 col-md-12">
                     <h1>
