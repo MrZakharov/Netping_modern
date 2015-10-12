@@ -92,7 +92,7 @@
                         </p>
                     </div>
                     <div class="row">
-                        <div id="slider3-pager-nav" class="col-sm-3">
+                        <div id="slider3-pager-nav" class="col-sm-3 col-xs-3">
                             <ul id="slider3-pager">
                                 @foreach (DevicePhoto photo in Model.DevicePhotos.Where(p => !p.IsBig))
                                 {
@@ -102,7 +102,7 @@
                                 }
                             </ul>
                         </div>
-                        <ul class="rslides col-sm-9" id="slider3">
+                        <ul class="rslides col-sm-9 col-xs-9" id="slider3">
                             @foreach (DevicePhoto photo in Model.DevicePhotos.Where(p => p.IsBig))
                             {
                                 <li style="list-style: none;">
