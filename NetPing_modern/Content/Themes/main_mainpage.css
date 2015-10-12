@@ -43,14 +43,15 @@
     display: block;
     float: left;
     position: relative;
-    width: 100%;
+    width: 95%;
     height: 140px;
     background-image: url(../Images/present_left.png);
     background-repeat: no-repeat;
     background-position: left center;
     margin-top: 20px;
     min-width: 135px;
-    margin-left: 50px;
+    max-width: 552px;
+    margin-left: 40px;
 }
 
     .page .main .present_left:hover {
@@ -95,7 +96,7 @@
     font-style: italic;
     text-decoration: underline;
     position: absolute;
-    right: 80px;
+    right: 20px;
     font-weight: 700;
     bottom: 10px;
 }
