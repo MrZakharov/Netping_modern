@@ -40,25 +40,24 @@
     }
 }
 
-
-
-<div class="container-fluid device-catalog-item">
-
-    <div class="row">
-        <div class="col-xs-12 breadcrumbs">
-            <a href="/" class="root">@Index.Path_main</a>
-            >
-            <a href="@ViewBag.grp_url" class="node">
-                @ViewBag.grp_name
-            </a>
-            >
-            <a href="javascript:void(0)" class="page">
-                @Model.Name.Name
-            </a>
+<div>
+    <div class="row" style="margin-right: 0px;">
+        <div class="container-fluid device-catalog-item">
+            <div class="col-xs-12 breadcrumbs">
+                <a href="/" class="root">@Index.Path_main</a>
+                >
+                <a href="@ViewBag.grp_url" class="node">
+                    @ViewBag.grp_name
+                </a>
+                >
+                <a href="javascript:void(0)" class="page">
+                    @Model.Name.Name
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-right: 0px;">
         <ul class="device-item-menu col-xs-12">
             <li><a href="#description"><span class="device-catalog-item-menu-icon description"></span> Описание</a></li>
             <li><a href="#specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</a></li>
@@ -67,9 +66,12 @@
             <li><a href="#connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</a></li>
         </ul>
     </div>
+</div>
 
 
+<div class="container-fluid device-catalog-item">
 
+   
     <div class="row">
         <div class="col-xs-12">
             <div class="row" id="main-row">
