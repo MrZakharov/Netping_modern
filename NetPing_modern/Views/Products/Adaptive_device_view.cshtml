@@ -133,10 +133,35 @@
                     <h1>
                         @Model.Name.Name
                     </h1>
-                    <div class="device-item-content">
-                        @Html.Raw(Model.Short_description)
+                        <div class="device-item-content" style="padding: 0px">
+                            @{string className = "new";}
+                            @if (!String.IsNullOrWhiteSpace(Model.Label.Name))
+                            {
+                                switch (Model.Label.OwnNameFromPath)
+                                {
+                                    case "New":
+                                        {
+                                            className = "new";
+                                            break;
+                                        }
+                                    case "EOL":
+                                        {
+                                            className = "eol";
+                                            break;
+                                        }
+                                    case "Archive":
+                                        {
+                                            className = "archive";
+                                            break;
+                                        }
+                                }
+                                <span class="label label-@className">@Model.Label.Name</span>
+                            }
+                        </div>
+                        <div class="device-item-content">
+                            @Html.Raw(Model.Short_description)
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
