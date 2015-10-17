@@ -188,9 +188,16 @@
                             <div class="t-title">@grp.Name</div>
                             <div>
                                 <ul>
-                                    @foreach (SFile file in files.ToList())
+                                    @if (grp.OwnNameFromPath == "User guide")
                                     {
-                                        <li> <a rel="nofollow" target="_blank" href="@file.Url" class="file doc">@file.Name</a></li>
+                                        Html.RenderPartial("UserGuides", files);
+                                    }
+                                    else
+                                    { 
+                                        foreach (SFile file in files.ToList())
+                                        {
+                                            <li> <a rel="nofollow" target="_blank" href="@file.Url" class="file doc">@file.Name</a></li>
+                                        }
                                     }
                                 </ul>
                             </div>
