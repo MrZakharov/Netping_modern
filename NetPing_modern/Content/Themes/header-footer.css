@@ -433,3 +433,24 @@ padding-top: 13px;
         width: initial;
     }
 }
+
+.header .delivery-banner {
+    text-align: center;
+    color: #fff;
+    background: #fc5658;
+    display: inline-block;
+    padding: 2px 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.header .delivery-banner span {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+.main-header .delivery-banner{
+        margin-top:10px;
+        margin-right: -15px;
+    }
