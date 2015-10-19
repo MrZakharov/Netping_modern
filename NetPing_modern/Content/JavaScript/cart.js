@@ -92,8 +92,8 @@
             Data: data,
             Phone: phone
         };
-
-        $('#cartPopup').append('<div id="cart-preloader" class="cart-preloader"></div>');
+        
+        $('#cartPopup').append('<div id="cart-preloader" class="cart-preloader"><img style="margin: 0 10px;vertical-align: middle;" height=16 src="/Content/Images/preloader.gif" /> Формировние заказа...</div>');
 
         $.ajax({
             type: "POST",
