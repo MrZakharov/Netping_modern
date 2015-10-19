@@ -42,6 +42,7 @@
         $("#continueCartButton").hide();
         $("#closeCartButton").hide();
         $("#sendDataCartButton").show();
+        $("#sendDataCartButton2").show();
         $("#clearCartButton").hide();
         $("#backCartButton").show();
     })
@@ -49,11 +50,16 @@
     $("#backCartButton").click(function () {
         $("#continueCartButton").show();
         $("#sendDataCartButton").hide();
+        $("#sendDataCartButton2").hide();
         $("#clearCartButton").show();
         $("#closeCartButton").show();
         $("#backCartButton").hide();
         $("#cartAbout").hide();
         $("#cartItems").show();
+    })
+
+    $("#sendDataCartButton2").click(function () {
+        $("#sendDataCartButton").click();
     })
 
     $("#sendDataCartButton").click(function () {
