@@ -52,20 +52,22 @@
     <div class="main-header clearfix">
 
         <div class="logo-wrapper col-sm-12 col-md-5 col-lg-5">
-            <a class="logo col-md-6 col-sm-4 col-sm-offset-1 col-md-offset-0" href="/">
+            <a class="logo col-md-6 col-sm-4 col-sm-offset-2 col-md-offset-0" href="/">
                 <img src="~/Content/Images/logo_text.png" alt="Netping logo" />
             </a>
-            <div class="logo-text col-md-6 col-sm-5">
-               @Html.Raw(Header.Logo_Title)
+            <div class="logo-text col-md-6 col-sm-4">
+                <p>
+                    @Html.Raw(Header.Logo_Title)
+                </p>
             </div>
-            <div class="col-sm-3 text-right hidden-md hidden-lg">
+            <div class="col-sm-2 text-right hidden-md hidden-lg" style="width: 170px;">
                 <div class="delivery-banner">
                     Доставка по России<br />
                     <span>бесплатно</span>
                 </div>
             </div>
         </div>
-        <div class="nav col-xs-8 col-sm-8 col-md-5 col-lg-5">
+        <div class="nav col-xs-8 col-sm-8 col-md-6 col-lg-5">
             <ul>
                 <li class="nav_li">
                     <a class="@(Request.RawUrl.ToLower().Contains("/products") == true ? "nav_element active" : "nav_element")" href="/products/monitoring-servernoj">@Header.Products</a>
@@ -138,7 +140,7 @@
             </ul>
 
         </div>
-        <div class="search col-xs-4 col-sm-3 col-md-2 col-lg-2 pull-right top">
+        <div class="search col-xs-4 col-sm-4 col-md-2 col-lg-2 pull-right top">
             <form class="search" name="search" action="http://www.google.com/cse" target="_blank">
                 <input type="text" placeholder="Поиск по сайту" name="q" />
                 <input type="hidden" name="cx" value="006534849235046585456:eqktuqsoi58" />
