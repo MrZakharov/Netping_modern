@@ -209,11 +209,11 @@ function showPopup(container) {
         var itemName = itemTemplate.find(".shopItemName")[0];
         itemName.innerHTML = '<a href="/products/' + product.key + '">' + product.name + '</a>';
         var itemPrice = itemTemplate.find(".shopItemPrice")[0];
-        itemPrice.innerHTML = product.price;
+        itemPrice.innerHTML = product.price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");;
         var itemCount = itemTemplate.find(".shopItemCount")[0];
         itemCount.value = product.count;
         var itemPriceSum = itemTemplate.find(".shopItemPriceSum")[0];
-        itemPriceSum.innerHTML = parseInt(product.price) * parseInt(product.count);
+        itemPriceSum.innerHTML = (parseInt(product.price) * parseInt(product.count)).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");;
         cartPopup.append(itemTemplate);
         var itemCountAdd = itemTemplate.find(".add-one")[0];
         $(itemCountAdd).data("device-id", product.ID);
@@ -293,6 +293,9 @@ function showPopup(container) {
         for (i = 0; i < data.length; i++) {
             sum += data[i].price * data[i].count;
         }
+
+        sum = sum.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
+
         $('#cartCostValue')[0].innerHTML = sum;
     }
 
