@@ -23,7 +23,7 @@ namespace NetPing.Controllers
             
             ViewBag.Devices = NetpingHelpers.Helpers.GetNewDevices();
 
-
+            ViewBag.DevDevices = NetpingHelpers.Helpers.GetDevDevices();
             //Main page banners list
             
             // var banners = repository.pubfiles;
