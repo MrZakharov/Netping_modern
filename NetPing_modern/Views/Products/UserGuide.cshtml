@@ -283,11 +283,18 @@
             <h1>@Model.Title</h1>
         </div>
         <div class="docContent">
-            @foreach (var page in Model.Pages)
+            @if (string.IsNullOrEmpty(Model.Pages.FirstOrDefault().Content))
             {
-                @*<a href="/UserGuide/@Model.Title.Replace("/", "")/@page.Title.Replace("/", "")/">@page.Title</a><br />*@
-                <a href="javascript:void(0)" class="pageItem">@page.Title.Replace("%2E", ".")</a><br />
+                @Html.Raw(Model.Pages.FirstOrDefault().Pages.FirstOrDefault().Content)
             }
+            else
+            {
+                @Html.Raw(Model.Pages.FirstOrDefault().Content)
+            }
+            @*@foreach (var page in Model.Pages)
+            {
+                <a href="javascript:void(0)" class="pageItem">@page.Title.Replace("%2E", ".")</a><br />
+            }*@
         </div>
     </div>
     <div class="col-sm-4 col-md-3 col-lg-3 hidden-sm">
@@ -407,17 +414,12 @@
     $(document).ready(function () {
         if (location.hash != null && location.hash != '') {
             var id = parseInt(location.hash.replace("#", ""));
-            var e = new Object();
-            if (id > 100) {
-                e.target = $('a[data-item-id=' + id + ']').parent().parent().parent().children('a.pageItem')[0];
-                //pageItemClick(e);
-                openClose(e);
-                e.target = $('a[data-item-id=' + id + ']')[0];
-                subPageItemClick(e);
-            }
-
-            e.target = $('a[data-item-id=' + id + ']')[0];
-            pageItemClick(e);
+            openByDataItemId(id);
+        } else {
+            if ($('a[data-item-id=101]').length > 0)
+                openByDataItemId(101);
+            else
+                openByDataItemId(1);
         }
 
         $('body').on('click', 'a.pageItem', function () {
@@ -514,6 +516,20 @@
             initFancybox();
         });
     }
+
+        function openByDataItemId(id){
+            var e = new Object();
+            if (id > 100) {
+                e.target = $('a[data-item-id=' + id + ']').parent().parent().parent().children('a.pageItem')[0];
+                //pageItemClick(e);
+                openClose(e);
+                e.target = $('a[data-item-id=' + id + ']')[0];
+                subPageItemClick(e);
+            }
+
+            e.target = $('a[data-item-id=' + id + ']')[0];
+            pageItemClick(e);
+        }
 </script>
 <script type="text/javascript">
     function initFancybox() {
