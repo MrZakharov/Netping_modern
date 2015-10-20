@@ -258,16 +258,20 @@
     <div class="col-sm-4 col-md-3 col-lg-3">
         <div class="content_doc"><span>@Index.Title_doc</span></div>
         
+        @{var index = 0; int subIndex = 0;}
         @foreach (var item in Model.Pages)
         {
+            ++index;
+            subIndex = index * 100;
             <div>
-                <a href="javascript:void(0)" class="pageItem"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title.Replace("%2E", ".")</a>
+                <a href="javascript:void(0)" class="pageItem" data-item-id="@index"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title.Replace("%2E", ".")</a>
                 @if(item.Pages != null && item.Pages.Any())
                 {
                 <div class="hidden subMenu">
                     @foreach (var subItem in item.Pages)
                     {
-                        <div><a href="javascript:void(0)" class="subPageItem"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title.Replace("%2E", ".")</a></div>
+                        ++subIndex;
+                        <div><a href="javascript:void(0)" class="subPageItem" data-item-id="@subIndex"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title.Replace("%2E", ".")</a></div>
                     }
                 </div>
                 }
@@ -401,6 +405,25 @@
 <script src="~/Content/JavaScript/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
     <script type="text/javascript">
     $(document).ready(function () {
+        if (location.hash != null && location.hash != '') {
+            var id = parseInt(location.hash.replace("#", ""));
+            var e = new Object();
+            if (id > 100) {
+                e.target = $('a[data-item-id=' + id + ']').parent().parent().parent().children('a.pageItem')[0];
+                //pageItemClick(e);
+                openClose(e);
+                e.target = $('a[data-item-id=' + id + ']')[0];
+                subPageItemClick(e);
+            }
+
+            e.target = $('a[data-item-id=' + id + ']')[0];
+            pageItemClick(e);
+        }
+
+        $('body').on('click', 'a.pageItem', function () {
+            console.log('clicked');
+        });
+
         var breadcrumpMain = 'NetPing > @Index.Title_doc > ';
         var sectionName = $('a#@Model.ItemId').parent().parent().parent().children('a').text();
         var deviceName = $('a#@Model.ItemId').parent().parent().children('a').text();
@@ -431,34 +454,14 @@
         });
 
         $('a.pageItem').click(function (e) {
-            openClose(e);
-
-            var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
-
-            var item = $.trim($(target).text());
-            var url = "/UserGuide/@Model.Title.Replace("/", "")/" + item + "/";
-            $.get(url, null, function (data) {
-                $('div.docContent').empty();
-                $('div.docContent').append(data);
-
-                initFancybox();
-            });
+            pageItemClick(e);
         });
 
         $('a.subPageItem').click(function (e) {
-            var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
-
-            //var item = $.trim($(target).parent().parent().children('a.pageItem').text());
-            var item = $.trim($(target).parent().parent().parent().children('a.pageItem').text()).replace('?', '');
-            var subItem = $.trim($(target).text()).replace('?', '');
-            var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
-            $.get(url, null, function (data) {
-                $('div.docContent').empty();
-                $('div.docContent').append(data);
-
-                initFancybox();
-            });
+            subPageItemClick(e);
         });
+
+        
     });
 
     function openClose(e) {
@@ -473,6 +476,43 @@
             $(target).parent().children('div.hidden').removeClass('hidden');
             $(target).children('b.right-caret').removeClass('right-caret').addClass('caret');
         }
+    }
+
+    function pageItemClick(e) {
+        openClose(e);
+
+        var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+        var item = $.trim($(target).text());
+        var itemId = $(target).attr('data-item-id');
+        location.hash = itemId;
+
+        var url = "/UserGuide/@Model.Title.Replace("/", "")/" + item + "/";
+        $.get(url, null, function (data) {
+            $('div.docContent').empty();
+            $('div.docContent').append(data);
+
+            initFancybox();
+        });
+    }
+
+    function subPageItemClick(e) {
+        var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+        //var item = $.trim($(target).parent().parent().children('a.pageItem').text());
+        var item = $.trim($(target).parent().parent().parent().children('a.pageItem').text()).replace('?', '');
+        var subItem = $.trim($(target).text()).replace('?', '');
+
+        var itemId = $(target).attr('data-item-id');
+        location.hash = itemId;
+
+        var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
+        $.get(url, null, function (data) {
+            $('div.docContent').empty();
+            $('div.docContent').append(data);
+
+            initFancybox();
+        });
     }
 </script>
 <script type="text/javascript">
