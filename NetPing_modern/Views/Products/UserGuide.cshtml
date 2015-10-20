@@ -257,53 +257,17 @@
     </div>
     <div class="col-sm-4 col-md-3 col-lg-3">
         <div class="content_doc"><span>@Index.Title_doc</span></div>
-        @*@foreach (var sec in Model.Sections)
-        {
-            <div>
-                <a href="javascript:void(0)" class="sectionItem"><b class="right-caret"></b> @sec.Name</a>
-                @foreach(var device in sec.Devices)
-                {
-                    <div class="hidden">
-                        <a href="javascript:void(0)" class="deviceItem"><b class="right-caret"></b> @device.Name</a>
-                        @foreach (var guide in device.UserGuides)
-                        {
-                            <div class="hidden">
-                                <a href="@guide.Url" class="guideItem" id="@guide.Id"><b class="@(guide.Id == Model.ItemId ? "caret" : "right-caret")"></b> @guide.Title</a>
-                                @if (guide.Id == Model.ItemId)
-                                {
-                                    foreach(var page in Model.Pages)
-                                    { 
-                                        <div>
-                                            <a href="javascript:void(0)" class="pageItem"><b class="@(page.Pages.Any() ? "right-caret" : "square")"></b> @page.Title</a>
-                                            @if(page.Pages.Any())
-                                            {
-                                                foreach(var subPage in page.Pages)
-                                                {
-                                                    <div class="hidden">
-                                                        <a href="javascript:void(0)" class="subPageItem"><b class="square"></b> @subPage.Title</a>
-                                                    </div>
-                                                }
-                                            }
-                                        </div>
-                                    }
-                                }
-                            </div>
-                        }
-                    </div>
-                }
-            </div>
-        }*@
         
         @foreach (var item in Model.Pages)
         {
             <div>
-                <a href="javascript:void(0)" class="pageItem"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title</a>
+                <a href="javascript:void(0)" class="pageItem"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title.Replace("%2E", ".")</a>
                 @if(item.Pages != null && item.Pages.Any())
                 {
                 <div class="hidden subMenu">
                     @foreach (var subItem in item.Pages)
                     {
-                        <div><a href="javascript:void(0)" class="subPageItem"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title</a></div>
+                        <div><a href="javascript:void(0)" class="subPageItem"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title.Replace("%2E", ".")</a></div>
                     }
                 </div>
                 }
@@ -318,7 +282,7 @@
             @foreach (var page in Model.Pages)
             {
                 @*<a href="/UserGuide/@Model.Title.Replace("/", "")/@page.Title.Replace("/", "")/">@page.Title</a><br />*@
-                <a href="javascript:void(0)" class="pageItem">@page.Title</a><br />
+                <a href="javascript:void(0)" class="pageItem">@page.Title.Replace("%2E", ".")</a><br />
             }
         </div>
     </div>
