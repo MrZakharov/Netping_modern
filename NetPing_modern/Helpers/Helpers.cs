@@ -38,6 +38,15 @@ namespace NetpingHelpers
             return devices;
         }
 
+        public static IEnumerable<Device> GetDevDevices()
+        {
+            var repository = new SPOnlineRepository(new ConfluenceClient(new Config()));
+
+            var devices = repository.Devices.Where(d => !d.Name.IsGroup() && d.Name.Path.Contains("Development"));
+            devices = devices.OrderByDescending(dev => dev.Created);
+            return devices;
+        }
+
         public static IEnumerable<Post> GetTopPosts()
         {
             // should be removed
