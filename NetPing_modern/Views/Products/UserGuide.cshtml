@@ -255,7 +255,7 @@
     <div class="col-md-12" id="breadcrump">
         <a href="/">NetPing</a> > Документация > <a href="/products/@Model.Section.Url">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
     </div>
-    <div class="col-sm-4 col-md-3 col-lg-3">
+    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
         <div class="content_doc"><span>@Index.Title_doc</span></div>
         
         @{var index = 0; int subIndex = 0;}
@@ -278,7 +278,7 @@
             </div>
         }
     </div>
-    <div class="col-sm-8 col-md-6 col-lg-6">
+    <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6">
         <div class="header">
             <h1>@Model.Title</h1>
         </div>
@@ -297,7 +297,7 @@
             }*@
         </div>
     </div>
-    <div class="col-sm-4 col-md-3 col-lg-3 hidden-sm">
+    <div class="col-sm-4 col-md-3 col-lg-3 hidden-sm hidden-xs">
         <div class="content_news">
             <div class="content_news_header">
                 <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
@@ -349,8 +349,8 @@
         <div class="clear"></div>
         <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
     </div>
-    <div class="row col-sm-12 hidden-lg hidden-md hidden-xs">
-        <div class="col-sm-5">
+    <div class="row col-sm-12 col-xs-12 hidden-lg hidden-md">
+        <div class="col-sm-5 col-xs-5">
         <div class="content_news">
             <div class="content_news_header">
                 <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
@@ -384,7 +384,7 @@
         }
 
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-7 col-xs-7">
             <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
             @foreach (Device device in ViewBag.Devices)
             {
@@ -494,7 +494,7 @@
             $('div.docContent').empty();
             $('div.docContent').append(data);
 
-            initFancybox();
+            initDocContent();
         });
     }
 
@@ -513,7 +513,7 @@
             $('div.docContent').empty();
             $('div.docContent').append(data);
 
-            initFancybox();
+            initDocContent();
         });
     }
 
@@ -529,6 +529,12 @@
 
             e.target = $('a[data-item-id=' + id + ']')[0];
             pageItemClick(e);
+        }
+
+        function initDocContent() {
+            initFancybox();
+
+            $('div.docContent').find('li').css('list-style-image', 'url("/Content/Images/doc_li.png")');
         }
 </script>
 <script type="text/javascript">
