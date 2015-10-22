@@ -222,50 +222,13 @@ namespace NetPing_modern.Controllers
             ViewBag.Posts = NetpingHelpers.Helpers.GetTopPosts();
             ViewBag.Devices = NetpingHelpers.Helpers.GetNewDevices();
 
-            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
 
             var sections = NavigationProvider.GetAllSections();
             var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
 
-            //var secs = new List<UserManualSectionViewModel>();
-            //foreach(var section in sections)
-            //{
-            //    var group = _repository.Devices.FirstOrDefault(d => d.Url == section.Url);
-            //    if(group != null)
-            //    {
-            //        var devsList = new List<UserManualDeviceViewModel>();
-            //        var devs = devices.Where(d => d.Name.IsUnderOther(group.Name));
-            //        foreach(var device in devs)
-            //        {
-            //            var guides = new List<UserManualFiles>();
-            //            foreach(var guide in device.SFiles.Where(um => um.File_type.OwnNameFromPath == "User guide"))
-            //            {
-            //                guides.Add(new UserManualFiles
-            //                    {
-            //                        Title = guide.Title,
-            //                        Url = guide.Url,
-            //                        Id = guide.Id,
-            //                        Name = guide.Name
-            //                    });
-            //            }
-
-            //            devsList.Add(new UserManualDeviceViewModel
-            //            {
-            //                Name = device.Name.Name,
-            //                UserGuides = guides
-            //            });
-            //        }
-
-            //        secs.Add(new UserManualSectionViewModel
-            //            {
-            //                Name = section.FormattedTitle,
-            //                Devices = devsList
-            //            });
-            //    }
-            //}
-
             UserManualViewModel model = null;
-            if(System.IO.File.Exists(file_name))
+            if (System.IO.File.Exists(file_name))
             {
                 try
                 {
@@ -276,7 +239,7 @@ namespace NetPing_modern.Controllers
                     model = new UserManualViewModel
                     {
                         Id = guide.Id,
-                        Title = guide.Title,
+                        Title = guide.Title.Replace("%2E", "."),
                         Name = guide.Name,
                         Pages = guide.Pages.OrderBy(p => p.Title, new NaturalComparer(CultureInfo.CurrentCulture)),
                         ItemId = guide.ItemId
@@ -293,34 +256,11 @@ namespace NetPing_modern.Controllers
                     model.Device = device;
                     model.Section = section;
 
-                    //foreach (var section in sections)
-                    //{
-                    //    var group = _repository.Devices.FirstOrDefault(d => d.Url == section.Url);
-                    //    if (group != null)
-                    //    {
-                    //        var devsList = new List<UserManualDeviceViewModel>();
-                    //        var devs = devices.Where(d => d.Name.IsUnderOther(group.Name));
-                    //        foreach (var device in devs)
-                    //        {
-                    //            var guides = new List<UserManualFiles>();
-                    //            foreach (var g in device.SFiles.Where(um => um.File_type.OwnNameFromPath == "User guide"))
-                    //            {
-                    //                if(model.ItemId == g.Id)
-                    //                {
-                    //                    var dev = g.Devices.FirstOrDefault();
-                    //                    var groups = _repository.Devices.Where(d => d.Name.IsGroup());
-                    //                    //foreach(var )
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
-
                     if (string.IsNullOrEmpty(page))
                         return View("~/Views/Products/UserGuide.cshtml", model);
                     else
                     {
-                        var m = guide.Pages.SingleOrDefault(p => p.Title.Contains(page));
+                        var m = guide.Pages.SingleOrDefault(p => p.Title.Contains(page.Replace(".", "%2E")));
                         Session["page"] = m;
                         return View("~/Views/Products/UserGuidePage.cshtml", m);
                     }
@@ -350,7 +290,7 @@ namespace NetPing_modern.Controllers
 
         public ActionResult GetSubPage(string id, string page, string subPage)
         {
-            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
 
             PageModel model = null;
             if(System.IO.File.Exists(file_name))
@@ -358,8 +298,8 @@ namespace NetPing_modern.Controllers
                 var stream = System.IO.File.OpenRead(file_name);
                 BinaryFormatter binaryWrite = new BinaryFormatter();
                 var guide = binaryWrite.Deserialize(stream) as UserManualModel;
-                var pg = guide.Pages.SingleOrDefault(p => p.Title.Replace("?", "") == page);
-                model = pg.Pages.SingleOrDefault(p => p.Title.Contains(subPage));
+                var pg = guide.Pages.SingleOrDefault(p => p.Title.Replace("?", "") == page.Replace(".", "%2E"));
+                model = pg.Pages.SingleOrDefault(p => p.Title.Contains(subPage.Replace(".", "%2E")));
 
                 return View("~/Views/Products/UserGuidePage.cshtml", model);
             }

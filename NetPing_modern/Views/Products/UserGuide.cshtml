@@ -20,7 +20,11 @@
 
 @section Head_Css{
     <link href="~/Content/JavaScript/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" type="text/css" media="screen" />
-    <style>
+    <style type="text/css">
+        @@font-face {
+            font-family: "Atlassian Icons";
+            src: url(/fonts/atlassian-icons.woff) format('woff');
+        }
         .container{
             margin-left: 0px;
             margin-right: 0px;
@@ -248,81 +252,69 @@
             /*margin-left: 60px;*/
             font-size: 12px;
         }
+        .blackLink{
+            color: #000000;
+        }
+        .linkUnderline{
+            text-decoration: underline;
+        }
+        .linkBold{
+            font-weight: bold;
+        }
+        #breadcrump{
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
     </style>
 }
 
 <div class="container">
     <div class="col-md-12" id="breadcrump">
-        <a href="/">NetPing</a> > Документация > <a href="/products/@Model.Section.Url">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
+        <a href="/" class="blackLink">NetPing</a> > <a href="javascript:void(0)" class="blackLink linkUnderline linkBold">Документация</a> > <a href="/products/@Model.Section.Url" class="blackLink linkUnderline linkBold">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
     </div>
-    <div class="col-sm-4 col-md-3 col-lg-3">
+    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
         <div class="content_doc"><span>@Index.Title_doc</span></div>
-        @*@foreach (var sec in Model.Sections)
-        {
-            <div>
-                <a href="javascript:void(0)" class="sectionItem"><b class="right-caret"></b> @sec.Name</a>
-                @foreach(var device in sec.Devices)
-                {
-                    <div class="hidden">
-                        <a href="javascript:void(0)" class="deviceItem"><b class="right-caret"></b> @device.Name</a>
-                        @foreach (var guide in device.UserGuides)
-                        {
-                            <div class="hidden">
-                                <a href="@guide.Url" class="guideItem" id="@guide.Id"><b class="@(guide.Id == Model.ItemId ? "caret" : "right-caret")"></b> @guide.Title</a>
-                                @if (guide.Id == Model.ItemId)
-                                {
-                                    foreach(var page in Model.Pages)
-                                    { 
-                                        <div>
-                                            <a href="javascript:void(0)" class="pageItem"><b class="@(page.Pages.Any() ? "right-caret" : "square")"></b> @page.Title</a>
-                                            @if(page.Pages.Any())
-                                            {
-                                                foreach(var subPage in page.Pages)
-                                                {
-                                                    <div class="hidden">
-                                                        <a href="javascript:void(0)" class="subPageItem"><b class="square"></b> @subPage.Title</a>
-                                                    </div>
-                                                }
-                                            }
-                                        </div>
-                                    }
-                                }
-                            </div>
-                        }
-                    </div>
-                }
-            </div>
-        }*@
         
+        @{var index = 0; int subIndex = 0;}
         @foreach (var item in Model.Pages)
         {
+            ++index;
+            subIndex = index * 100;
             <div>
-                <a href="javascript:void(0)" class="pageItem"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title</a>
+                <a href="javascript:void(0)" class="pageItem" data-item-id="@index"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title.Replace("%2E", ".")</a>
                 @if(item.Pages != null && item.Pages.Any())
                 {
                 <div class="hidden subMenu">
                     @foreach (var subItem in item.Pages)
                     {
-                        <div><a href="javascript:void(0)" class="subPageItem"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title</a></div>
+                        ++subIndex;
+                        <div><a href="javascript:void(0)" class="subPageItem" data-item-id="@subIndex"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title.Replace("%2E", ".")</a></div>
                     }
                 </div>
                 }
             </div>
         }
     </div>
-    <div class="col-sm-8 col-md-6 col-lg-6">
+    <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6">
         <div class="header">
             <h1>@Model.Title</h1>
         </div>
         <div class="docContent">
-            @foreach (var page in Model.Pages)
+            @if (string.IsNullOrEmpty(Model.Pages.FirstOrDefault().Content))
             {
-                @*<a href="/UserGuide/@Model.Title.Replace("/", "")/@page.Title.Replace("/", "")/">@page.Title</a><br />*@
-                <a href="javascript:void(0)" class="pageItem">@page.Title</a><br />
+                @Html.Raw(Model.Pages.FirstOrDefault().Pages.FirstOrDefault().Content)
             }
+            else
+            {
+                @Html.Raw(Model.Pages.FirstOrDefault().Content)
+            }
+            @*@foreach (var page in Model.Pages)
+            {
+                <a href="javascript:void(0)" class="pageItem">@page.Title.Replace("%2E", ".")</a><br />
+            }*@
         </div>
     </div>
-    <div class="col-sm-4 col-md-3 col-lg-3 hidden-sm">
+    <div class="col-sm-4 col-md-3 col-lg-3 hidden-sm hidden-xs">
         <div class="content_news">
             <div class="content_news_header">
                 <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
@@ -374,8 +366,8 @@
         <div class="clear"></div>
         <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
     </div>
-    <div class="row col-sm-12 hidden-lg hidden-md hidden-xs">
-        <div class="col-sm-5">
+    <div class="row col-sm-12 col-xs-12 hidden-lg hidden-md">
+        <div class="col-sm-5 col-xs-5">
         <div class="content_news">
             <div class="content_news_header">
                 <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
@@ -409,7 +401,7 @@
         }
 
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-7 col-xs-7">
             <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
             @foreach (Device device in ViewBag.Devices)
             {
@@ -437,6 +429,20 @@
 <script src="~/Content/JavaScript/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
     <script type="text/javascript">
     $(document).ready(function () {
+        if (location.hash != null && location.hash != '') {
+            var id = parseInt(location.hash.replace("#", ""));
+            openByDataItemId(id);
+        } else {
+            if ($('a[data-item-id=101]').length > 0)
+                openByDataItemId(101);
+            else
+                openByDataItemId(1);
+        }
+
+        $('body').on('click', 'a.pageItem', function () {
+            console.log('clicked');
+        });
+
         var breadcrumpMain = 'NetPing > @Index.Title_doc > ';
         var sectionName = $('a#@Model.ItemId').parent().parent().parent().children('a').text();
         var deviceName = $('a#@Model.ItemId').parent().parent().children('a').text();
@@ -467,34 +473,14 @@
         });
 
         $('a.pageItem').click(function (e) {
-            openClose(e);
-
-            var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
-
-            var item = $.trim($(target).text());
-            var url = "/UserGuide/@Model.Title.Replace("/", "")/" + item + "/";
-            $.get(url, null, function (data) {
-                $('div.docContent').empty();
-                $('div.docContent').append(data);
-
-                initFancybox();
-            });
+            pageItemClick(e);
         });
 
         $('a.subPageItem').click(function (e) {
-            var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
-
-            //var item = $.trim($(target).parent().parent().children('a.pageItem').text());
-            var item = $.trim($(target).parent().parent().parent().children('a.pageItem').text()).replace('?', '');
-            var subItem = $.trim($(target).text()).replace('?', '');
-            var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
-            $.get(url, null, function (data) {
-                $('div.docContent').empty();
-                $('div.docContent').append(data);
-
-                initFancybox();
-            });
+            subPageItemClick(e);
         });
+
+        
     });
 
     function openClose(e) {
@@ -510,6 +496,63 @@
             $(target).children('b.right-caret').removeClass('right-caret').addClass('caret');
         }
     }
+
+    function pageItemClick(e) {
+        openClose(e);
+
+        var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+        var item = $.trim($(target).text());
+        var itemId = $(target).attr('data-item-id');
+        location.hash = itemId;
+
+        var url = "/UserGuide/@Model.Title.Replace("/", "")/" + item + "/";
+        $.get(url, null, function (data) {
+            $('div.docContent').empty();
+            $('div.docContent').append(data);
+
+            initDocContent();
+        });
+    }
+
+    function subPageItemClick(e) {
+        var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+        //var item = $.trim($(target).parent().parent().children('a.pageItem').text());
+        var item = $.trim($(target).parent().parent().parent().children('a.pageItem').text()).replace('?', '');
+        var subItem = $.trim($(target).text()).replace('?', '');
+
+        var itemId = $(target).attr('data-item-id');
+        location.hash = itemId;
+
+        var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
+        $.get(url, null, function (data) {
+            $('div.docContent').empty();
+            $('div.docContent').append(data);
+
+            initDocContent();
+        });
+    }
+
+        function openByDataItemId(id){
+            var e = new Object();
+            if (id > 100) {
+                e.target = $('a[data-item-id=' + id + ']').parent().parent().parent().children('a.pageItem')[0];
+                //pageItemClick(e);
+                openClose(e);
+                e.target = $('a[data-item-id=' + id + ']')[0];
+                subPageItemClick(e);
+            }
+
+            e.target = $('a[data-item-id=' + id + ']')[0];
+            pageItemClick(e);
+        }
+
+        function initDocContent() {
+            initFancybox();
+
+            $('div.docContent').find('li').css('list-style-image', 'url("/Content/Images/doc_li.png")');
+        }
 </script>
 <script type="text/javascript">
     function initFancybox() {

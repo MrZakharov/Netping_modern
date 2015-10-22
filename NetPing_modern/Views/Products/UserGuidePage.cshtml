@@ -5,25 +5,25 @@
 @model NetPing_modern.DAL.Model.PageModel
 
 <div class="header">
-    <h1 style="margin-left: 10px;">@Model.Title</h1>
+    <h2 style="margin-left: 10px;">@Model.Title.Replace("%2E", ".")</h2>
 </div>
 
 <div style="margin-left: 10px;">
     @foreach (var page in Model.Pages)
     {
-        <h2>@page.Title</h2>
+        <h2>@page.Title.Replace("%2E", ".")</h2>
 
         foreach(var p in page.Pages)
         {
-            <a href="/page/@page.Title/@p.Title/">@p.Title</a><br />
+            <a href="/page/@page.Title/@p.Title/">@p.Title.Replace("%2E", ".")</a><br />
         }
         
         <div>
-            @Html.Raw(page.Content.Replace("https://netping.atlassian.net", "").Replace("/wiki", "https://netping.atlassian.net/wiki"))
+            @Html.Raw(page.Content.Replace("https://netping.atlassian.net", "").Replace("/wiki", "https://netping.atlassian.net/wiki").Replace("%2E", "."))
         </div>
        
     }
 </div>
 <div style="margin-left: 10px;">
-    @Html.Raw(Model.Content.Replace("https://netping.atlassian.net", "").Replace("/wiki", "https://netping.atlassian.net/wiki"))
+    @Html.Raw(Model.Content.Replace("https://netping.atlassian.net", "").Replace("/wiki", "https://netping.atlassian.net/wiki").Replace("%2E", "."))
 </div>
