@@ -254,7 +254,11 @@ namespace NetPing_modern.Controllers
                     var section = sections.FirstOrDefault(s => s.Url == group.Url);
 
                     model.Device = device;
-                    model.Section = section;
+                    model.Section = section ?? new SectionModel
+                        {
+                            Title = "Other",
+                            Url = "/"
+                        };
 
                     if (string.IsNullOrEmpty(page))
                         return View("~/Views/Products/UserGuide.cshtml", model);
