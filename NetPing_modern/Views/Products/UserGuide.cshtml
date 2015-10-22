@@ -542,10 +542,10 @@
                 openClose(e);
                 e.target = $('a[data-item-id=' + id + ']')[0];
                 subPageItemClick(e);
+            } else {
+                e.target = $('a[data-item-id=' + id + ']')[0];
+                pageItemClick(e);
             }
-
-            e.target = $('a[data-item-id=' + id + ']')[0];
-            pageItemClick(e);
         }
 
         function initDocContent() {
