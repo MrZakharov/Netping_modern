@@ -3,11 +3,12 @@ using NetPing.DAL;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using NetPing_modern.Controllers;
 
 
 namespace NetPing.Controllers
 {
-    public class ViewController : Controller
+    public class ViewController : BaseController
     {
         private readonly IRepository _repository;
 

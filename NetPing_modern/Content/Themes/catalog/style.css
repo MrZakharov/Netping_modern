@@ -99,6 +99,10 @@
     background: #fafff9 !important;
 }
 
+.device-catalog-item .device-item-content a{
+    font-size: 14px;
+}
+
 .device-catalog-item a h3 {
     color: #000;
     display: inline;

@@ -15,7 +15,7 @@ using Microsoft.SharePoint.Client;
 
 namespace NetPing_modern.Controllers
 {
-    public class ProductsController : Controller
+    public class ProductsController : BaseController
     {
         private readonly IRepository _repository;
 

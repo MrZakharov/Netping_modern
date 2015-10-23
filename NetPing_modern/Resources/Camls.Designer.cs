@@ -143,6 +143,23 @@ namespace NetPing_modern.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;View&gt;
+        ///                                    &lt;Query&gt;
+        ///                                    &lt;Where&gt;
+        ///                                            &lt;Or&gt;
+        ///                                                &lt;In&gt;
+        ///                                                    &lt;FieldRef Name=&apos;Language&apos; /&gt;
+        ///                                                    &lt;Values&gt;
+        ///                                                        &lt;Value Type=&apos;TaxonomyFieldType&apos;&gt;English&lt;/Value&gt;
+        ///                                                    &lt;/Values&gt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Caml_HTMLInjection {
+            get {
+                return ResourceManager.GetString("Caml_HTMLInjection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;View&gt;&lt;OrderBy&gt;
         ///                                            &lt;FieldRef Name=&apos;Created&apos; Ascending=&apos;FALSE&apos; /&gt;
         ///                                  &lt;/OrderBy&gt;

@@ -22,6 +22,7 @@ namespace NetPing.DAL
 
         TreeNode<Device> DevicesTree(Device root, IEnumerable<Device> devices);
         IEnumerable<Device> GetDevices(string id, string groupId);
+        IEnumerable<HTMLInjection> HtmlInjections { get; }
         string UpdateAll();
 
         string UpdateAllAsync(string name);

@@ -40,25 +40,24 @@
     }
 }
 
-
-
-<div class="container-fluid device-catalog-item">
-
-    <div class="row">
-        <div class="col-xs-12 breadcrumbs">
-            <a href="/" class="root">@Index.Path_main</a>
-            >
-            <a href="@ViewBag.grp_url" class="node">
-                @ViewBag.grp_name
-            </a>
-            >
-            <a href="javascript:void(0)" class="page">
-                @Model.Name.Name
-            </a>
+<div>
+    <div class="row" style="margin-right: 0px;">
+        <div class="container-fluid device-catalog-item">
+            <div class="col-xs-12 breadcrumbs">
+                <a href="/" class="root">@Index.Path_main</a>
+                >
+                <a href="@ViewBag.grp_url" class="node">
+                    @ViewBag.grp_name
+                </a>
+                >
+                <a href="javascript:void(0)" class="page">
+                    @Model.Name.Name
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-right: 0px;">
         <ul class="device-item-menu col-xs-12">
             <li><a href="#description"><span class="device-catalog-item-menu-icon description"></span> Описание</a></li>
             <li><a href="#specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</a></li>
@@ -67,9 +66,12 @@
             <li><a href="#connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</a></li>
         </ul>
     </div>
+</div>
 
 
+<div class="container-fluid device-catalog-item">
 
+   
     <div class="row">
         <div class="col-xs-12">
             <div class="row" id="main-row">
@@ -92,44 +94,74 @@
                         </p>
                     </div>
                     <div class="row">
-                        <div id="slider3-pager-nav" class="col-sm-3">
+                        <div id="slider3-pager-nav" class="col-sm-3 col-xs-3">
                             <ul id="slider3-pager">
                                 @foreach (DevicePhoto photo in Model.DevicePhotos.Where(p => !p.IsBig))
                                 {
-                                    <li><a href="#"><img class="thumb-image" src="@photo.Url" alt=""></a></li>
+                                    <li style="list-style: none;">
+                                        <a href="#"><img class="thumb-image" src="@photo.Url" alt=""></a>
+                                    </li>
                                 }
                             </ul>
                         </div>
-                        <ul class="rslides col-sm-9" id="slider3">
+                        <ul class="rslides col-sm-9 col-xs-9" id="slider3">
                             @foreach (DevicePhoto photo in Model.DevicePhotos.Where(p => p.IsBig))
                             {
-                                <li><img class="bigImageSize" src="@photo.Url" alt="" title="" /></li>
+                                <li style="list-style: none;">
+                                    <img class="bigImageSize" src="@photo.Url" alt="" title="" />
+                                </li>
                             }
                         </ul>
-                    </div>
-                    <div class="device-item-buttons">
-                        <div class="price">
-                            <span>@GetPrice(Model.Price)</span> @Model.GetCurrency
-                        </div>
-
-                        <div class="to-cart button-block text-right ">
-                            <input type="text" class="btn btn-info counter" data-device-id="@Model.Name.Id" value="1" />
-                            <div class="add-remove">
-                                <button data-device-id="@Model.Name.Id" class="btn btn-info count-button add">+</button>
-                                <button data-device-id="@Model.Name.Id" class="btn btn-info count-button remove">-</button>
+                        <div class="device-item-buttons">
+                            <div class="price">
+                                <span>@GetPrice(Model.Price)</span> @Model.GetCurrency
                             </div>
-                            <div @(Model.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@Model.Name.Id" class="btn btn-primary buy-button"></div>
+
+                            <div class="to-cart button-block text-right ">
+                                <input type="text" class="btn btn-info counter" data-device-id="@Model.Name.Id" value="1" />
+                                <div class="add-remove">
+                                    <button data-device-id="@Model.Name.Id" class="btn btn-info count-button add">+</button>
+                                    <button data-device-id="@Model.Name.Id" class="btn btn-info count-button remove">-</button>
+                                </div>
+                                <div @(Model.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@Model.Name.Id" class="btn btn-primary buy-button"></div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-lg-7 col-md-12">
                     <h1>
                         @Model.Name.Name
                     </h1>
-                    <div class="device-item-content">
-                        @Html.Raw(Model.Short_description)
+                        <div class="device-item-content" style="padding: 0px">
+                            @{string className = "new";}
+                            @if (!String.IsNullOrWhiteSpace(Model.Label.Name))
+                            {
+                                switch (Model.Label.OwnNameFromPath)
+                                {
+                                    case "New":
+                                        {
+                                            className = "new";
+                                            break;
+                                        }
+                                    case "EOL":
+                                        {
+                                            className = "eol";
+                                            break;
+                                        }
+                                    case "Archive":
+                                        {
+                                            className = "archive";
+                                            break;
+                                        }
+                                }
+                                <span class="label label-@className">@Model.Label.Name</span>
+                            }
+                        </div>
+                        <div class="device-item-content">
+                            @Html.Raw(Model.Short_description)
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -251,7 +283,7 @@
                 <div class="row">
                     @foreach (Device dev in ViewBag.Connected_devices_sensors)
                     {
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-3 col-md-4 col-xs-6">
                             <div class="connected-device cat_item">
                                 <div style="display: none">
                                     <p class="Price">
@@ -294,7 +326,7 @@
                     @foreach (Device dev in ViewBag.Connected_devices_accessuars)
                     {
 
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-3 col-md-4 col-xs-6">
                             <div class="connected-device cat_item">
                                 <div style="display: none">
                                     <p class="Price">
@@ -337,11 +369,28 @@
             </div>
         </div>
     </div>
-    <ul class="device-item-menu col-xs-12 floating-menu" style="display:none;">
-        <li><a href="#description"><span class="device-catalog-item-menu-icon description"></span> Описание</a></li>
-        <li><a href="#specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</a></li>
-        <li><a href="#files"><span class="device-catalog-item-menu-icon files"></span> Документация и файлы</a></li>
-        <li><a href="#usage"><span class="device-catalog-item-menu-icon usage"></span> Примеры применения устройства</a></li>
-        <li><a href="#connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</a></li>
+
+    <div class="floating-menu" style="display:none;">
+        <div class="header contacts row"></div>
+        <div class="col-xs-12 breadcrumbs" style="background-color: #ffffff; margin-top: 0px;"></div>
+        <ul class="device-item-menu col-xs-12" style="margin-top: 0px;">
+            <li><a href="#description"><span class="device-catalog-item-menu-icon description"></span> Описание</a></li>
+            <li><a href="#specs"><span class="device-catalog-item-menu-icon specs"></span> Спецификация</a></li>
+            <li><a href="#files"><span class="device-catalog-item-menu-icon files"></span> Документация и файлы</a></li>
+            <li><a href="#usage"><span class="device-catalog-item-menu-icon usage"></span> Примеры применения устройства</a></li>
+            <li><a href="#connected-device"><span class="device-catalog-item-menu-icon connected-device"></span> Подключаемые устройства</a></li>
+    </div>
     </ul>
 </div>
+
+@section scripts{
+<script type="text/javascript">
+    $(document).ready(function () {
+        var header = $($('div.header.contacts')[0]).html();
+        $($('div.header.contacts')[1]).html(header);
+
+        var breadcrumbs = $($('div.breadcrumbs')[0]).html();
+        $($('div.breadcrumbs')[1]).html(breadcrumbs);
+    });
+</script>
+}

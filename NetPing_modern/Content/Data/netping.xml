@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE yml_catalog SYSTEM "shops.dtd">
 <<<<<<< HEAD
+<<<<<<< HEAD
 <yml_catalog date="2015-09-24 14:32">
 =======
 <<<<<<< HEAD
@@ -29,6 +30,9 @@
 <yml_catalog date="2015-08-21 01:45">
 >>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
 >>>>>>> master
+=======
+<yml_catalog date="2015-10-11 13:24">
+>>>>>>> refs/remotes/origin/master
   <shop>
     <name>Netping.ru</name>
     <company>Netping.ru</company>
@@ -37,6 +41,7 @@
       <currency id="RUR" rate="1" plus="0" />
     </currencies>
     <categories>
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
@@ -80,280 +85,147 @@
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_1WireTermosensor_big.png</picture>
 =======
+=======
+      <category id="12">Готовые решения для мониторинга серверных комнат и шкафов</category>
+      <category id="11">Готовые решения для удаленного управления электропитанием</category>
+      <category id="10">Готовые решения на основе POE</category>
+      <category id="4">Каталог датчиков для устройств Netping</category>
+      <category id="7">Каталог устройств удалённого управления и распределения электропитания Netping</category>
+      <category id="3">Каталог аксессуаров для устройств Netping</category>
+      <category id="8">Неуправляемые POE коммутаторы</category>
+>>>>>>> refs/remotes/origin/master
     </categories>
     <local_delivery_cost>350</local_delivery_cost>
     <offers>
-      <offer id="53" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-8-pwr-220-v3-sms</url>
-        <price>14260</price>
+      <offer id="91" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/gotovoe-reshenie-dlya-monitoringa-servernoj-komnaty-na-osnove-uniping-server-solution-v3-sms</url>
+        <price>21430</price>
         <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_8PWR_SMS_big.png</picture>
->>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
+        <categoryId>12</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/Server_room_monitor_solution_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
         <typePrefix />
         <vendor>NetPing</vendor>
-<<<<<<< HEAD
-        <vendorCode>Термодатчик 1-wire, (THS), 2м</vendorCode>
-        <model>Термодатчик 1-wire, (THS), 2м</model>
-        <description>Датчик температуры -55C ... +125C с интерфейсом 1-wire. Длина шлейфа 2 м.</description>
-=======
-        <vendorCode>Устройство NetPing 8/PWR-220 v3/SMS</vendorCode>
-        <model>Устройство NetPing 8/PWR-220 v3/SMS</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS</description>
->>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
+        <vendorCode>Готовое решение для мониторинга серверной комнаты на основе Uniping server solution v3/SMS</vendorCode>
+        <model>Готовое решение для мониторинга серверной комнаты на основе Uniping server solution v3/SMS</model>
+        <description>Наиболее типовыми задачами мониторинга серверных комнат являются: мониторинг климата и окружающей среды при работе компьютерного оборудования,мониторинг доступа в помещение и наличия движения в серверной комнате,мониторинг наличия электропитания. Система мониторинга должна постоянно отслеживать эти параметры и уведомлять дежурный персонал в случае необходимости.Данное решение для мониторинга серверных комнат на основе устройства Uniping server solution v3/SMS позволяет собирать информацию с внешних датчиков и отправлять E-mail или SMS-уведомления дежурному персоналу в случае необходимости. Для сбора и накопления статистики используется интеграция устройства по протоколу SNMP с системами мониторинга сети Zabbix или PRTG network monitor.  </description>
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
-<<<<<<< HEAD
+      <offer id="92" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/monitoring-bankomatov-i-platjozhnykh-terminalov-pri-pomoshhi-netping</url>
+        <price>10629</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>11</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/ATM_solution_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Мониторинг банкоматов и платёжных терминалов при помощи Netping</vendorCode>
+        <model>Мониторинг банкоматов и платёжных терминалов при помощи Netping</model>
+        <description>Типовой задачей в обслуживании банкоматов и платёжных терминалов является обеспечение их надёжной работы. Для этого немаловажно постоянно отслеживать условия работы критичных блоков, а также иметь возможность удалённо перезагружать, включать или выключать электропитание внутренних устройств. Важно поддерживать контроль над банкоматом при проблемах основного канала связи, интегрировать систему мониторинга в общую систему управления и отслеживания работы банкоматов.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="59" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/poe-3-ports-injector</url>
+        <price>3376</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>10</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_solut_poe_3injector_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>POE инжектор на 3 порта</vendorCode>
+        <model>POE инжектор на 3 порта</model>
+        <description>POE инжектор на 3 порта, способен обеспечить 3 внешних устройства питанием по стандарту POE IEEE 802.3af/at </description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="26" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/thermo-sensor-1-wire</url>
+        <price>777</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_1WireTermosensor_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Термодатчик 1-wire, (THS), 2м</vendorCode>
+        <model>Термодатчик 1-wire, (THS), 2м</model>
+        <description>Датчик температуры -55C ... +125C с интерфейсом 1-wire. Длина шлейфа 2 м.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
       <offer id="25" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/humidity-sensor-1-wire</url>
         <price>1920</price>
         <currencyId>RUR</currencyId>
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_1WireHumiditysensor_big.png</picture>
-=======
-      <offer id="52" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-4-pwr-220-v3-sms</url>
-        <price>9500</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_4PWR_SMS_220_v3_big.png</picture>
->>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
         <typePrefix />
         <vendor>NetPing</vendor>
-<<<<<<< HEAD
         <vendorCode>Датчик влажности 1-wire, (HS), 2м</vendorCode>
         <model>Датчик влажности 1-wire, (HS), 2м</model>
         <description>Датчик относительной влажности воздуха с интерфейсом 1-wire и встроенным датчиком температуры. Длина провода 2 м.</description>
-=======
-        <vendorCode>Устройство Netping 4/PWR-220 v3/SMS</vendorCode>
-        <model>Устройство Netping 4/PWR-220 v3/SMS</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS и встроенным аккумулятором.</description>
->>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
-<<<<<<< HEAD
       <offer id="41" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/thermo-sensor-TS</url>
-        <price>550</price>
+        <price>633</price>
         <currencyId>RUR</currencyId>
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_TermosensorTS_big.png</picture>
-=======
-      <offer id="58" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v2-sms</url>
-        <price>6500</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_V2SMS2PWR220_big2.png</picture>
->>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
         <typePrefix />
         <vendor>NetPing</vendor>
-<<<<<<< HEAD
         <vendorCode>Термодатчик TS, 1м</vendorCode>
         <model>Термодатчик TS, 1м</model>
         <description>Термодатчик для измерения температуры окружающего воздуха внутри помещения. -55C..+125C. Избегайте попадания воды на термодатчик!</description>
-=======
-        <vendorCode>Устройство NetPing 2/PWR-220 v2/SMS</vendorCode>
-        <model>Устройство NetPing 2/PWR-220 v2/SMS</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS и встроенным аккумулятором</description>
->>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
-<<<<<<< HEAD
       <offer id="42" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/thermo-sensor-WT</url>
-        <price>630</price>
+        <price>725</price>
         <currencyId>RUR</currencyId>
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_TermosensorWT_big.png</picture>
-=======
-      <offer id="57" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v1-sms</url>
-        <price>5906</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_SMS2PWR220-v1_big.png</picture>
->>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
         <typePrefix />
         <vendor>NetPing</vendor>
-<<<<<<< HEAD
         <vendorCode>Thermo sensor WT</vendorCode>
         <model>Thermo sensor WT</model>
         <description>Термодатчик для измерения температуры воздуха и воды -55C..+125C. Герметичный корпус, допускает погружение в воду.</description>
-=======
-        <vendorCode>Устройство NetPing 2/PWR-220 v1/SMS</vendorCode>
-        <model>Устройство NetPing 2/PWR-220 v1/SMS</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="54" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v3-eth</url>
-        <price>4400</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_ETH_2PWR220_v2_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство NetPing 2/PWR-220 v3/ETH</vendorCode>
-        <model>Устройство NetPing 2/PWR-220 v3/ETH</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU)</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="55" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-pwr-220-v3-eth</url>
-        <price>3690</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_ETH_PWR220_v2_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство NetPing /PWR-220 v3/ETH</vendorCode>
-        <model>Устройство NetPing /PWR-220 v3/ETH</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU)</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="49" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/uniping-server-solution-v3-sms</url>
-        <price>11500</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_UniPing_server_v3_SMS_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство UniPing server solution v3/SMS</vendorCode>
-        <model>Устройство UniPing server solution v3/SMS</model>
-        <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления о срабатывании датчиков</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="109" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/uniping-server-solution-v3</url>
-        <price>8900</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_UniPing_server_v3_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство UniPing server solution v3</vendorCode>
-        <model>Устройство UniPing server solution v3</model>
-        <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления о срабатывании датчиков.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="47" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-sms</url>
-        <price>5550</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_SMS_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство NetPing SMS</vendorCode>
-        <model>Устройство NetPing SMS</model>
-        <description>Шлюз для отправки и приёма SMS-команд для устройств NetPing. Позволяет отправлять SMS-уведомления и выполнять SMS-команды, передаваемые по сети Ethernet/Internet от любого числа устройств NetPing.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="51" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/uniping-v3</url>
-        <price>4700</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_v3_UniPing_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство UniPing v3</vendorCode>
-        <model>Устройство UniPing v3</model>
-        <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления о срабатывании датчиков </description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="50" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-io-v2</url>
-        <price>1760</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_v2netpingIO_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство NetPing IO v2</vendorCode>
-        <model>Устройство NetPing IO v2</model>
-        <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления об их срабатывании</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="48" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/uniping-server-solution</url>
-        <price>6072</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_UniPing_server_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство UniPing server solution</vendorCode>
-        <model>Устройство UniPing server solution</model>
-        <description> Рекомендуется использовать устройство Uniping server solution v3 вместо Uniping server solution. Устройство Uniping server solution снято с производства.Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления о срабатывании датчиков</description>
->>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="107" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/humidity-sensor-ws2</url>
-        <price>1690</price>
+        <price>1944</price>
         <currencyId>RUR</currencyId>
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_HumidityWS2_big.png</picture>
@@ -389,7 +261,7 @@
       </offer>
       <offer id="36" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/sensor-220V</url>
-        <price>620</price>
+        <price>713</price>
         <currencyId>RUR</currencyId>
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_sensor220V_big.png</picture>
@@ -407,7 +279,7 @@
       </offer>
       <offer id="32" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/door-sensor-metall</url>
-        <price>250</price>
+        <price>288</price>
         <currencyId>RUR</currencyId>
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_metall_kontakt_big.png</picture>
@@ -443,7 +315,7 @@
       </offer>
       <offer id="33" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-datchik-dvijenija</url>
-        <price>910</price>
+        <price>1047</price>
         <currencyId>RUR</currencyId>
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_moove_sensor_big.png</picture>
@@ -479,7 +351,7 @@
       </offer>
       <offer id="38" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/sirena-ac10</url>
-        <price>575</price>
+        <price>662</price>
         <currencyId>RUR</currencyId>
         <categoryId>4</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_sirena_big.png</picture>
@@ -495,46 +367,53 @@
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
+<<<<<<< HEAD
       <offer id="59" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/poe-3-ports-injector</url>
         <price>2935</price>
+=======
+      <offer id="53" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/netping-8-pwr-220-v3-sms</url>
+        <price>16401</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
-        <categoryId>10</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_solut_poe_3injector_big.png</picture>
+        <categoryId>6</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_v2netpingIO_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
         <typePrefix />
         <vendor>NetPing</vendor>
-        <vendorCode>POE инжектор на 3 порта</vendorCode>
-        <model>POE инжектор на 3 порта</model>
-        <description>POE инжектор на 3 порта, способен обеспечить 3 внешних устройства питанием по стандарту POE IEEE 802.3af/at </description>
+        <vendorCode>Устройство NetPing IO v2</vendorCode>
+        <model>Устройство NetPing IO v2</model>
+        <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления об их срабатывании</description>
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
-      <offer id="92" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/monitoring-bankomatov-i-platjozhnykh-terminalov-pri-pomoshhi-netping</url>
-        <price>10000</price>
+      <offer id="52" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/netping-4-pwr-220-v3-sms</url>
+        <price>10925</price>
         <currencyId>RUR</currencyId>
-        <categoryId>11</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/ATM_solution_big.png</picture>
+        <categoryId>7</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_nping_power_4PWR_SMS_220_v3_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
         <typePrefix />
         <vendor>NetPing</vendor>
-        <vendorCode>Мониторинг банкоматов и платёжных терминалов при помощи Netping</vendorCode>
-        <model>Мониторинг банкоматов и платёжных терминалов при помощи Netping</model>
-        <description>Типовой задачей в обслуживании банкоматов и платёжных терминалов является обеспечение их надёжной работы. Для этого немаловажно постоянно отслеживать условия работы критичных блоков, а также иметь возможность удалённо перезагружать, включать или выключать электропитание внутренних устройств. Важно поддерживать контроль над банкоматом при проблемах основного канала связи, интегрировать систему мониторинга в общую систему управления и отслеживания работы банкоматов.</description>
+        <vendorCode>Устройство Netping 4/PWR-220 v3/SMS</vendorCode>
+        <model>Устройство Netping 4/PWR-220 v3/SMS</model>
+        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS и встроенным аккумулятором.</description>
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
-      <offer id="60" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-thermostat</url>
-        <price>7006</price>
+      <offer id="58" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/netping-2-pwr-220-v2-sms</url>
+        <price>7475</price>
         <currencyId>RUR</currencyId>
+<<<<<<< HEAD
         <categoryId>11</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_solut_pwr_termostat_big.png</picture>
         <store>true</store>
@@ -631,6 +510,8 @@
         <url>http://www.netping.ru/products/netping-2-pwr-220-v2-sms</url>
         <price>6500</price>
         <currencyId>RUR</currencyId>
+=======
+>>>>>>> refs/remotes/origin/master
         <categoryId>7</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_power_V2SMS2PWR220_big2.png</picture>
         <store>true</store>
@@ -647,7 +528,11 @@
       </offer>
       <offer id="57" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-2-pwr-220-v1-sms</url>
+<<<<<<< HEAD
         <price>5906</price>
+=======
+        <price>6792</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
         <categoryId>7</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_power_SMS2PWR220-v1_big.png</picture>
@@ -665,7 +550,11 @@
       </offer>
       <offer id="54" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-2-pwr-220-v3-eth</url>
+<<<<<<< HEAD
         <price>4400</price>
+=======
+        <price>5060</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
         <categoryId>7</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_power_ETH_2PWR220_v2_big.png</picture>
@@ -683,7 +572,11 @@
       </offer>
       <offer id="49" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/uniping-server-solution-v3-sms</url>
+<<<<<<< HEAD
         <price>11500</price>
+=======
+        <price>13225</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_bases_UniPing_server_v3_SMS_big.png</picture>
@@ -701,7 +594,11 @@
       </offer>
       <offer id="109" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/uniping-server-solution-v3</url>
+<<<<<<< HEAD
         <price>8900</price>
+=======
+        <price>10235</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_bases_UniPing_server_v3_big.png</picture>
@@ -711,6 +608,7 @@
         <typePrefix />
         <vendor>NetPing</vendor>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <vendorCode>Устройство UniPing server solution v3</vendorCode>
         <model>Устройство UniPing server solution v3</model>
         <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления о срабатывании датчиков.</description>
@@ -719,13 +617,22 @@
         <model>Датчик движения (PYRONIX COLT QUAD PI ПИК детектор), 2м</model>
         <description>Датчик предназначен для регистрации наличия движения. Позволяет регистрировать любое движение в зоне 10 м. Подключается к устройствам Uniping.</description>
 >>>>>>> master
+=======
+        <vendorCode>Устройство UniPing server solution v3</vendorCode>
+        <model>Устройство UniPing server solution v3</model>
+        <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления о срабатывании датчиков.</description>
+>>>>>>> refs/remotes/origin/master
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="47" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-sms</url>
+<<<<<<< HEAD
         <price>5550</price>
+=======
+        <price>6383</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_bases_SMS_big.png</picture>
@@ -743,7 +650,11 @@
       </offer>
       <offer id="51" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/uniping-v3</url>
+<<<<<<< HEAD
         <price>4700</price>
+=======
+        <price>5405</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_bases_v3_UniPing_big.png</picture>
@@ -761,7 +672,11 @@
       </offer>
       <offer id="50" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-io-v2</url>
+<<<<<<< HEAD
         <price>1760</price>
+=======
+        <price>2024</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_bases_v2netpingIO_big.png</picture>
@@ -779,7 +694,7 @@
       </offer>
       <offer id="46" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-mini-ups</url>
-        <price>2435</price>
+        <price>2801</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_nping_bases_mini_UPS_big.png</picture>
@@ -797,7 +712,7 @@
       </offer>
       <offer id="43" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-IRC-TR-v2</url>
-        <price>2072</price>
+        <price>2383</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_v2_IRC-TR_big.png</picture>
@@ -815,7 +730,7 @@
       </offer>
       <offer id="14" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/rozetka-ac-din-socket</url>
-        <price>990</price>
+        <price>1139</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_mains_AC_DIN_socket_big.png</picture>
@@ -833,7 +748,7 @@
       </offer>
       <offer id="15" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/perehodnik-ups-c-kabelem</url>
-        <price>550</price>
+        <price>633</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_mains_Adapter_PWR220_big.png</picture>
@@ -851,7 +766,7 @@
       </offer>
       <offer id="22" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/power-socket-adapter-ups</url>
-        <price>350</price>
+        <price>403</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_mains_UPS_adapter_big.png</picture>
@@ -869,7 +784,7 @@
       </offer>
       <offer id="24" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/vap11n-wifi-bridge</url>
-        <price>1700</price>
+        <price>1955</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_mains_VAP11N_WiFi_big.png</picture>
@@ -923,7 +838,7 @@
       </offer>
       <offer id="34" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/power-adapter-48V-1_5A</url>
-        <price>1055</price>
+        <price>1214</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_Power_48V_ps_big.png</picture>
@@ -995,7 +910,7 @@
       </offer>
       <offer id="21" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-cable-extender-4m</url>
-        <price>250</price>
+        <price>288</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_mains_sensors_extender4_big.png</picture>
@@ -1013,7 +928,7 @@
       </offer>
       <offer id="23" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-connection-board-v2</url>
-        <price>2255</price>
+        <price>2594</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_mains_v2_Connection_Board_big.png</picture>
@@ -1031,7 +946,7 @@
       </offer>
       <offer id="20" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/netping-relay-board</url>
-        <price>2900</price>
+        <price>3335</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_mains_relay_board_big.png</picture>
@@ -1049,7 +964,7 @@
       </offer>
       <offer id="35" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/power-adapter-12V-0_5A</url>
-        <price>477</price>
+        <price>549</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_Power_sup_netping_big.png</picture>
@@ -1065,6 +980,7 @@
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <offer id="63" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/poe-switch-np-sm4</url>
@@ -1111,6 +1027,11 @@
         <url>http://www.netping.ru/products/uniping-server-solution-v3</url>
         <price>8900</price>
 >>>>>>> master
+=======
+      <offer id="63" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/poe-switch-np-sm4</url>
+        <price>2162</price>
+>>>>>>> refs/remotes/origin/master
         <currencyId>RUR</currencyId>
         <categoryId>8</categoryId>
         <picture>http://www.netping.ru/Pub/Photos/_swtch_poeeq_4SM_big.png</picture>
@@ -1137,6 +1058,7 @@
         <delivery>true</delivery>
         <typePrefix />
         <vendor>NetPing</vendor>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <vendorCode>Коммутатор PS104GT</vendorCode>
         <model>Коммутатор PS104GT</model>
@@ -1634,6 +1556,11 @@
         <description>Наиболее типовыми задачами мониторинга серверных комнат являются: мониторинг климата и окружающей среды при работе компьютерного оборудования,мониторинг доступа в помещение и наличия движения в серверной комнате,мониторинг наличия электропитания. Система мониторинга должна постоянно отслеживать эти параметры и уведомлять дежурный персонал в случае необходимости.Данное решение для мониторинга серверных комнат на основе устройства Uniping server solution v3/SMS позволяет собирать информацию с внешних датчиков и отправлять E-mail или SMS-уведомления дежурному персоналу в случае необходимости. Для сбора и накопления статистики используется интеграция устройства по протоколу SNMP с системами мониторинга сети Zabbix или PRTG network monitor.  </description>
 >>>>>>> 785798ee8894aded155aa24a3363379ba573fc48
 >>>>>>> master
+=======
+        <vendorCode>Коммутатор PS104GT</vendorCode>
+        <model>Коммутатор PS104GT</model>
+        <description>Коммутатор Ethernet 5 gigabit портов 10/100/1000 BASE-TX. С поддержкой POE (электропитание по Ethernet кабелю) </description>
+>>>>>>> refs/remotes/origin/master
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>

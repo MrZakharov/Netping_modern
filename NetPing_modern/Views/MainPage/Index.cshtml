@@ -165,10 +165,10 @@
             }
 
             <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
-            <!--
-        @foreach (Device device in ViewBag.Devices)
+            
+        @foreach (Device device in ViewBag.DevDevices)
         {
-            <div class="content_best_sales_description" style="background-image: url(@device.GetCoverPhoto(false).Url));">
+            <div class="content_best_sales_description" style="background-image: url(@device.GetCoverPhoto(false).Url);">
                 <a class="content_best_sales_description_a" href="@("/products/" + @device.Url)">@device.Name.Name</a>
                 <p class="content_best_sales_description_p">
 
@@ -177,6 +177,6 @@
                 </p>
             </div>
         }
-            -->
+            
         </div>
     }

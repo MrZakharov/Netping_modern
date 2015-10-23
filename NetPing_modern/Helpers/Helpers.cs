@@ -17,6 +17,14 @@ namespace NetpingHelpers
 {
     public static class Helpers
     {
+        public static IEnumerable<HTMLInjection> GetHtmlInjections(IRepository repository = null)
+        {
+            if(repository == null)
+                repository = new SPOnlineRepository(new ConfluenceClient(new Config()));
+
+            return repository.HtmlInjections;
+        }
+
         public static IEnumerable<Device> GetNewDevices()
         {
             // should be removed
@@ -26,6 +34,15 @@ namespace NetpingHelpers
             var devices = repository.Devices.Where(dev =>
                                     dev.Label.IsEqualStrId(NetPing_modern.Properties.Resources.Guid_Label_New)
                             );
+            devices = devices.OrderByDescending(dev => dev.Created);
+            return devices;
+        }
+
+        public static IEnumerable<Device> GetDevDevices()
+        {
+            var repository = new SPOnlineRepository(new ConfluenceClient(new Config()));
+
+            var devices = repository.Devices.Where(d => !d.Name.IsGroup() && d.Name.Path.Contains("Development"));
             devices = devices.OrderByDescending(dev => dev.Created);
             return devices;
         }

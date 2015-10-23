@@ -7,10 +7,11 @@ using NetPing.DAL;
 using NetPing.Models;
 using NetPing_modern.Properties;
 using System.Resources;
+using NetPing_modern.Controllers;
 
 namespace NetPing.Controllers
 {
-    public class InnerPagesController : Controller
+    public class InnerPagesController : BaseController
     {
         //
         // GET: /InnerPages/
