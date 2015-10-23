@@ -25,7 +25,6 @@ namespace NetPing
             routes.MapRoute("cache_update_async", "cache_update_async", new { controller = "InnerPages", action = "UCacheAsync" });
 
             routes.MapRoute("product_item_aspx", "product_item.aspx", new { controller = "Product_item", action = "Index" });
-
             /*
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             
@@ -88,7 +87,28 @@ namespace NetPing
                 url: "Blog/{postname}",
                 defaults: new { controller = "Blog", action = "Record" }
             );
-            
+
+            routes.MapRoute(
+                name: "UserGuides",
+                url: "UserGuide/{id}/{page}",
+                defaults: new { controller = "Products", action = "UserGuide", id = UrlParameter.Optional, page = UrlParameter.Optional },
+                constraints: new { controller = "Products" }
+            );
+
+            routes.MapRoute(
+                name: "UserGuideSubPage",
+                url: "GetSubPage/{id}/{page}/{subPage}",
+                defaults: new { controller = "Products", action = "GetSubPage" },
+                constraints: new { controller = "Products" }
+            );
+
+            routes.MapRoute(
+                name: "UserGuidePage",
+                url: "page/{page}/{subPage}",
+                defaults: new { controller = "Products", action = "UserGuideSubPage", page = UrlParameter.Optional, subPage = UrlParameter.Optional },
+                constraints: new { controller = "Products" }
+            );
+
             routes.MapRoute(
                 name: "Products",
                 url: "products/{group}/{id}",

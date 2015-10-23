@@ -61,6 +61,29 @@ namespace NetPing_modern.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;View&gt;&lt;OrderBy&gt;
+        ///                                            &lt;FieldRef Name=&apos;Created&apos; Ascending=&apos;FALSE&apos; /&gt;
+        ///                                  &lt;/OrderBy&gt;
+        ///                                    &lt;Query&gt;
+        ///                                    &lt;Where&gt;
+        ///										&lt;Or&gt;
+        ///											&lt;In&gt;
+        ///												&lt;FieldRef Name=&apos;Language&apos; /&gt;
+        ///												&lt;Values&gt;
+        ///													&lt;Value Type=&apos;TaxonomyFieldType&apos;&gt;English&lt;/Value&gt;
+        ///												&lt;/Values&gt;
+        ///											&lt;/In&gt;
+        ///											&lt;In&gt;
+        ///												&lt;FieldRef Name=&apos;Language&apos; /&gt;
+        ///									 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Caml_DevDoc {
+            get {
+                return ResourceManager.GetString("Caml_DevDoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;View&gt;
         ///    &lt;Query&gt;
         ///       &lt;Where&gt;

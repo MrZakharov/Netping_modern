@@ -27,6 +27,11 @@ using NetPing_modern.Services.Confluence;
 //using TidyManaged;
 using Category = NetPing.PriceGeneration.YandexMarker.Category;
 using File = System.IO.File;
+using NetPing_modern.Global.Config;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using NetPing_modern.DAL.Model;
 
 namespace NetPing.DAL
 {
@@ -457,27 +462,70 @@ namespace NetPing.DAL
         private IEnumerable<SFile> SFiles_Read(IEnumerable<SPTerm> termsFileTypes, IEnumerable<SPTerm> terms)
         {
             var result = new List<SFile>();
+            var confluenceClient = new ConfluenceClient(new Config());
 
-            foreach (var item in (ListItemCollection)ReadSPList("Pub files", Camls.Caml_Pub_files))
+            foreach (var item in (ListItemCollection)ReadSPList("Device documentation", Camls.Caml_DevDoc))
             {
-
-                result.Add(new SFile
+                if ((item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes).OwnNameFromPath == "User guide")
                 {
-                    Id = item.Id
-                   ,
-                    Name = item["FileLeafRef"] as string
-                   ,
-                    Title = item["Title"] as string
-                   ,
-                    Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
-                   ,
-                    File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes)
-                   ,
-                    Created = (DateTime)item["Created"]
-                   ,
-                    Url = (item["Public_url"] as FieldUrlValue).ToFileUrlStr(item["FileLeafRef"] as string)
+                    //TODO: Save to file content by FileLeafRef param
+                    var fileUrl = (item["URL"] as FieldUrlValue).ToFileUrlStr(item["FileLeafRef"] as string);
+                    
+                    var contentId = confluenceClient.GetContentIdFromUrl(fileUrl);
+                    if(contentId.HasValue)
+                    {
+                        var content = confluenceClient.GetUserManual(contentId.Value, item.Id);
+                        PushUserGuideToCache(content);
+                        //TODO: Save url to file as Url param
+                        //var url = new UrlHelper().Action("UserGuide", "Products", new { id = contentId.Value });
+                        try
+                        {
+                            var url = "/UserGuide/" + content.Title.Replace("/", "");
+                            result.Add(new SFile
+                            {
+                                Id = item.Id
+                               ,
+                                Name = item["FileLeafRef"] as string
+                               ,
+                                Title = item["Title"] as string
+                               ,
+                                Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
+                               ,
+                                File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes)
+                               ,
+                                Created = (DateTime)item["Created"]
+                               ,
+                                Url = url
 
-                });
+                            });
+                        }
+                        catch(Exception ex)
+                        {
+                            //toDo log exception to log file
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    result.Add(new SFile
+                    {
+                        Id = item.Id
+                       ,
+                        Name = item["FileLeafRef"] as string
+                       ,
+                        Title = item["Title"] as string
+                       ,
+                        Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
+                       ,
+                        File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes)
+                       ,
+                        Created = (DateTime)item["Created"]
+                       ,
+                        Url = (item["URL"] as FieldUrlValue).ToFileUrlStr(item["FileLeafRef"] as string)
+
+                    });
+                }
             }
             if (result.Count == 0) throw new Exception("No one SFile was readed!");
 
@@ -965,6 +1013,39 @@ namespace NetPing.DAL
             catch (Exception ex)
             {
                 if (streamWrite != null) streamWrite.Close();
+                //toDo log exception to log file
+            }
+        }
+
+        public void PushUserGuideToCache(UserManualModel model)
+        {
+            try
+            {
+                HttpRuntime.Cache.Insert(model.Title, model, new TimerCacheDependency());
+
+                string file_name = HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/" + model.Title.Replace("/", "") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+                Stream streamWrite = null;
+                try
+                {
+                    streamWrite = File.Create(file_name);
+                    BinaryFormatter binaryWrite = new BinaryFormatter();
+                    binaryWrite.Serialize(streamWrite, model);
+                    streamWrite.Close();
+                }
+                catch(DirectoryNotFoundException)
+                {
+                    var result = Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/"));
+                    if (result.Exists)
+                        PushUserGuideToCache(model);
+                }
+                catch (Exception ex)
+                {
+                    if (streamWrite != null) streamWrite.Close();
+                    //toDo log exception to log file
+                }
+            }
+            catch(Exception ex)
+            {
                 //toDo log exception to log file
             }
         }

@@ -1,0 +1,572 @@
+﻿@using System.Globalization
+@using NetpingHelpers
+@using NetPing.Models
+@using NetPing_modern.Helpers
+@using NetPing_modern.Resources.Views.MainPage
+
+@{
+    Layout = "~/Views/Shared/Adaptive_master.cshtml";
+}
+@model NetPing_modern.ViewModels.UserManualViewModel
+
+@helper GetPrice(double? price)
+{
+    if (price != null && price > 0)
+    {
+        string str = string.Format(new CultureInfo(1035), "{0:N0}", price);
+        @str
+    }
+}
+
+@section Head_Css{
+    <link href="~/Content/JavaScript/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" type="text/css" media="screen" />
+    <style type="text/css">
+        @@font-face {
+            font-family: "Atlassian Icons";
+            src: url(/fonts/atlassian-icons.woff) format('woff');
+        }
+        .container{
+            margin-left: 0px;
+            margin-right: 0px;
+            width: 100%;
+        }
+
+        .content_best_sales, .content_best_inwork {
+            background-image: url(/Content/Images/best_sales.png);
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 25px;
+            background-color: #e5f8e4;
+            color: #144e5a;
+            font-size: 24px;
+            padding-left: 57px;
+            line-height: 35px;
+        }
+
+        .content_doc{
+            background-image: url(/Content/Images/best_sales.png);
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 25px;
+            background-color: #e5f8e4;
+            color: #144e5a;
+            font-size: 24px;
+            padding-left: 57px;
+            line-height: 35px;
+        }
+
+        .content_news_header {
+            background-color: #e5f8e4;
+        }
+
+        .content_best_inwork {
+            background-image: url(/Content/Images/inwork.png);
+            margin-top: 60px;
+        }
+
+        .content_news {
+            float: left;
+            width: 100%;
+        }
+
+        .content_news_header {
+            background-color: #e5f8e4;
+            height: 35px;
+        }
+
+        .content_news_latest {
+            float: left;
+            background-image: url(/Content/Images/content_news.png);
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 25px;
+            color: #144e5a;
+            font-size: 22px;
+            padding-left: 57px;
+            line-height: 35px;
+        }
+
+        .content_news_latest_rrs {
+            background-image: url(/Content/Images/content_news_latest_rrs.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            float: right;
+            display: block;
+            height: 35px;
+            width: 35px;
+        }
+
+        .content_news_latest_border {
+            margin-top: 10px;
+            border-bottom: 1px solid #000;
+        }
+
+        .content_news_latest_date {
+            margin-top: 20px;
+        }
+
+        .content_news_latest_date_span {
+            display: block;
+            color: #144e5a;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .content_news_latest_date_a {
+            display: block;
+            color: #2f2f2f;
+            font-size: 16px;
+            text-decoration: underline;
+        }
+
+        .content_news_latest_date .content_news_latest_date_span:after {
+            color: #fff;
+            margin-left: 15px;
+            font-weight: 500;
+            padding: 4px 8px;
+            width: 115px;
+            display: inline-block;
+        }
+
+        .content_news_latest_date.News .content_news_latest_date_span:after {
+            content: "Новость";
+            background: #144e5a;
+        }
+
+         .content_news_latest_date.News.Eng .content_news_latest_date_span:after {
+            content: "News";
+            background: #144e5a;
+        }
+
+        .content_news_latest_date.Tutorial .content_news_latest_date_span:after {
+            content: "Руководство";
+            background: #4ab27d;
+        }
+
+        .content_news_latest_date.Tutorial.Eng .content_news_latest_date_span:after {
+            content: "Turtorial";
+            background: #4ab27d;
+        }
+
+        .content_news_latest_date.FAQ .content_news_latest_date_span:after {
+            content: "Ответ на вопрос";
+            background: #8e8e8e;
+        }
+
+        .content_news_latest_date.FAQ.Eng .content_news_latest_date_span:after {
+            content: "FAQ";
+            background: #8e8e8e;
+        }
+
+        .caret {
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid #000000;
+            display: inline-block;
+            height: 0;
+            opacity: 0.3;
+            vertical-align: baseline;
+            width: 0;
+            margin-left: 0px;
+        }
+
+        .right-caret {
+            border-bottom: 4px solid transparent;
+            border-top: 4px solid transparent;
+            border-left: 4px solid #000000;
+            display: inline-block;
+            height: 0;
+            opacity: 0.3;
+            vertical-align: baseline;
+            width: 0;
+            margin-left: 0px;
+        }
+
+        .square {
+            border-bottom: 2px solid #000000;
+            border-top: 2px solid #000000;
+            border-left: 2px solid #000000;
+            border-right: 2px solid #000000;
+            display: inline-block;
+            height: 0;
+            opacity: 0.3;
+            vertical-align: baseline;
+            width: 0;
+            margin-left: 0px;
+        }
+
+        div.subMenu{
+            margin-left: 15px;
+        }
+
+        img{
+            width: 100%;
+        }
+
+        .content_best_sales_description {
+            /*height: 129px;*/
+            margin-top: 20px;
+            background-image: url(/Content/Images/content_description.png);
+            background-repeat: no-repeat;
+            background-position: left;
+            padding-left: 160px;
+        }
+
+        .content_best_sales_description_a {
+            font-size: 18px;
+            color: #2f2f2f;
+            text-decoration: underline;
+        }
+
+        .content_best_sales_description_p {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #2f2f2f;
+        }
+
+        .content_best_sales_description_see {
+            color: #144e5a;
+            text-decoration: underline;
+            font-size: 18px;
+            font-style: italic;
+            margin-left: 453px;
+        }
+
+        .content_best_sales_description .price {
+            color: #eb6e0e;
+            font-size: 22px;
+        }
+
+        .deviceItem{
+            margin-left: 15px;
+        }
+        .guideItem{
+            margin-left: 30px;
+        } 
+        .pageItem{
+            /*margin-left: 45px;*/
+            font-size: 14px;
+        } 
+        .subPageItem{
+            /*margin-left: 60px;*/
+            font-size: 12px;
+        }
+        .blackLink{
+            color: #000000;
+        }
+        .linkUnderline{
+            text-decoration: underline;
+        }
+        .linkBold{
+            font-weight: bold;
+        }
+        #breadcrump{
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="col-md-12" id="breadcrump">
+        <a href="/" class="blackLink">NetPing</a> > <a href="javascript:void(0)" class="blackLink linkUnderline linkBold">Документация</a> > <a href="/products/@Model.Section.Url" class="blackLink linkUnderline linkBold">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+        <div class="content_doc"><span>@Index.Title_doc</span></div>
+        
+        @{var index = 0; int subIndex = 0;}
+        @foreach (var item in Model.Pages)
+        {
+            ++index;
+            subIndex = index * 100;
+            <div>
+                <a href="javascript:void(0)" class="pageItem" data-item-id="@index"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title.Replace("%2E", ".")</a>
+                @if(item.Pages != null && item.Pages.Any())
+                {
+                <div class="hidden subMenu">
+                    @foreach (var subItem in item.Pages)
+                    {
+                        ++subIndex;
+                        <div><a href="javascript:void(0)" class="subPageItem" data-item-id="@subIndex"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title.Replace("%2E", ".")</a></div>
+                    }
+                </div>
+                }
+            </div>
+        }
+    </div>
+    <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6">
+        <div class="header">
+            <h1>@Model.Title</h1>
+        </div>
+        <div class="docContent">
+            @if (string.IsNullOrEmpty(Model.Pages.FirstOrDefault().Content))
+            {
+                @Html.Raw(Model.Pages.FirstOrDefault().Pages.FirstOrDefault().Content)
+            }
+            else
+            {
+                @Html.Raw(Model.Pages.FirstOrDefault().Content)
+            }
+            @*@foreach (var page in Model.Pages)
+            {
+                <a href="javascript:void(0)" class="pageItem">@page.Title.Replace("%2E", ".")</a><br />
+            }*@
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-3 hidden-sm hidden-xs">
+        <div class="content_news">
+            <div class="content_news_header">
+                <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
+            </div>
+        </div>
+        @{
+            int i = 0;
+            foreach (Post post in ViewBag.Posts)
+            {
+
+                if (NetpingHelpers.Helpers.IsCultureEng)
+                {
+                    <div class="content_news_latest_date @post.Category.OwnNameFromPath Eng">
+                        <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>
+                        <a class="content_news_latest_date_a" href="@post.Url_name">@post.Title</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="content_news_latest_date @post.Category.OwnNameFromPath">
+                        <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>
+                        <a class="content_news_latest_date_a" href="@post.Url_name">@post.Title</a>
+                    </div>
+                }
+
+                if (++i == 7)
+                {
+                    break;
+                }
+            }
+        }
+        
+        <div class="clear"></div>
+        <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
+        @foreach (Device device in ViewBag.Devices)
+        {
+            <div class="content_best_sales_description" style="background-image: url(@device.GetCoverPhoto(false).Url);">
+                <a class="content_best_sales_description_a" href="@("/products/" + device.Url)">@device.Name.Name</a>
+                <p class="content_best_sales_description_p">
+
+                    @Html.Raw(device.Short_description.ToShortTextHTML("/products/" + device.Url))
+
+                    <br />
+                    Цена:
+                    <span class="price">@GetPrice(device.Price)&nbsp;@device.GetCurrency</span>
+                </p>
+            </div>
+        }
+        <div class="clear"></div>
+        <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
+    </div>
+    <div class="row col-sm-12 col-xs-12 hidden-lg hidden-md">
+        <div class="col-sm-5 col-xs-5">
+        <div class="content_news">
+            <div class="content_news_header">
+                <div><a href="/Blog" class="content_news_latest">@Index.Title_popular_news</a></div>
+            </div>
+        </div>
+        @{
+            int i1 = 0;
+            foreach (Post post in ViewBag.Posts)
+            {
+
+                if (NetpingHelpers.Helpers.IsCultureEng)
+                {
+                    <div class="content_news_latest_date @post.Category.OwnNameFromPath Eng">
+                        <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>
+                        <a class="content_news_latest_date_a" href="@post.Url_name">@post.Title</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="content_news_latest_date @post.Category.OwnNameFromPath">
+                        <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>
+                        <a class="content_news_latest_date_a" href="@post.Url_name">@post.Title</a>
+                    </div>
+                }
+
+                if (++i1 == 7)
+                {
+                    break;
+                }
+            }
+        }
+
+        </div>
+        <div class="col-sm-7 col-xs-7">
+            <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
+            @foreach (Device device in ViewBag.Devices)
+            {
+                <div class="content_best_sales_description" style="background-image: url(@device.GetCoverPhoto(false).Url);">
+                    <a class="content_best_sales_description_a" href="@("/products/" + device.Url)">@device.Name.Name</a>
+                    <p class="content_best_sales_description_p">
+
+                        @Html.Raw(device.Short_description.ToShortTextHTML("/products/" + device.Url))
+
+                        <br />
+                        Цена:
+                        <span class="price">@GetPrice(device.Price)&nbsp;@device.GetCurrency</span>
+                    </p>
+                </div>
+            }
+            <div class="clear"></div>
+            <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script src="~/Content/JavaScript/fancybox/jquery.fancybox-1.3.4.js"></script>
+<script src="~/Content/JavaScript/fancybox/jquery.easing-1.3.pack.js"></script>
+<script src="~/Content/JavaScript/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        if (location.hash != null && location.hash != '') {
+            var id = parseInt(location.hash.replace("#", ""));
+            openByDataItemId(id);
+        } else {
+            if ($('a[data-item-id=101]').length > 0)
+                openByDataItemId(101);
+            else
+                openByDataItemId(1);
+        }
+
+        $('body').on('click', 'a.pageItem', function () {
+            console.log('clicked');
+        });
+
+        var breadcrumpMain = 'NetPing > @Index.Title_doc > ';
+        var sectionName = $('a#@Model.ItemId').parent().parent().parent().children('a').text();
+        var deviceName = $('a#@Model.ItemId').parent().parent().children('a').text();
+        breadcrumpMain += sectionName + ' > ' + deviceName + ' > ' + '@Model.Title';
+        //$('#breadcrump').text(breadcrumpMain);
+
+        $('a#@Model.ItemId').parent().removeClass('hidden');
+        $('a#@Model.ItemId').parent().parent().removeClass('hidden');
+        $('a#@Model.ItemId').parent().parent().children('div.hidden').removeClass('hidden');
+        $('a#@Model.ItemId').parent().parent().parent().children('div.hidden').removeClass('hidden');
+
+        $('a.guideItem').click(function (e) {
+            if ($(e.target).parent().children('div').length > 0 && $(e.target).parent().children('div.hidden').length == 0) {
+                $(e.target).parent().children('div').addClass('hidden');
+                $(e.target).children('b').removeClass('caret').addClass('right-caret');
+
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+        $('a.sectionItem').click(function (e) {
+            openClose(e);
+        });
+
+        $('a.deviceItem').click(function (e) {
+            openClose(e);
+        });
+
+        $('a.pageItem').click(function (e) {
+            pageItemClick(e);
+        });
+
+        $('a.subPageItem').click(function (e) {
+            subPageItemClick(e);
+        });
+
+        
+    });
+
+    function openClose(e) {
+        var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+        if ($(target).parent().children('div.hidden').length == 0) {
+            $(target).parent().children('div').addClass('hidden');
+            $(target).children('b').removeClass('caret').addClass('right-caret');
+            $(target).parent().parent().children('div.hidden').removeClass('hidden');
+        } else {
+            //$('b.caret').removeClass('caret').addClass('right-caret');
+            $(target).parent().children('div.hidden').removeClass('hidden');
+            $(target).children('b.right-caret').removeClass('right-caret').addClass('caret');
+        }
+    }
+
+    function pageItemClick(e) {
+        openClose(e);
+
+        var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+        var item = $.trim($(target).text());
+        var itemId = $(target).attr('data-item-id');
+        location.hash = itemId;
+
+        var url = "/UserGuide/@Model.Title.Replace("/", "")/" + item + "/";
+        $.get(url, null, function (data) {
+            $('div.docContent').empty();
+            $('div.docContent').append(data);
+
+            initDocContent();
+        });
+    }
+
+    function subPageItemClick(e) {
+        var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
+
+        //var item = $.trim($(target).parent().parent().children('a.pageItem').text());
+        var item = $.trim($(target).parent().parent().parent().children('a.pageItem').text()).replace('?', '');
+        var subItem = $.trim($(target).text()).replace('?', '');
+
+        var itemId = $(target).attr('data-item-id');
+        location.hash = itemId;
+
+        var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
+        $.get(url, null, function (data) {
+            $('div.docContent').empty();
+            $('div.docContent').append(data);
+
+            initDocContent();
+        });
+    }
+
+        function openByDataItemId(id){
+            var e = new Object();
+            if (id > 100) {
+                e.target = $('a[data-item-id=' + id + ']').parent().parent().parent().children('a.pageItem')[0];
+                //pageItemClick(e);
+                openClose(e);
+                e.target = $('a[data-item-id=' + id + ']')[0];
+                subPageItemClick(e);
+            } else {
+                e.target = $('a[data-item-id=' + id + ']')[0];
+                pageItemClick(e);
+            }
+        }
+
+        function initDocContent() {
+            initFancybox();
+
+            $('div.docContent').find('li').css('list-style-image', 'url("/Content/Images/doc_li.png")');
+        }
+</script>
+<script type="text/javascript">
+    function initFancybox() {
+        $('.confluence-embedded-image').each(function() {
+            $(this).attr('href', $(this).data('image-src')).css('cursor', 'zoom-in');
+        });
+        $('.confluence-embedded-image').fancybox({
+            'transitionIn': 'elastic',
+            'transitionOut': 'elastic',
+            'speedIn': '600',
+            'speedOut': '200',
+            'overlayShow': false,
+            'type': 'image'
+        });
+    }
+</script>
+}

@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Caml_DevDoc" xml:space="preserve">
+    <value>&lt;View&gt;&lt;OrderBy&gt;
+                                            &lt;FieldRef Name='Created' Ascending='FALSE' /&gt;
+                                  &lt;/OrderBy&gt;
+                                    &lt;Query&gt;
+                                    &lt;Where&gt;
+										&lt;Or&gt;
+											&lt;In&gt;
+												&lt;FieldRef Name='Language' /&gt;
+												&lt;Values&gt;
+													&lt;Value Type='TaxonomyFieldType'&gt;English&lt;/Value&gt;
+												&lt;/Values&gt;
+											&lt;/In&gt;
+											&lt;In&gt;
+												&lt;FieldRef Name='Language' /&gt;
+												&lt;Values&gt;
+													&lt;Value Type='TaxonomyFieldType'&gt;ALL&lt;/Value&gt;
+												&lt;/Values&gt;                                                
+											&lt;/In&gt;
+										&lt;/Or&gt;
+                                    &lt;/Query&gt;
+                                    &lt;/Where&gt;
+                                  &lt;/View&gt;</value>
+  </data>
   <data name="Caml_DevicePhotos" xml:space="preserve">
     <value>&lt;View&gt;
                                     &lt;Query&gt;

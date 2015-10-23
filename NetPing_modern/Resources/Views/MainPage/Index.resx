@@ -159,4 +159,10 @@
   <data name="Title_dev" xml:space="preserve">
     <value>Development</value>
   </data>
+  <data name="Title_popular_news" xml:space="preserve">
+    <value>Popular articles</value>
+  </data>
+  <data name="Title_doc" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
 </root>

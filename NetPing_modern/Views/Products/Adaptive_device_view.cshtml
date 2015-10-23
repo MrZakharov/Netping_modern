@@ -214,7 +214,22 @@
                 {
                     foreach (dynamic grp in ViewBag.Files_groups)
                     {
+                        if (grp.OwnNameFromPath == "File user guide")
+                        {
+                            continue;
+                        }
+                        
                         IEnumerable<SFile> files = Model.SFiles.Where(type => type.File_type.Id == grp.Id);
+                        if (grp.OwnNameFromPath == "User guide")
+                        {
+                            var grpId = (ViewBag.Files_groups as IEnumerable<SPTerm>).SingleOrDefault(g => g.OwnNameFromPath == "File user guide").Id;
+                            if (grpId != null)
+                            {
+                                var list = new List<SFile>(files);
+                                list.AddRange(Model.SFiles.Where(type => type.File_type.Id == grpId));
+                                files = list;
+                            }
+                        }
                         if (files.Any())
                         {
                             <div class="t-title">@grp.Name</div>
@@ -222,8 +237,19 @@
                                 <ul>
                                     @foreach (SFile file in files.ToList())
                                     {
-                                        <li> <a rel="nofollow" target="_blank" href="@file.Url" class="file doc">@file.Name</a></li>
+                                        <li> <a href="@file.Url" class="file doc">@file.Title</a></li>
                                     }
+                                    @*@if (grp.OwnNameFromPath == "User guide")
+                                    {
+                                        Html.RenderPartial("UserGuides", files);
+                                    }
+                                    else
+                                    { 
+                                        foreach (SFile file in files.ToList())
+                                        {
+                                            <li> <a href="@file.Url" class="file doc">@file.Name</a></li>
+                                        }
+                                    }*@
                                 </ul>
                             </div>
                         }
