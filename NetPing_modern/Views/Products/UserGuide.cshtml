@@ -265,6 +265,13 @@
             margin-top: 5px;
             margin-bottom: 5px;
         }
+        .activePage{
+            color: #000000;
+        }
+        .activePage:active, .activePage:focus{
+            text-decoration: none;
+            color: #000000;
+        }
     </style>
 }
 
@@ -513,6 +520,8 @@
             $('div.docContent').append(data);
 
             initDocContent();
+            $('a.pageItem').removeClass('activePage');
+            //$(target).addClass('activePage');
         });
     }
 
@@ -532,6 +541,8 @@
             $('div.docContent').append(data);
 
             initDocContent();
+            $('a.subPageItem').removeClass('activePage');
+            $(target).addClass('activePage');
         });
     }
 
@@ -544,10 +555,14 @@
                 openClose(e);
                 e.target = $('a[data-item-id="' + id + '"]')[0];
                 subPageItemClick(e);
+                $('a.pageItem').removeClass('activePage');
             } else {
                 e.target = $('a[data-item-id="' + id + '"]')[0];
                 pageItemClick(e);
+                $('a.subPageItem').removeClass('activePage');
             }
+
+            $('a[data-item-id="' + id + '"]').addClass('activePage');
         }
 
         function initDocContent() {
