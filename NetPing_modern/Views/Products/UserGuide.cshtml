@@ -358,9 +358,25 @@
         <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
         @foreach (Device device in ViewBag.Devices)
         {
-            <div class="content_best_sales_description" style="background-image: url(@device.GetCoverPhoto(false).Url);">
-                <a class="content_best_sales_description_a" href="@("/products/" + device.Url)">@device.Name.Name</a>
-                <p class="content_best_sales_description_p">
+            <div class="col-md-12 col-lg-12" style="padding-left: 1px; padding-right: 1px;">
+                <div class="col-sm-4 col-lg-4 hidden-md" style="background-image: url(@device.GetCoverPhoto(false).Url); background-size: cover; min-height: 100px;"></div>
+                <div class="col-sm-8 col-md-12 col-lg-8" style="padding-left: 1px; padding-right: 1px;">
+                    <a class="content_best_sales_description_a" href="@("/products/" + device.Url)">@device.Name.Name</a>
+                    <div class="col-md-12 col-lg-4 hidden-xs hidden-sm hidden-lg" style="background-image: url(@device.GetCoverPhoto(false).Url); background-repeat: no-repeat; background-position: center; min-height: 100px;"></div>
+                    <p class="content_best_sales_description_p">
+
+                        @Html.Raw(device.Short_description.ToShortTextHTML("/products/" + device.Url))
+
+                        <br />
+                        Цена:
+                        <span class="price" style="color: #eb6e0e; font-size: 22px;">@GetPrice(device.Price)&nbsp;@device.GetCurrency</span>
+                    </p>
+                </div>
+            </div>
+            
+            @*<div class="content_best_sales_description col-md-12" style="background-image: url(@device.GetCoverPhoto(false).Url);">
+                <a class="content_best_sales_description_a col-md-8" href="@("/products/" + device.Url)">@device.Name.Name</a>
+                <p class="content_best_sales_description_p col-md-8">
 
                     @Html.Raw(device.Short_description.ToShortTextHTML("/products/" + device.Url))
 
@@ -368,7 +384,7 @@
                     Цена:
                     <span class="price">@GetPrice(device.Price)&nbsp;@device.GetCurrency</span>
                 </p>
-            </div>
+            </div>*@
         }
         <div class="clear"></div>
         <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
