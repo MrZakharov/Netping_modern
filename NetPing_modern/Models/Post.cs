@@ -17,5 +17,11 @@ namespace NetPing.Models
         public DateTime Created { get; set; }
         public string Url_name { get; set; }
         public bool IsTop { get; set; }
+
+
+        /// <summary>
+        /// Для заполнения meta HTML страницы
+        /// </summary>
+        public Dictionary<string, string> MetaHtml { get; set; }
     }
 }
