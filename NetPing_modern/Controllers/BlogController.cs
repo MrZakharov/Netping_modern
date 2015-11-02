@@ -67,9 +67,15 @@ namespace NetPing_modern.Controllers
 
             var resourceManager = new ResourceManager("NetPing_modern.Resources.Views.Blog.Main", typeof(BlogController).Assembly);
 
-            ViewBag.Title = model.Post.GetMetaValueToKey("Title") ?? resourceManager.GetString("Page_title", System.Globalization.CultureInfo.CurrentCulture);
-            ViewBag.Description = model.Post.GetMetaValueToKey("Description") ?? resourceManager.GetString("Page_description", System.Globalization.CultureInfo.CurrentCulture);
-            ViewBag.Keys = model.Post.GetMetaValueToKey("Keys") ?? resourceManager.GetString("Page_keywords", System.Globalization.CultureInfo.CurrentCulture);
+            ViewBag.Title = (model.Post != null && string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Title"))) ?
+                model.Post.GetMetaValueToKey("Title") :
+                resourceManager.GetString("Page_title", System.Globalization.CultureInfo.CurrentCulture);
+            ViewBag.Title = (model.Post != null && string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Title"))) ?
+                model.Post.GetMetaValueToKey("Description") :
+                resourceManager.GetString("Page_description", System.Globalization.CultureInfo.CurrentCulture);
+            ViewBag.Title = (model.Post != null && string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Title"))) ?
+                model.Post.GetMetaValueToKey("Keys") :
+                resourceManager.GetString("Page_keywords", System.Globalization.CultureInfo.CurrentCulture);
 
 
             ViewBag.BlogCategoryName = "";
@@ -233,9 +239,15 @@ namespace NetPing_modern.Controllers
 
                 ViewBag.Head = resourceManager.GetString("Page_head", System.Globalization.CultureInfo.CurrentCulture);
 
-                ViewBag.Title = model.Post.GetMetaValueToKey("Title") ?? resourceManager.GetString("Page_title", System.Globalization.CultureInfo.CurrentCulture);
-                ViewBag.Description = model.Post.GetMetaValueToKey("Description") ?? resourceManager.GetString("Page_description", System.Globalization.CultureInfo.CurrentCulture);
-                ViewBag.Keys = model.Post.GetMetaValueToKey("Keys") ?? resourceManager.GetString("Page_keywords", System.Globalization.CultureInfo.CurrentCulture);
+                ViewBag.Title = (model.Post != null && string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Title"))) ?
+                model.Post.GetMetaValueToKey("Title") :
+                resourceManager.GetString("Page_title", System.Globalization.CultureInfo.CurrentCulture);
+                ViewBag.Title = (model.Post != null && string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Title"))) ?
+                    model.Post.GetMetaValueToKey("Description") :
+                    resourceManager.GetString("Page_description", System.Globalization.CultureInfo.CurrentCulture);
+                ViewBag.Title = (model.Post != null && string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Title"))) ?
+                    model.Post.GetMetaValueToKey("Keys") :
+                    resourceManager.GetString("Page_keywords", System.Globalization.CultureInfo.CurrentCulture);
             }
 
 
