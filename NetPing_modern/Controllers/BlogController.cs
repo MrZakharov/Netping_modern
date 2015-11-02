@@ -73,8 +73,8 @@ namespace NetPing_modern.Controllers
             ViewBag.Description = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Description"))) ?
                 model.Post.GetMetaValueToKey("Description") :
                 resourceManager.GetString("Page_description", System.Globalization.CultureInfo.CurrentCulture);
-            ViewBag.Keys = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Keys"))) ?
-                model.Post.GetMetaValueToKey("Keys") :
+            ViewBag.Keys = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Keywords"))) ?
+                model.Post.GetMetaValueToKey("Keywords") :
                 resourceManager.GetString("Page_keywords", System.Globalization.CultureInfo.CurrentCulture);
 
 
@@ -174,8 +174,8 @@ namespace NetPing_modern.Controllers
             ViewBag.Description = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Description"))) ?
                 model.Post.GetMetaValueToKey("Description") :
                 model.Post.ShortBody;
-            ViewBag.Keys = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Keys"))) ?
-                    model.Post.GetMetaValueToKey("Keys") : "";
+            ViewBag.Keys = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Keywords"))) ?
+                    model.Post.GetMetaValueToKey("Keywords") : "";
 
             ViewBag.BlogCategoryName = model.Post.Category.Name;
             ViewBag.BlogCategoryPath = model.Post.Category.Path;
@@ -251,8 +251,8 @@ namespace NetPing_modern.Controllers
                 ViewBag.Description = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Description"))) ?
                     model.Post.GetMetaValueToKey("Description") :
                     resourceManager.GetString("Page_description", System.Globalization.CultureInfo.CurrentCulture);
-                ViewBag.Keys = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Keys"))) ?
-                    model.Post.GetMetaValueToKey("Keys") :
+                ViewBag.Keys = (model.Post != null && !string.IsNullOrEmpty(model.Post.GetMetaValueToKey("Keywords"))) ?
+                    model.Post.GetMetaValueToKey("Keywords") :
                     resourceManager.GetString("Page_keywords", System.Globalization.CultureInfo.CurrentCulture);
             }
 
