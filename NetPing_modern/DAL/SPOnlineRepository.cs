@@ -279,25 +279,25 @@ namespace NetPing.DAL
             foreach (var item in (ListItemCollection)ReadSPList("Devices", Camls.Caml_Device_keys))
             {
                 var device = new Device
-                         {
-                             Id = item.Id
+                {
+                    Id = item.Id
                             ,
-                             OldKey = item["Title"] as string
+                    OldKey = item["Title"] as string
                             ,
-                             Name = (item["Name"] as TaxonomyFieldValue).ToSPTerm(terms)
+                    Name = (item["Name"] as TaxonomyFieldValue).ToSPTerm(terms)
                             ,
-                             Destination = (item["Destination"] as TaxonomyFieldValueCollection).ToSPTermList(termsDestinations)
+                    Destination = (item["Destination"] as TaxonomyFieldValueCollection).ToSPTermList(termsDestinations)
                             ,
-                             Connected_devices = (item["Connected_devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
+                    Connected_devices = (item["Connected_devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
                             ,
-                             Price = item["Price"] as double?
+                    Price = item["Price"] as double?
                             ,
-                             Label = (item["Label"] as TaxonomyFieldValue).ToSPTerm(termsLabels)
+                    Label = (item["Label"] as TaxonomyFieldValue).ToSPTerm(termsLabels)
                             ,
-                             Created = (DateTime)item["Created"]
+                    Created = (DateTime)item["Created"]
                             ,
-                             Url = item["Url"] as string
-                         };
+                    Url = item["Url"] as string
+                };
 
 
 
@@ -552,10 +552,16 @@ namespace NetPing.DAL
                 }
                 string content = string.Empty;
                 string title = string.Empty;
+                Dictionary<string, string> metaHtml = null;
                 if (contentId.HasValue)
                 {
                     Task<string> contentTask = _confluenceClient.GetContenAsync(contentId.Value);
                     content = contentTask.Result;
+
+                    metaHtml = GetPageProperties(content);
+                    if (metaHtml != null)
+                        content = RemovePagePropertiesInContent(content);
+
                     contentTask = _confluenceClient.GetContentTitleAsync(contentId.Value);
                     title = contentTask.Result;
                 }
@@ -568,25 +574,81 @@ namespace NetPing.DAL
 
 
                 result.Add(new Post
-                         {
-                             Id = (item["Old_id"] == null) ? 0 : int.Parse(item["Old_id"].ToString())
+                {
+                    Id = (item["Old_id"] == null) ? 0 : int.Parse(item["Old_id"].ToString())
                             ,
-                             Title = title
+                    Title = title
                             ,
-                             Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
+                    Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
                             ,
-                             Body = content.ReplaceInternalLinks()
+                    Body = content.ReplaceInternalLinks()
                             ,
-                             Category = (item["Category"] as TaxonomyFieldValue).ToSPTerm(categoryTerms)
+                    Category = (item["Category"] as TaxonomyFieldValue).ToSPTerm(categoryTerms)
                             ,
-                             Created = (DateTime)item["Pub_date"]
+                    Created = (DateTime)item["Pub_date"]
                              ,
-                             Url_name = "/Blog/" + (item["Body_link"] as FieldUrlValue).Description.Replace(".", "x2E").Trim(' '),
-                             IsTop = (bool)item["TOP"]
-                         });
+                    Url_name = "/Blog/" + (item["Body_link"] as FieldUrlValue).Description.Replace(".", "x2E").Trim(' '),
+                    IsTop = (bool)item["TOP"],
+                    MetaHtml = metaHtml
+                });
             }
             if (result.Count == 0) throw new Exception("No one post was readed!");
             return result;
+        }
+        /// <summary>
+        /// Находим блок PageProperties на странице
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private Dictionary<string, string> GetPageProperties(string content)
+        {
+            HtmlDocument html = new HtmlDocument();
+            html.LoadHtml(content);
+            HtmlNode table = GetPagePropertiesContent(html).Descendants("table").FirstOrDefault();
+            if (table != null)
+            {
+                var result = new Dictionary<string, string>();
+                var trNodes = table.ChildNodes[0].ChildNodes.Where(x => x.Name == "tr");
+                foreach (var tr in trNodes)
+                {
+                    var tdNodes = tr.ChildNodes.Where(x => x.Name == "td").ToArray();
+                    if (tdNodes.Count() == 2)
+                    {
+                        var key = tdNodes[0].InnerText;
+                        if (!result.ContainsKey(key))
+                            result.Add(tdNodes[0].InnerText, tdNodes[1].InnerText);
+                    }
+                }
+                return result;
+            }
+            else
+                return null;
+
+        }
+
+        /// <summary>
+        /// Удаляем из страницы блок PageProperties (блок с мета тегами)
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private string RemovePagePropertiesInContent(string content)
+        {
+            HtmlDocument html = new HtmlDocument();
+            html.LoadHtml(content);
+            HtmlNode table = GetPagePropertiesContent(html);
+            html.DocumentNode.SelectSingleNode(table.XPath).Remove();
+            return html.DocumentNode.InnerHtml;
+        }
+
+        /// <summary>
+        /// Находим на странице блок PageProperties (блок с мета тегами)
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        private static HtmlNode GetPagePropertiesContent(HtmlDocument html)
+        {
+            return html.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("data-macro-name")
+                        && x.Attributes["data-macro-name"].Value.Contains("details")).FirstOrDefault();
         }
 
         #endregion
@@ -776,9 +838,9 @@ namespace NetPing.DAL
         private void GenerateYml()
         {
             var catalog = new YmlCatalog
-                          {
-                              Date = DateTime.Now
-                          };
+            {
+                Date = DateTime.Now
+            };
             var shop = new Shop();
             catalog.Shop = shop;
 
@@ -788,21 +850,21 @@ namespace NetPing.DAL
             shop.Company = netpingRu;
             shop.Url = "http://www.netping.ru";
             shop.Currencies.Add(new Currency
-                                    {
-                                        Id = "RUR",
-                                        Rate = 1,
-                                        Plus = 0
-                                    });
+            {
+                Id = "RUR",
+                Rate = 1,
+                Plus = 0
+            });
 
             var tree = new DevicesTree(Devices);
             foreach (DeviceTreeNode categoryNode in tree.Nodes)
             {
                 shop.Categories.Add(new Category
-                                    {
-                                        Id = categoryNode.Id,
-                                        Name = categoryNode.Name,
-                                        ParentId = categoryNode.Parent == null ? (int?)null : categoryNode.Parent.Id
-                                    });
+                {
+                    Id = categoryNode.Id,
+                    Name = categoryNode.Name,
+                    ParentId = categoryNode.Parent == null ? (int?)null : categoryNode.Parent.Id
+                });
 
                 foreach (DeviceTreeNode childCategoryNode in categoryNode.Nodes)
                 {
@@ -841,18 +903,18 @@ namespace NetPing.DAL
             }
 
             shop.Offers.Add(new Offer
-                            {
-                                Id = offerNode.Id,
-                                Url = GetDeviceUrl(offerNode.Device),
-                                Price = (int) (offerNode.Device.Price.HasValue ? offerNode.Device.Price.Value : 0),
-                                CategoryId = childCategoryNode.Id,
-                                Picture = offerNode.Device.GetCoverPhoto(true).Url,
-                                TypePrefix = "",
-                                /*childCategoryNode.Name,*/
-                                VendorCode = offerNode.Name,
-                                Model = offerNode.Name,
-                                Description = descr
-                            });
+            {
+                Id = offerNode.Id,
+                Url = GetDeviceUrl(offerNode.Device),
+                Price = (int)(offerNode.Device.Price.HasValue ? offerNode.Device.Price.Value : 0),
+                CategoryId = childCategoryNode.Id,
+                Picture = offerNode.Device.GetCoverPhoto(true).Url,
+                TypePrefix = "",
+                /*childCategoryNode.Name,*/
+                VendorCode = offerNode.Name,
+                Model = offerNode.Name,
+                Description = descr
+            });
 
         }
 
@@ -1000,15 +1062,15 @@ namespace NetPing.DAL
                 }
 
                 terms.Add(new SPTerm
-                        {
-                            Id = term.Id
+                {
+                    Id = term.Id
                            ,
-                            Name = name
+                    Name = name
                            ,
-                            Path = term.PathOfTerm
+                    Path = term.PathOfTerm
                            ,
-                            Properties = term.LocalCustomProperties
-                        });
+                    Properties = term.LocalCustomProperties
+                });
                 if (!string.IsNullOrEmpty(term.CustomSortOrder))
                 {
                     sortOrders.AddSortOrder(term.CustomSortOrder);
@@ -1075,15 +1137,15 @@ namespace NetPing.DAL
             var items = ReadSPList("HTML_injection", NetPing_modern.Resources.Camls.Caml_HTMLInjection);
 
             var list = new List<HTMLInjection>();
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 list.Add(new HTMLInjection
-                    {
-                        HTML = item["HTML"].ToString(),
-                        Page = item["Page"].ToString(),
-                        Section = item["Section"].ToString(),
-                        Title = item["Title"].ToString(),
-                    });
+                {
+                    HTML = item["HTML"].ToString(),
+                    Page = item["Page"].ToString(),
+                    Section = item["Section"].ToString(),
+                    Title = item["Title"].ToString(),
+                });
             }
 
             return list;
