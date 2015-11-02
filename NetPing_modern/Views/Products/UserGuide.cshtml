@@ -265,12 +265,19 @@
             margin-top: 5px;
             margin-bottom: 5px;
         }
+        .activePage{
+            color: #000000;
+        }
+        .activePage:active, .activePage:focus{
+            text-decoration: none;
+            color: #000000;
+        }
     </style>
 }
 
 <div class="container">
     <div class="col-md-12" id="breadcrump">
-        <a href="/" class="blackLink">NetPing</a> > <a href="javascript:void(0)" class="blackLink linkUnderline linkBold">Документация</a> > <a href="/products/@Model.Section.Url" class="blackLink linkUnderline linkBold">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title/">@Model.Title</a>
+        <a href="/" class="blackLink">NetPing</a> > <a href="javascript:void(0)" class="blackLink linkUnderline linkBold">Документация</a> > <a href="/products/@Model.Section.Url" class="blackLink linkUnderline linkBold">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title.Replace("/", "")/">@Model.Title</a>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
         <div class="content_doc"><span>@Index.Title_doc</span></div>
@@ -281,14 +288,14 @@
             ++index;
             subIndex = index * 100;
             <div>
-                <a href="javascript:void(0)" class="pageItem" data-item-id="@index"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title.Replace("%2E", ".")</a>
+                <a href="javascript:void(0)" class="pageItem" data-item-id="@item.Title.Replace(":", "%58")"><b class="@(item.Pages.Any() ? "right-caret" : "square")"></b> @item.Title.Replace("%2E", ".")</a>
                 @if(item.Pages != null && item.Pages.Any())
                 {
                 <div class="hidden subMenu">
                     @foreach (var subItem in item.Pages)
                     {
                         ++subIndex;
-                        <div><a href="javascript:void(0)" class="subPageItem" data-item-id="@subIndex"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title.Replace("%2E", ".")</a></div>
+                        <div><a href="javascript:void(0)" class="subPageItem" data-item-id="@subItem.Title.Replace(":", "%58")"><b class="@(subItem.Pages.Any() ? "right-caret" : "square")"></b> @subItem.Title.Replace("%2E", ".")</a></div>
                     }
                 </div>
                 }
@@ -351,9 +358,25 @@
         <div class="content_best_sales"><span>@Index.Title_new_devices</span></div>
         @foreach (Device device in ViewBag.Devices)
         {
-            <div class="content_best_sales_description" style="background-image: url(@device.GetCoverPhoto(false).Url);">
-                <a class="content_best_sales_description_a" href="@("/products/" + device.Url)">@device.Name.Name</a>
-                <p class="content_best_sales_description_p">
+            <div class="col-md-12 col-lg-12" style="padding-left: 1px; padding-right: 1px;">
+                <div class="col-sm-4 col-lg-4 hidden-md" style="background-image: url(@device.GetCoverPhoto(false).Url); background-size: cover; min-height: 100px;"></div>
+                <div class="col-sm-8 col-md-12 col-lg-8" style="padding-left: 1px; padding-right: 1px;">
+                    <a class="content_best_sales_description_a" href="@("/products/" + device.Url)">@device.Name.Name</a>
+                    <div class="col-md-12 col-lg-4 hidden-xs hidden-sm hidden-lg" style="background-image: url(@device.GetCoverPhoto(false).Url); background-repeat: no-repeat; background-position: center; min-height: 100px;"></div>
+                    <p class="content_best_sales_description_p">
+
+                        @Html.Raw(device.Short_description.ToShortTextHTML("/products/" + device.Url))
+
+                        <br />
+                        Цена:
+                        <span class="price" style="color: #eb6e0e; font-size: 22px;">@GetPrice(device.Price)&nbsp;@device.GetCurrency</span>
+                    </p>
+                </div>
+            </div>
+            
+            @*<div class="content_best_sales_description col-md-12" style="background-image: url(@device.GetCoverPhoto(false).Url);">
+                <a class="content_best_sales_description_a col-md-8" href="@("/products/" + device.Url)">@device.Name.Name</a>
+                <p class="content_best_sales_description_p col-md-8">
 
                     @Html.Raw(device.Short_description.ToShortTextHTML("/products/" + device.Url))
 
@@ -361,7 +384,7 @@
                     Цена:
                     <span class="price">@GetPrice(device.Price)&nbsp;@device.GetCurrency</span>
                 </p>
-            </div>
+            </div>*@
         }
         <div class="clear"></div>
         <div class="content_best_inwork"><span>@Index.Title_dev</span></div>
@@ -430,13 +453,14 @@
     <script type="text/javascript">
     $(document).ready(function () {
         if (location.hash != null && location.hash != '') {
-            var id = parseInt(location.hash.replace("#", ""));
+            //var id = parseInt(location.hash.replace("#", ""));
+            var id = location.hash.replace("#", "");
             openByDataItemId(id);
         } else {
-            if ($('a[data-item-id=101]').length > 0)
-                openByDataItemId(101);
+            if ($('a.subPageItem').length > 0)
+                openByDataItemId($('a.subPageItem').attr('data-item-id'));
             else
-                openByDataItemId(1);
+                openByDataItemId($('a.pageItem').attr('data-item-id'));
         }
 
         $('body').on('click', 'a.pageItem', function () {
@@ -502,7 +526,7 @@
 
         var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
 
-        var item = $.trim($(target).text());
+        var item = $.trim($(target).text().replace(":", ""));
         var itemId = $(target).attr('data-item-id');
         location.hash = itemId;
 
@@ -512,6 +536,8 @@
             $('div.docContent').append(data);
 
             initDocContent();
+            $('a.pageItem').removeClass('activePage');
+            //$(target).addClass('activePage');
         });
     }
 
@@ -519,8 +545,8 @@
         var target = e.target.tagName == "A" ? e.target : $(e.target).parent();
 
         //var item = $.trim($(target).parent().parent().children('a.pageItem').text());
-        var item = $.trim($(target).parent().parent().parent().children('a.pageItem').text()).replace('?', '');
-        var subItem = $.trim($(target).text()).replace('?', '');
+        var item = $.trim($(target).parent().parent().parent().children('a.pageItem').text()).replace('?', '').replace(':', '');
+        var subItem = $.trim($(target).text()).replace('?', '').replace(':', '');
 
         var itemId = $(target).attr('data-item-id');
         location.hash = itemId;
@@ -531,21 +557,28 @@
             $('div.docContent').append(data);
 
             initDocContent();
+            $('a.subPageItem').removeClass('activePage');
+            $(target).addClass('activePage');
         });
     }
 
         function openByDataItemId(id){
             var e = new Object();
-            if (id > 100) {
-                e.target = $('a[data-item-id=' + id + ']').parent().parent().parent().children('a.pageItem')[0];
+            var isPage = $('a[data-item-id="' + id + '"]').hasClass('pageItem');
+            if (!isPage) {
+                e.target = $('a[data-item-id="' + id + '"]').parent().parent().parent().children('a.pageItem')[0];
                 //pageItemClick(e);
                 openClose(e);
-                e.target = $('a[data-item-id=' + id + ']')[0];
+                e.target = $('a[data-item-id="' + id + '"]')[0];
                 subPageItemClick(e);
+                $('a.pageItem').removeClass('activePage');
             } else {
-                e.target = $('a[data-item-id=' + id + ']')[0];
+                e.target = $('a[data-item-id="' + id + '"]')[0];
                 pageItemClick(e);
+                $('a.subPageItem').removeClass('activePage');
             }
+
+            $('a[data-item-id="' + id + '"]').addClass('activePage');
         }
 
         function initDocContent() {
