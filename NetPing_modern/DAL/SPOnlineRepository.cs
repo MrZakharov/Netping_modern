@@ -604,25 +604,32 @@ namespace NetPing.DAL
         {
             HtmlDocument html = new HtmlDocument();
             html.LoadHtml(content);
-            HtmlNode table = GetPagePropertiesContent(html).Descendants("table").FirstOrDefault();
-            if (table != null)
+            try
             {
-                var result = new Dictionary<string, string>();
-                var trNodes = table.ChildNodes[0].ChildNodes.Where(x => x.Name == "tr");
-                foreach (var tr in trNodes)
+                HtmlNode table = GetPagePropertiesContent(html).Descendants("table").FirstOrDefault();
+                if (table != null)
                 {
-                    var tdNodes = tr.ChildNodes.Where(x => x.Name == "td").ToArray();
-                    if (tdNodes.Count() == 2)
+                    var result = new Dictionary<string, string>();
+                    var trNodes = table.ChildNodes[0].ChildNodes.Where(x => x.Name == "tr");
+                    foreach (var tr in trNodes)
                     {
-                        var key = tdNodes[0].InnerText;
-                        if (!result.ContainsKey(key))
-                            result.Add(tdNodes[0].InnerText, tdNodes[1].InnerText);
+                        var tdNodes = tr.ChildNodes.Where(x => x.Name == "td").ToArray();
+                        if (tdNodes.Count() == 2)
+                        {
+                            var key = tdNodes[0].InnerText;
+                            if (!result.ContainsKey(key))
+                                result.Add(tdNodes[0].InnerText, tdNodes[1].InnerText);
+                        }
                     }
+                    return result;
                 }
-                return result;
+                else
+                    return null;
             }
-            else
+            catch
+            {
                 return null;
+            }
 
         }
 
