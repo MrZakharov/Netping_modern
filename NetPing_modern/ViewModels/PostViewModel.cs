@@ -15,5 +15,17 @@ namespace NetPing_modern.ViewModels
         public bool IsTop { get; set; }
         public List<TagViewModel> Tags { get; set; }
         public string Preview { get; set; }
+
+        public Dictionary<string, string> MetaHtml { get; set; }
+
+        /// <summary>
+        /// поиск значения ключа метотегов
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string GetMetaValueToKey(string key)
+        {
+            return (MetaHtml != null && MetaHtml.Count > 0 && MetaHtml.ContainsKey(key)) ? MetaHtml[key] : null;
+        }
     }
 }
