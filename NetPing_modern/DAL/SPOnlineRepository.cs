@@ -1010,7 +1010,7 @@ namespace NetPing.DAL
             catch (Exception ex)
             {
                 if (streamRead != null) streamRead.Close();
-                UpdateAll();
+               // UpdateAll();
                 return HttpRuntime.Cache.Get(cache_name);
             }
             HttpRuntime.Cache.Insert(cache_name, obj, new TimerCacheDependency());

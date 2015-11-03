@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE yml_catalog SYSTEM "shops.dtd">
-<yml_catalog date="2015-10-11 13:24">
+<yml_catalog date="2015-11-03 16:03">
   <shop>
     <name>Netping.ru</name>
     <company>Netping.ru</company>
@@ -13,6 +13,7 @@
       <category id="11">Готовые решения для удаленного управления электропитанием</category>
       <category id="10">Готовые решения на основе POE</category>
       <category id="4">Каталог датчиков для устройств Netping</category>
+      <category id="6">Каталог устойств мониторинг серверных комнат и шкафов</category>
       <category id="7">Каталог устройств удалённого управления и распределения электропитания Netping</category>
       <category id="3">Каталог аксессуаров для устройств Netping</category>
       <category id="8">Неуправляемые POE коммутаторы</category>
@@ -289,96 +290,6 @@
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
-      <offer id="53" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-8-pwr-220-v3-sms</url>
-        <price>16401</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_v2netpingIO_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство NetPing IO v2</vendorCode>
-        <model>Устройство NetPing IO v2</model>
-        <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления об их срабатывании</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="52" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-4-pwr-220-v3-sms</url>
-        <price>10925</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_4PWR_SMS_220_v3_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство Netping 4/PWR-220 v3/SMS</vendorCode>
-        <model>Устройство Netping 4/PWR-220 v3/SMS</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS и встроенным аккумулятором.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="58" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v2-sms</url>
-        <price>7475</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_V2SMS2PWR220_big2.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство NetPing 2/PWR-220 v2/SMS</vendorCode>
-        <model>Устройство NetPing 2/PWR-220 v2/SMS</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS и встроенным аккумулятором</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="57" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v1-sms</url>
-        <price>6792</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_SMS2PWR220-v1_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство NetPing 2/PWR-220 v1/SMS</vendorCode>
-        <model>Устройство NetPing 2/PWR-220 v1/SMS</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="54" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v3-eth</url>
-        <price>5060</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_ETH_2PWR220_v2_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Устройство NetPing 2/PWR-220 v3/ETH</vendorCode>
-        <model>Устройство NetPing 2/PWR-220 v3/ETH</model>
-        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU)</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
       <offer id="49" type="vendor.model" available="true">
         <url>http://www.netping.ru/products/uniping-server-solution-v3-sms</url>
         <price>13225</price>
@@ -465,6 +376,96 @@
         <vendorCode>Устройство NetPing IO v2</vendorCode>
         <model>Устройство NetPing IO v2</model>
         <description>Устройство удалённого мониторинга датчиков по сети Ethernet/Internet. Позволяет удалённо получать информацию о состоянии датчиков и уведомления об их срабатывании</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="53" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/netping-8-pwr-220-v3-sms</url>
+        <price>16401</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>7</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_nping_power_8PWR_SMS_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Устройство NetPing 8/PWR-220 v3/SMS</vendorCode>
+        <model>Устройство NetPing 8/PWR-220 v3/SMS</model>
+        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="52" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/netping-4-pwr-220-v3-sms</url>
+        <price>10925</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>7</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_nping_power_4PWR_SMS_220_v3_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Устройство Netping 4/PWR-220 v3/SMS</vendorCode>
+        <model>Устройство Netping 4/PWR-220 v3/SMS</model>
+        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS и встроенным аккумулятором.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="58" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/netping-2-pwr-220-v2-sms</url>
+        <price>7475</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>7</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_nping_power_V2SMS2PWR220_big2.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Устройство NetPing 2/PWR-220 v2/SMS</vendorCode>
+        <model>Устройство NetPing 2/PWR-220 v2/SMS</model>
+        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS и встроенным аккумулятором</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="57" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/netping-2-pwr-220-v1-sms</url>
+        <price>6792</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>7</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_nping_power_SMS2PWR220-v1_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Устройство NetPing 2/PWR-220 v1/SMS</vendorCode>
+        <model>Устройство NetPing 2/PWR-220 v1/SMS</model>
+        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU) c поддержкой управления по SMS</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="54" type="vendor.model" available="true">
+        <url>http://www.netping.ru/products/netping-2-pwr-220-v3-eth</url>
+        <price>5060</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>7</categoryId>
+        <picture>http://www.netping.ru/Pub/Photos/_nping_power_ETH_2PWR220_v2_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Устройство NetPing 2/PWR-220 v3/ETH</vendorCode>
+        <model>Устройство NetPing 2/PWR-220 v3/ETH</model>
+        <description>Устройство удалённого управления розетками электропитания по сети Ethernet/Internet (IP PDU)</description>
         <sales_notes>предоплата</sales_notes>
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
