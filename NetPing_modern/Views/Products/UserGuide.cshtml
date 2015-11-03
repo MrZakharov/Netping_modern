@@ -277,7 +277,7 @@
 
 <div class="container">
     <div class="col-md-12" id="breadcrump">
-        <a href="/" class="blackLink">NetPing</a> > <a href="javascript:void(0)" class="blackLink linkUnderline linkBold">Документация</a> > <a href="/products/@Model.Section.Url" class="blackLink linkUnderline linkBold">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title.Replace("/", "")/">@Model.Title</a>
+        <a href="/" class="blackLink">NetPing</a> > <a href="javascript:void(0)" class="blackLink linkUnderline linkBold">Документация</a> > <a href="/products/@Model.Section.Url" class="blackLink linkUnderline linkBold">@Model.Section.FormattedTitle</a> > <a href="/products/@Model.Device.Url">@Model.Device.Name.Name</a> > <a href="/UserGuide/@Model.Title.Replace("/", "").Replace("%2F", "!2F")/">@Model.Title.Replace("%2F", "/")</a>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
         <div class="content_doc"><span>@Index.Title_doc</span></div>
@@ -304,7 +304,7 @@
     </div>
     <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6">
         <div class="header">
-            <h1>@Model.Title</h1>
+            <h1>@Model.Title.Replace("%2F", "/")</h1>
         </div>
         <div class="docContent">
             @if (string.IsNullOrEmpty(Model.Pages.FirstOrDefault().Content))
@@ -530,7 +530,7 @@
         var itemId = $(target).attr('data-item-id');
         location.hash = itemId;
 
-        var url = "/UserGuide/@Model.Title.Replace("/", "")/" + item + "/";
+        var url = "/UserGuide/@Model.Title.Replace("/", "").Replace("%2F", "!2F")/" + item + "/";
         $.get(url, null, function (data) {
             $('div.docContent').empty();
             $('div.docContent').append(data);
@@ -551,7 +551,7 @@
         var itemId = $(target).attr('data-item-id');
         location.hash = itemId;
 
-        var url = "/GetSubPage/@Model.Title.Replace("/", "")/" + item + "/" + subItem + "/";
+        var url = "/GetSubPage/@Model.Title.Replace("/", "").Replace("%2F", "!2F")/" + item + "/" + subItem + "/";
         $.get(url, null, function (data) {
             $('div.docContent').empty();
             $('div.docContent').append(data);

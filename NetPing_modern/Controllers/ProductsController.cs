@@ -222,7 +222,7 @@ namespace NetPing_modern.Controllers
             ViewBag.Posts = NetpingHelpers.Helpers.GetTopPosts();
             ViewBag.Devices = NetpingHelpers.Helpers.GetNewDevices();
 
-            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E").Replace("!2F", "%2F") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
 
             var sections = NavigationProvider.GetAllSections();
             var devices = _repository.Devices.Where(d => !d.Name.IsGroup());

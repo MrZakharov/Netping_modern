@@ -296,7 +296,7 @@ namespace NetPing_modern.Services.Confluence
                     if(results.id != null && !string.IsNullOrEmpty(results.title.Value))
                     {
                         userManual.Id = int.Parse(results.id.Value);
-                        userManual.Title = regex.Replace((results.title.Value as string).Replace(".", "%2E").Replace("/", "%2F"), string.Empty);
+                        userManual.Title = regex.Replace((results.title.Value as string).Replace(".", "%2E"), string.Empty);
                         userManual.Pages = GetUserManualPages(userManual.Id);
                     }
                 }
