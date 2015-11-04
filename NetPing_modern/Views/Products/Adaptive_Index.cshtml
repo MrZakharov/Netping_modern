@@ -32,11 +32,11 @@
 
 @helper GetPrice(double? price)
 {
-    if (price != null && price > 0)
-    {
-        string str = string.Format(new CultureInfo(1035), "{0:N0} ", price);
+if (price != null && price > 0)
+{
+    string str = string.Format(new CultureInfo(1035), "{0:N0} ", price);
         @str
-    }
+}
 }
 @{
     string titTitle = "";
@@ -298,25 +298,44 @@
                                             <div class="col-xs-5 col-lg-12 price">
                                                 <span>@GetPrice(device.Price)</span> @device.GetCurrency
                                             </div>
-
-                                            <div class="col-xs-7 col-lg-12 to-cart button-block text-right ">
-                                                <input type="text" class="btn btn-info counter" data-device-id="@device.Name.Id" value="1" />
-                                                <div class="add-remove">
-                                                    <button data-device-id="@device.Name.Id" class="btn btn-info count-button add">+</button>
-                                                    <button data-device-id="@device.Name.Id" class="btn btn-info count-button remove">-</button>
+                                            <div class="col-xs-5 col-lg-12 stock">
+                                                На складе
+                                                <br />
+                                                @device.DeviceStockUpdate.ToString("dd.MM")  &nbsp;&nbsp; <b> @device.DeviceStock шт.</b>
+                                            </div>
+                                            <div class="col-xs-7 col-lg-12 to-cart button-block">
+                                                <div class="row">
+                                                    <div class="col-lg-3" style="padding-right:0;">
+                                                        <input type="text" class="btn btn-info counter" data-device-id="@device.Name.Id" value="1" />
+                                                        <div class="add-remove">
+                                                            <button data-device-id="@device.Name.Id" class="btn btn-info count-button add">+</button>
+                                                            <button data-device-id="@device.Name.Id" class="btn btn-info count-button remove">-</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-9" style="padding-left:0;">
+                                                        <div @(device.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@device.Name.Id" class="btn btn-primary buy-button"></div>
+                                                    </div>
                                                 </div>
-                                                <div @(device.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@device.Name.Id" class="btn btn-primary buy-button"></div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 col-lg-12 button-block more-info">
-                                                <a href="@link" class="btn btn-default">
-                                                    @Index.Btn_read_more
-                                                </a>
+                                            <div class="col-xs-7 col-lg-12 button-block more-info">
+                                                <div class="row">
+                                                    <div class="col-lg-9 col-lg-offset-3 text-left" style="padding-left:0;">
+                                                        <a href="@link" class="btn btn-default">
+                                                            @Index.Btn_read_more
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-xs-6 col-lg-12 compare text-right button-block">
-                                                <input type="checkbox" id="check-@device.Id" name="compare" value="@device.Id" /><label for="check-@device.Id" class="checkbox"></label>
-                                                <button class="btn btn-default compare">@Index.Txt_compare</button>
+                                            <div class="col-xs-7 col-lg-12 compare text-right button-block">
+                                                <div class="row">
+                                                    <div class="col-lg-3" style="padding-right:3px;">
+                                                        <input type="checkbox" id="check-@device.Id" name="compare" value="@device.Id" />
+                                                        <label for="check-@device.Id" class="checkbox"></label>
+                                                    </div>
+                                                    <div class="col-lg-9 text-left" style="padding-left:0;">
+                                                        <button class="btn btn-default compare">@Index.Txt_compare</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -325,8 +344,8 @@
                         </div>
 
                         <hr />
-                    }
-                }
+                                        }
+                                    }
             </div>
         </div>
     </div>

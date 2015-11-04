@@ -23,6 +23,7 @@ namespace NetPing
 
             routes.MapRoute("cache_updated", "cache_updated", new { controller = "InnerPages", action = "UCache" });
             routes.MapRoute("cache_update_async", "cache_update_async", new { controller = "InnerPages", action = "UCacheAsync" });
+            routes.MapRoute("stock_update", "stock_update", new { controller = "InnerPages", action = "UCacheStock" });
 
             routes.MapRoute("product_item_aspx", "product_item.aspx", new { controller = "Product_item", action = "Index" });
 
