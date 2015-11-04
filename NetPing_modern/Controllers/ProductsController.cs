@@ -222,7 +222,7 @@ namespace NetPing_modern.Controllers
             ViewBag.Posts = NetpingHelpers.Helpers.GetTopPosts();
             ViewBag.Devices = NetpingHelpers.Helpers.GetNewDevices();
 
-            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E").Replace("!2F", "%2F") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
 
             var sections = NavigationProvider.GetAllSections();
             var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
@@ -292,6 +292,7 @@ namespace NetPing_modern.Controllers
             return HttpNotFound();
         }
 
+        [ValidateInput(false)]
         public ActionResult GetSubPage(string id, string page, string subPage)
         {
             string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
@@ -302,8 +303,8 @@ namespace NetPing_modern.Controllers
                 var stream = System.IO.File.OpenRead(file_name);
                 BinaryFormatter binaryWrite = new BinaryFormatter();
                 var guide = binaryWrite.Deserialize(stream) as UserManualModel;
-                var pg = guide.Pages.SingleOrDefault(p => p.Title.Replace("?", "") == page.Replace(".", "%2E"));
-                model = pg.Pages.SingleOrDefault(p => p.Title.Contains(subPage.Replace(".", "%2E")));
+                var pg = guide.Pages.SingleOrDefault(p => p.Title.Replace("?", "").Replace(":", "") == page.Replace(".", "%2E"));
+                model = pg.Pages.SingleOrDefault(p => p.Title.Replace(":", "").Contains(subPage.Replace(".", "%2E")));
 
                 return View("~/Views/Products/UserGuidePage.cshtml", model);
             }

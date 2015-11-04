@@ -292,10 +292,11 @@ namespace NetPing_modern.Services.Confluence
                     var task = content.ReadAsStringAsync();
                     string stringContent = task.Result;
                     dynamic results = JObject.Parse(stringContent);
+                    var regex = new Regex("\\[([^)]*)\\] ");
                     if(results.id != null && !string.IsNullOrEmpty(results.title.Value))
                     {
                         userManual.Id = int.Parse(results.id.Value);
-                        userManual.Title = (results.title.Value as string).Replace(".", "%2E");
+                        userManual.Title = regex.Replace((results.title.Value as string).Replace(".", "%2E"), string.Empty);
                         userManual.Pages = GetUserManualPages(userManual.Id);
                     }
                 }
@@ -323,6 +324,7 @@ namespace NetPing_modern.Services.Confluence
                     var task = content.ReadAsStringAsync();
                     string stringContent = task.Result;
                     dynamic results = JObject.Parse(stringContent);
+                    var regex = new Regex("\\[([^)]*)\\] ");
                     if (results.results != null)
                     {
                         if (results.results.Type == JTokenType.Array && results.results.Count > 0)
@@ -330,7 +332,7 @@ namespace NetPing_modern.Services.Confluence
                            foreach(var result in results.results)
                            {
                                var pageId = int.Parse(result.id.Value);
-                               var pageTitle = (result.title.Value as string).Replace(".", "%2E");
+                               var pageTitle = regex.Replace((result.title.Value as string).Replace(".", "%2E"), string.Empty);
                                var subPages = new List<PageModel>();
                                var pageContent = string.Empty;
                                if (IsTreePage(pageId))
