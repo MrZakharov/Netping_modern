@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE yml_catalog SYSTEM "shops.dtd">
+<<<<<<< HEAD
 <yml_catalog date="2015-10-23 17:08">
+=======
+<yml_catalog date="2015-11-03 16:03">
+>>>>>>> refs/remotes/origin/PageProperties
   <shop>
     <name>Netping.ru</name>
     <company>Netping.ru</company>
