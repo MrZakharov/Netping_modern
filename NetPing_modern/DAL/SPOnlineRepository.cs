@@ -27,6 +27,8 @@ using NetPing_modern.Services.Confluence;
 //using TidyManaged;
 using Category = NetPing.PriceGeneration.YandexMarker.Category;
 using File = System.IO.File;
+using System.Data;
+using Microsoft.VisualBasic.FileIO;
 
 namespace NetPing.DAL
 {
@@ -276,28 +278,43 @@ namespace NetPing.DAL
         {
             var devices = new List<Device>();
 
+            string stock_csv = HttpContext.Current.Server.MapPath("~/Pub/Data/netping_ru_stock.csv");
+            var dataTable = new Dictionary<string, string>();
+
+            if (File.Exists(stock_csv))
+            {
+                dataTable = GetDataTableFromCSVFile(stock_csv);
+            }
+
             foreach (var item in (ListItemCollection)ReadSPList("Devices", Camls.Caml_Device_keys))
             {
+                var _guidid = (item["Name"] as TaxonomyFieldValue).ToSPTerm(terms).Id;
+                var _stock = _guidid != null && dataTable.ContainsKey(_guidid.ToString()) ? dataTable[_guidid.ToString()] : "0";
+
                 var device = new Device
-                         {
-                             Id = item.Id
+                {
+                    Id = item.Id
                             ,
-                             OldKey = item["Title"] as string
+                    OldKey = item["Title"] as string
                             ,
-                             Name = (item["Name"] as TaxonomyFieldValue).ToSPTerm(terms)
+                    Name = (item["Name"] as TaxonomyFieldValue).ToSPTerm(terms)
                             ,
-                             Destination = (item["Destination"] as TaxonomyFieldValueCollection).ToSPTermList(termsDestinations)
+                    Destination = (item["Destination"] as TaxonomyFieldValueCollection).ToSPTermList(termsDestinations)
                             ,
-                             Connected_devices = (item["Connected_devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
+                    Connected_devices = (item["Connected_devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
                             ,
-                             Price = item["Price"] as double?
+                    Price = item["Price"] as double?
                             ,
-                             Label = (item["Label"] as TaxonomyFieldValue).ToSPTerm(termsLabels)
+                    Label = (item["Label"] as TaxonomyFieldValue).ToSPTerm(termsLabels)
                             ,
-                             Created = (DateTime)item["Created"]
+                    Created = (DateTime)item["Created"]
                             ,
-                             Url = item["Url"] as string
-                         };
+                    Url = item["Url"] as string
+                            ,
+                    DeviceStock = int.Parse(_stock)
+                            ,
+                    DeviceStockUpdate = DateTime.Now
+                };
 
 
 
@@ -315,6 +332,7 @@ namespace NetPing.DAL
 
                 devices.Add(device);
             }
+
 
             foreach (var dev in devices)
             {
@@ -336,6 +354,38 @@ namespace NetPing.DAL
 
             if (devices.Count == 0) throw new Exception("No one devices was readed!");
             return devices;
+        }
+
+        /// <summary>
+        /// read csv file to DataTable
+        /// </summary>
+        /// <param name="csv_file_path"></param>
+        /// <returns></returns>
+        private Dictionary<string, string> GetDataTableFromCSVFile(string csv_file_path)
+        {
+            var csvData = new Dictionary<string, string>();
+            try
+            {
+                using (TextFieldParser csvReader = new TextFieldParser(csv_file_path))
+                {
+                    csvReader.SetDelimiters(new string[] { "," });
+                    csvReader.HasFieldsEnclosedInQuotes = true;
+
+                    //read column names  
+                    csvReader.ReadLine();
+
+                    while (!csvReader.EndOfData)
+                    {
+                        string[] fields = csvReader.ReadFields();
+                        csvData.Add(fields[0], fields[1]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);  
+            }
+            return csvData;
         }
 
         private String CleanSpanStyles(String str)
@@ -568,22 +618,22 @@ namespace NetPing.DAL
 
 
                 result.Add(new Post
-                         {
-                             Id = (item["Old_id"] == null) ? 0 : int.Parse(item["Old_id"].ToString())
+                {
+                    Id = (item["Old_id"] == null) ? 0 : int.Parse(item["Old_id"].ToString())
                             ,
-                             Title = title
+                    Title = title
                             ,
-                             Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
+                    Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
                             ,
-                             Body = content.ReplaceInternalLinks()
+                    Body = content.ReplaceInternalLinks()
                             ,
-                             Category = (item["Category"] as TaxonomyFieldValue).ToSPTerm(categoryTerms)
+                    Category = (item["Category"] as TaxonomyFieldValue).ToSPTerm(categoryTerms)
                             ,
-                             Created = (DateTime)item["Pub_date"]
+                    Created = (DateTime)item["Pub_date"]
                              ,
-                             Url_name = "/Blog/" + (item["Body_link"] as FieldUrlValue).Description.Replace(".", "x2E").Trim(' '),
-                             IsTop = (bool)item["TOP"]
-                         });
+                    Url_name = "/Blog/" + (item["Body_link"] as FieldUrlValue).Description.Replace(".", "x2E").Trim(' '),
+                    IsTop = (bool)item["TOP"]
+                });
             }
             if (result.Count == 0) throw new Exception("No one post was readed!");
             return result;
@@ -772,13 +822,12 @@ namespace NetPing.DAL
         }
 
 
-
         private void GenerateYml()
         {
             var catalog = new YmlCatalog
-                          {
-                              Date = DateTime.Now
-                          };
+            {
+                Date = DateTime.Now
+            };
             var shop = new Shop();
             catalog.Shop = shop;
 
@@ -788,21 +837,21 @@ namespace NetPing.DAL
             shop.Company = netpingRu;
             shop.Url = "http://www.netping.ru";
             shop.Currencies.Add(new Currency
-                                    {
-                                        Id = "RUR",
-                                        Rate = 1,
-                                        Plus = 0
-                                    });
+            {
+                Id = "RUR",
+                Rate = 1,
+                Plus = 0
+            });
 
             var tree = new DevicesTree(Devices);
             foreach (DeviceTreeNode categoryNode in tree.Nodes)
             {
                 shop.Categories.Add(new Category
-                                    {
-                                        Id = categoryNode.Id,
-                                        Name = categoryNode.Name,
-                                        ParentId = categoryNode.Parent == null ? (int?)null : categoryNode.Parent.Id
-                                    });
+                {
+                    Id = categoryNode.Id,
+                    Name = categoryNode.Name,
+                    ParentId = categoryNode.Parent == null ? (int?)null : categoryNode.Parent.Id
+                });
 
                 foreach (DeviceTreeNode childCategoryNode in categoryNode.Nodes)
                 {
@@ -841,18 +890,18 @@ namespace NetPing.DAL
             }
 
             shop.Offers.Add(new Offer
-                            {
-                                Id = offerNode.Id,
-                                Url = GetDeviceUrl(offerNode.Device),
-                                Price = (int) (offerNode.Device.Price.HasValue ? offerNode.Device.Price.Value : 0),
-                                CategoryId = childCategoryNode.Id,
-                                Picture = offerNode.Device.GetCoverPhoto(true).Url,
-                                TypePrefix = "",
-                                /*childCategoryNode.Name,*/
-                                VendorCode = offerNode.Name,
-                                Model = offerNode.Name,
-                                Description = descr
-                            });
+            {
+                Id = offerNode.Id,
+                Url = GetDeviceUrl(offerNode.Device),
+                Price = (int)(offerNode.Device.Price.HasValue ? offerNode.Device.Price.Value : 0),
+                CategoryId = childCategoryNode.Id,
+                Picture = offerNode.Device.GetCoverPhoto(true).Url,
+                TypePrefix = "",
+                /*childCategoryNode.Name,*/
+                VendorCode = offerNode.Name,
+                Model = offerNode.Name,
+                Description = descr
+            });
 
         }
 
@@ -1000,15 +1049,15 @@ namespace NetPing.DAL
                 }
 
                 terms.Add(new SPTerm
-                        {
-                            Id = term.Id
+                {
+                    Id = term.Id
                            ,
-                            Name = name
+                    Name = name
                            ,
-                            Path = term.PathOfTerm
+                    Path = term.PathOfTerm
                            ,
-                            Properties = term.LocalCustomProperties
-                        });
+                    Properties = term.LocalCustomProperties
+                });
                 if (!string.IsNullOrEmpty(term.CustomSortOrder))
                 {
                     sortOrders.AddSortOrder(term.CustomSortOrder);
@@ -1075,15 +1124,15 @@ namespace NetPing.DAL
             var items = ReadSPList("HTML_injection", NetPing_modern.Resources.Camls.Caml_HTMLInjection);
 
             var list = new List<HTMLInjection>();
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 list.Add(new HTMLInjection
-                    {
-                        HTML = item["HTML"].ToString(),
-                        Page = item["Page"].ToString(),
-                        Section = item["Section"].ToString(),
-                        Title = item["Title"].ToString(),
-                    });
+                {
+                    HTML = item["HTML"].ToString(),
+                    Page = item["Page"].ToString(),
+                    Section = item["Section"].ToString(),
+                    Title = item["Title"].ToString(),
+                });
             }
 
             return list;

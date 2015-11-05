@@ -35,6 +35,13 @@ namespace NetPing.Controllers
             return View();
         }
 
+        public ActionResult UCacheStock()
+        {
+            ViewBag.result = _repository.UpdateAllAsync("Devices");
+
+            return View("UCache");
+        }
+
         #region Async Cache update
 
         public ActionResult UCacheAsync()
