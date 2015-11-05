@@ -115,6 +115,8 @@
                         <div class="device-item-buttons">
                             <div class="price">
                                 <span>@GetPrice(Model.Price)</span> @Model.GetCurrency
+                                <br />
+                                <span style="font-size:12px;float:right;color:#000000;">На складе @Model.DeviceStockUpdate.ToString("dd.MM") @(Model.DeviceStock == -1 ? "нет данных" : Model.DeviceStock + "шт.")</span>
                             </div>
 
                             <div class="to-cart button-block text-right ">
