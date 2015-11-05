@@ -280,10 +280,12 @@ namespace NetPing.DAL
 
             string stock_csv = HttpContext.Current.Server.MapPath("~/Pub/Data/netping_ru_stock.csv");
             var dataTable = new Dictionary<string, string>();
+            var _eviceStockUpdate = new DateTime();
 
             if (File.Exists(stock_csv))
             {
                 dataTable = GetDataTableFromCSVFile(stock_csv);
+                _eviceStockUpdate = DateTime.Parse(dataTable[""]);
             }
 
             foreach (var item in (ListItemCollection)ReadSPList("Devices", Camls.Caml_Device_keys))
