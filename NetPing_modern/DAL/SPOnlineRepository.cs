@@ -289,7 +289,7 @@ namespace NetPing.DAL
             foreach (var item in (ListItemCollection)ReadSPList("Devices", Camls.Caml_Device_keys))
             {
                 var _guidid = (item["Name"] as TaxonomyFieldValue).ToSPTerm(terms).Id;
-                var _stock = _guidid != null && dataTable.ContainsKey(_guidid.ToString()) ? dataTable[_guidid.ToString()] : "0";
+                var _stock = _guidid != null && dataTable.ContainsKey(_guidid.ToString()) ? dataTable[_guidid.ToString()] : "-1";
 
                 var device = new Device
                 {
