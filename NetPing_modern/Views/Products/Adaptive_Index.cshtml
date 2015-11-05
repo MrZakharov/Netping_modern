@@ -29,9 +29,46 @@
         });
     </script>
 }
+@functions
+{
+    public string GetClassName(Device device)
+    {
+        string className = string.Empty;
+        if (!String.IsNullOrWhiteSpace(device.Label.Name))
+        {
+            switch (device.Label.OwnNameFromPath)
+            {
+                case "New":
+                    {
+                        className = "new";
+                        break;
+                    }
+                case "EOL":
+                    {
+                        className = "eol";
+                        break;
+                    }
+                case "Archive":
+                    {
+                        className = "archive";
+                        break;
+                    }
+                case "Dev":
+                    {
+                        className = "dev";
+                        break;
+                    }
+                default:
+                    className = "new";
+                    break;
+            }
+        }
+        return className;
+    }
+}
 
 @helper GetPrice(double? price)
-{
+        {
 if (price != null && price > 0)
 {
     string str = string.Format(new CultureInfo(1035), "{0:N0} ", price);
@@ -265,30 +302,7 @@ if (price != null && price > 0)
 
                             <div class="col-lg-9 device-item-content">
                                 <a href="@link"><h3>@device.Name.Name</h3></a>
-                                @{string className = "new";}
-                                @if (!String.IsNullOrWhiteSpace(device.Label.Name))
-                                {
-                                    switch (device.Label.OwnNameFromPath)
-                                    {
-                                        case "New":
-                                            {
-                                                className = "new";
-                                                break;
-                                            }
-                                        case "EOL":
-                                            {
-                                                className = "eol";
-                                                break;
-                                            }
-                                        case "Archive":
-                                            {
-                                                className = "archive";
-                                                break;
-                                            }
-                                    }
-                                    <span class="label label-@className">@device.Label.Name</span>
-                                }
-
+                                <span class="label label-@GetClassName(device)">@device.Label.Name</span>
                                 <div class="row">
                                     <div class="col-lg-7">
                                         @Html.Raw(device.Short_description)
@@ -298,7 +312,7 @@ if (price != null && price > 0)
                                             <div class="col-xs-5 col-lg-12 price">
                                                 <span>@GetPrice(device.Price)</span> @device.GetCurrency
                                             </div>
-                                            <div class="col-xs-5 col-lg-12 stock">
+                                            <div class="col-xs-5 col-lg-12 stock view_@GetClassName(device)">
                                                 На складе
                                                 <br />
                                                 @device.DeviceStockUpdate.ToString("dd.MM")  &nbsp;&nbsp; <b> @device.DeviceStock шт.</b>
@@ -344,8 +358,8 @@ if (price != null && price > 0)
                         </div>
 
                         <hr />
-                                        }
-                                    }
+                    }
+                }
             </div>
         </div>
     </div>

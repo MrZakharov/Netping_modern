@@ -147,7 +147,7 @@
     margin: 8px 8px 8px 0;
 }
 
-    .device-catalog-item .label.label-new {
+    .device-catalog-item .label.label-new,  .device-catalog-item .label.label-dev {
         background: #60af6e;
     }
 
@@ -161,6 +161,10 @@
 
     .device-catalog-item .label.label-archive {
         background: #535353;
+    }
+
+    .view_dev{
+        display:none;
     }
 
 .device-catalog-item .device-item-buttons .button-block {
