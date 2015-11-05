@@ -35,11 +35,14 @@ namespace NetPing.Controllers
         {
             string stock_csv = HttpContext.Server.MapPath("~/Pub/Data/netping_ru_stock.csv");
             if (!System.IO.File.Exists(stock_csv))
+            {
                 ViewBag.result = "Ошибка! Файл данных не найден";
-            else
-                ViewBag.result = _repository.UpdateAllAsync("Devices");
+                return View("UCache");
+            }
+            //else
+            //    ViewBag.result = _repository.UpdateAllAsync("Devices");
 
-            return View("UCache");
+            return View();
         }
 
         #region Async Cache update
