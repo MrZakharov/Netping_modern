@@ -308,3 +308,9 @@
         width: 50px;
     }
 }
+@media (min-width: 768px)
+{
+    .device-catalog-item .device-item-buttons .price {
+    margin-bottom: 0;
+}
+}
