@@ -315,7 +315,7 @@ if (price != null && price > 0)
                                             <div class="visible-lg col-lg-12 stock view_@GetClassName(device)">
                                                 На складе
                                                 <br />
-                                                @device.DeviceStockUpdate.ToString("dd.MM")  &nbsp;&nbsp; <b> @(device.DeviceStock == -1? "нет данных": device.DeviceStock + "шт.") </b>
+                                                @device.DeviceStockUpdate.ToString("dd.MM")  &nbsp;&nbsp; <b> @(device.DeviceStock == -1? "нет данных": device.DeviceStock + " шт.") </b>
                                             </div>
                                             <div class="col-xs-7 col-sm-7 col-lg-12 to-cart button-block">
                                                 <div class="row">
@@ -333,8 +333,8 @@ if (price != null && price > 0)
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="visible-sm col-sm-12 stock view_@GetClassName(device)">
-                                                На складе @device.DeviceStockUpdate.ToString("dd.MM")  &nbsp;&nbsp; <b> @(device.DeviceStock == -1 ? "нет данных" : device.DeviceStock + "шт.") </b>
+                                            <div class="visible-sm visible-md col-sm-12 stock view_@GetClassName(device)">
+                                                На складе @device.DeviceStockUpdate.ToString("dd.MM")  &nbsp;&nbsp; <b> @(device.DeviceStock == -1 ? "нет данных" : device.DeviceStock + " шт.") </b>
                                             </div>
                                             <div class="col-xs-5 col-sm-5 col-lg-12 button-block more-info">
                                                 <div class="row">

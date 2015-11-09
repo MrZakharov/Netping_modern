@@ -794,7 +794,7 @@ namespace NetPing.DAL
                     termsLabels = TermsLabels;
                     devices = Devices_Read(posts, sFiles, devicePhotos, devicesParameters, terms, termsDestinations, termsLabels);
                     HttpRuntime.Cache.Insert("Devices", devices);
-                    //PushToCache("Devices", devices);
+                    PushToCache("Devices", devices);
                     break;
                 case "GenerateYml":
                     if (Helpers.IsCultureRus)
@@ -816,7 +816,7 @@ namespace NetPing.DAL
                     PushToCache("PubFiles", PubFiles);
                     PushToCache("SFiles", SFiles);
                     PushToCache("Posts", Posts);
-                    PushToCache("Devices", Devices);
+                    //PushToCache("Devices", Devices);
                     break;
                 default:
                     return "404";
