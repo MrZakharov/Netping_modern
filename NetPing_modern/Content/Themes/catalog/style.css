@@ -163,8 +163,8 @@
         background: #535353;
     }
 
-    .view_dev{
-        display:none;
+    .view_dev, .visible-lg.stock.view_dev{
+        display:none!important;
     }
 
 .device-catalog-item .device-item-buttons .button-block {

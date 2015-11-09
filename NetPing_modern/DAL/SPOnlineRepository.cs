@@ -316,7 +316,7 @@ namespace NetPing.DAL
                             ,
                     DeviceStock = int.Parse(_stock)
                             ,
-                    DeviceStockUpdate = DateTime.Now
+                    DeviceStockUpdate = _eviceStockUpdate
                 };
 
 
@@ -351,7 +351,7 @@ namespace NetPing.DAL
                 dev.DeviceParameters = allDevicesParameters.Where(par => par.Device == dev.Name).ToList();
 
                 // Get device photos
-                dev.DevicePhotos = allDevicePhotos.Where(p => p.Dev_name == dev.Name).ToList();
+                dev.DevicePhotos = allDevicePhotos.Where(p => p.Dev_name.Id == dev.Name.Id).ToList();
 
             }
 
@@ -817,6 +817,9 @@ namespace NetPing.DAL
                     PushToCache("SFiles", SFiles);
                     PushToCache("Posts", Posts);
                     //PushToCache("Devices", Devices);
+                    break;
+                case "OnlyDevices":
+
                     break;
                 default:
                     return "404";
