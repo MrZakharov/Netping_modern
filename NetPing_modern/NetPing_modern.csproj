@@ -669,6 +669,7 @@
     <Content Include="Views\Products\Adaptive_device_view.cshtml" />
     <Content Include="Views\Products\Archive.cshtml" />
     <Content Include="Views\Shared\PreorderForm.cshtml" />
+    <Content Include="Views\InnerPages\UCacheStock.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

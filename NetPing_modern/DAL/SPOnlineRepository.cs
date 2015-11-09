@@ -280,16 +280,19 @@ namespace NetPing.DAL
 
             string stock_csv = HttpContext.Current.Server.MapPath("~/Pub/Data/netping_ru_stock.csv");
             var dataTable = new Dictionary<string, string>();
+            var _eviceStockUpdate = new DateTime();
 
             if (File.Exists(stock_csv))
             {
                 dataTable = GetDataTableFromCSVFile(stock_csv);
+                _eviceStockUpdate = DateTime.Parse(dataTable[""]);
             }
 
             foreach (var item in (ListItemCollection)ReadSPList("Devices", Camls.Caml_Device_keys))
             {
-                var _guidid = (item["Name"] as TaxonomyFieldValue).ToSPTerm(terms).Id;
-                var _stock = _guidid != null && dataTable.ContainsKey(_guidid.ToString()) ? dataTable[_guidid.ToString()] : "0";
+                //var _guidid1S = item["1C_ref"];
+                var _guidid = item["_x0031_C_ref"] as string;
+                var _stock = _guidid != null && dataTable.ContainsKey(_guidid.ToString()) ? dataTable[_guidid.ToString()] : "-1";
 
                 var device = new Device
                 {

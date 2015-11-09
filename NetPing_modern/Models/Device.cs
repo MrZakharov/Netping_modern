@@ -71,5 +71,7 @@ namespace NetPing.Models
         /// Date of information update about stock
         /// </summary>
         public DateTime DeviceStockUpdate { get; set; }
+
+
     }
 }
