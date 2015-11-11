@@ -61,5 +61,17 @@ namespace NetPing.Models
             if (dp != null) return dp;
             return new DevicePhoto();
         }
+
+        /// <summary>
+        /// The number of products in stock
+        /// </summary>
+        public int DeviceStock { get; set; }
+
+        /// <summary>
+        /// Date of information update about stock
+        /// </summary>
+        public DateTime DeviceStockUpdate { get; set; }
+
+
     }
 }

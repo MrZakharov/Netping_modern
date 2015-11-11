@@ -29,14 +29,51 @@
         });
     </script>
 }
+@functions
+{
+    public string GetClassName(Device device)
+    {
+        string className = string.Empty;
+        if (!String.IsNullOrWhiteSpace(device.Label.Name))
+        {
+            switch (device.Label.OwnNameFromPath)
+            {
+                case "New":
+                    {
+                        className = "new";
+                        break;
+                    }
+                case "EOL":
+                    {
+                        className = "eol";
+                        break;
+                    }
+                case "Archive":
+                    {
+                        className = "archive";
+                        break;
+                    }
+                case "Dev":
+                    {
+                        className = "dev";
+                        break;
+                    }
+                default:
+                    className = "new";
+                    break;
+            }
+        }
+        return className;
+    }
+}
 
 @helper GetPrice(double? price)
+        {
+if (price != null && price > 0)
 {
-    if (price != null && price > 0)
-    {
-        string str = string.Format(new CultureInfo(1035), "{0:N0} ", price);
+    string str = string.Format(new CultureInfo(1035), "{0:N0} ", price);
         @str
-    }
+}
 }
 @{
     string titTitle = "";
@@ -265,58 +302,59 @@
 
                             <div class="col-lg-9 device-item-content">
                                 <a href="@link"><h3>@device.Name.Name</h3></a>
-                                @{string className = "new";}
-                                @if (!String.IsNullOrWhiteSpace(device.Label.Name))
-                                {
-                                    switch (device.Label.OwnNameFromPath)
-                                    {
-                                        case "New":
-                                            {
-                                                className = "new";
-                                                break;
-                                            }
-                                        case "EOL":
-                                            {
-                                                className = "eol";
-                                                break;
-                                            }
-                                        case "Archive":
-                                            {
-                                                className = "archive";
-                                                break;
-                                            }
-                                    }
-                                    <span class="label label-@className">@device.Label.Name</span>
-                                }
-
+                                <span class="label label-@GetClassName(device)">@device.Label.Name</span>
                                 <div class="row">
                                     <div class="col-lg-7">
                                         @Html.Raw(device.Short_description)
                                     </div>
                                     <div class="col-sm-12 col-lg-5 device-item-buttons">
                                         <div class="row">
-                                            <div class="col-xs-5 col-lg-12 price">
+                                            <div class="col-xs-5 col-sm-5 col-lg-12 price">
                                                 <span>@GetPrice(device.Price)</span> @device.GetCurrency
                                             </div>
-
-                                            <div class="col-xs-7 col-lg-12 to-cart button-block text-right ">
-                                                <input type="text" class="btn btn-info counter" data-device-id="@device.Name.Id" value="1" />
-                                                <div class="add-remove">
-                                                    <button data-device-id="@device.Name.Id" class="btn btn-info count-button add">+</button>
-                                                    <button data-device-id="@device.Name.Id" class="btn btn-info count-button remove">-</button>
+                                            <div class="visible-lg col-lg-12 stock view_@GetClassName(device)">
+                                                На складе
+                                                <br />
+                                                @device.DeviceStockUpdate.ToString("dd.MM")  &nbsp;&nbsp; <b> @(device.DeviceStock == -1? "нет данных": device.DeviceStock + " шт.") </b>
+                                            </div>
+                                            <div class="col-xs-7 col-sm-7 col-lg-12 to-cart button-block">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-sm-4" style="padding-right:0;">
+                                                        <div>
+                                                            <input type="text" class="btn btn-info counter" data-device-id="@device.Name.Id" value="1" />
+                                                            <div class="add-remove">
+                                                                <button data-device-id="@device.Name.Id" class="btn btn-info count-button add">+</button>
+                                                                <button data-device-id="@device.Name.Id" class="btn btn-info count-button remove">-</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-9 col-sm-5" style="padding-left:0;">
+                                                        <div @(device.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@device.Name.Id" class="btn btn-primary buy-button"></div>
+                                                    </div>
                                                 </div>
-                                                <div @(device.Label.OwnNameFromPath == "Archive" ? "disabled" : "") data-device-id="@device.Name.Id" class="btn btn-primary buy-button"></div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 col-lg-12 button-block more-info">
-                                                <a href="@link" class="btn btn-default">
-                                                    @Index.Btn_read_more
-                                                </a>
+                                            <div class="visible-sm visible-md col-sm-12 stock view_@GetClassName(device)">
+                                                На складе @device.DeviceStockUpdate.ToString("dd.MM")  &nbsp;&nbsp; <b> @(device.DeviceStock == -1 ? "нет данных" : device.DeviceStock + " шт.") </b>
                                             </div>
-                                            <div class="col-xs-6 col-lg-12 compare text-right button-block">
-                                                <input type="checkbox" id="check-@device.Id" name="compare" value="@device.Id" /><label for="check-@device.Id" class="checkbox"></label>
-                                                <button class="btn btn-default compare">@Index.Txt_compare</button>
+                                            <div class="col-xs-5 col-sm-5 col-lg-12 button-block more-info">
+                                                <div class="row">
+                                                    <div class="col-lg-9 col-lg-offset-3 text-left" style="padding-left:0;">
+                                                        <a href="@link" class="btn btn-default">
+                                                            @Index.Btn_read_more
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-5 col-sm-7 col-lg-12 compare text-right button-block">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-sm-4" style="padding-right:3px;">
+                                                        <input type="checkbox" id="check-@device.Id" name="compare" value="@device.Id" />
+                                                        <label for="check-@device.Id" class="checkbox"></label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-sm-5 text-left" style="padding-left:0;">
+                                                        <button class="btn btn-default compare">@Index.Txt_compare</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

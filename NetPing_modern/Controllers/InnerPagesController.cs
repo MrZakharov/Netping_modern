@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NetPing.DAL;
-using NetPing.Models;
-using NetPing_modern.Properties;
 using System.Resources;
 using NetPing_modern.Controllers;
 
@@ -31,6 +27,20 @@ namespace NetPing.Controllers
         public ActionResult UCache()
         {
             ViewBag.result = _repository.UpdateAll();
+
+            return View();
+        }
+
+        public ActionResult UCacheStock()
+        {
+            string stock_csv = HttpContext.Server.MapPath("~/Pub/Data/netping_ru_stock.csv");
+            if (!System.IO.File.Exists(stock_csv))
+            {
+                ViewBag.result = "Ошибка! Файл данных не найден";
+                return View("UCache");
+            }
+            //else
+            //    ViewBag.result = _repository.UpdateAllAsync("Devices");
 
             return View();
         }

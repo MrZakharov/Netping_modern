@@ -147,7 +147,7 @@
     margin: 8px 8px 8px 0;
 }
 
-    .device-catalog-item .label.label-new {
+    .device-catalog-item .label.label-new,  .device-catalog-item .label.label-dev {
         background: #60af6e;
     }
 
@@ -163,6 +163,10 @@
         background: #535353;
     }
 
+    .view_dev, .visible-lg.stock.view_dev{
+        display:none!important;
+    }
+
 .device-catalog-item .device-item-buttons .button-block {
     margin-bottom: 5px;
 }
@@ -170,6 +174,10 @@
 .device-catalog-item .device-item-buttons .price {
     color: #eb6e0e;
     font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.device-catalog-item .device-item-buttons .stock {
     margin-bottom: 15px;
 }
 
@@ -186,7 +194,7 @@
     font-size: 24px;
     padding-top: 2px;
     padding-bottom: 1px;
-    width: 19%;
+    /*width: 19%;*/
     max-width: 50px;
     height: 34px;
     text-align: center;
@@ -195,7 +203,7 @@
 .device-catalog-item .device-item-buttons .to-cart .add-remove {
     display: inline-block;
     vertical-align: middle;
-    width: 15%;
+    width: 25%;
     max-width: 20px;
 }
 
@@ -299,4 +307,10 @@
     .device-catalog-item .device-item-buttons .to-cart .btn.counter {
         width: 50px;
     }
+}
+@media (min-width: 768px)
+{
+    .device-catalog-item .device-item-buttons .price {
+    margin-bottom: 0;
+}
 }
