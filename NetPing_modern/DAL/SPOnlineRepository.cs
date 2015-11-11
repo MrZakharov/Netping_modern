@@ -318,6 +318,10 @@ namespace NetPing.DAL
                     Created = (DateTime)item["Created"]
                             ,
                     Url = item["Url"] as string
+                            ,
+                    DeviceStockUpdate=_eviceStockUpdate
+                            ,
+                    DeviceStock=Int16.Parse(_stock)
                 };
 
 
