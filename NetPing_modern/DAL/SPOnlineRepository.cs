@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HtmlAgilityPack;
@@ -30,6 +31,166 @@ using File = System.IO.File;
 
 namespace NetPing.DAL
 {
+    internal class SharepointKeys
+    {
+        public static readonly String Names = "Names";
+        public static readonly String Purposes = "Destinations";
+        public static readonly String DeviceParameters = "Device parameters";
+        public static readonly String Labels = "Labels";
+        public static readonly String PostCategories = "Posts categories";
+        public static readonly String DocumentTypes = "Documents types";
+    }
+
+    internal class CacheKeys
+    {
+        public static readonly String Names = "Terms";
+        public static readonly String Purposes = "TermsDestinations";
+        public static readonly String DeviceParameters = "DevicesParameters";
+        public static readonly String Labels = "TermsLabels";
+        public static readonly String PostCategories = "TermsCategories";
+        public static readonly String DocumentTypes = "TermsFileTypes";
+    }
+
+    internal static class SharepointToCacheNamesMapper
+    {
+        private static readonly Dictionary<String, String> _dictionary = new Dictionary<String, String>();
+        private static readonly Dictionary<String, String> _revDictionary = new Dictionary<String, String>();
+
+        static SharepointToCacheNamesMapper()
+        {
+            _dictionary.Add(CacheKeys.Names, SharepointKeys.Names);
+            _dictionary.Add(CacheKeys.Purposes, SharepointKeys.Purposes);
+            _dictionary.Add(CacheKeys.DeviceParameters, SharepointKeys.DeviceParameters);
+            _dictionary.Add(CacheKeys.Labels, SharepointKeys.Labels);
+            _dictionary.Add(CacheKeys.PostCategories, SharepointKeys.PostCategories);
+            _dictionary.Add(CacheKeys.DocumentTypes, SharepointKeys.DocumentTypes);
+
+            foreach (var item in _dictionary)
+            {
+                _revDictionary.Add(item.Value, item.Key);
+            }
+        }
+
+        public static String CacheKeyBySharepointKey(string sharepointKey)
+        {
+            return _revDictionary[sharepointKey];
+        }
+
+        public static String SharepointKeyByCacheKey(string cacheKey)
+        {
+            return _dictionary[cacheKey];
+        }
+    }
+
+    internal class InFileDataStorageSynchronizer
+    {
+        private readonly IDataStorage _storage;
+        private readonly SharepointClientParameters _sharepointClientParameters;
+
+        public InFileDataStorageSynchronizer(IDataStorage storage, SharepointClientParameters sharepointClientParameters)
+        {
+            _storage = storage;
+            _sharepointClientParameters = sharepointClientParameters;
+        }
+
+        public void Load()
+        {
+            var sw = Stopwatch.StartNew();
+
+            Parallel.Invoke(
+                () => LoadSharepointTerms(CacheKeys.Names),
+                () => LoadSharepointTerms(CacheKeys.Purposes),
+                () => LoadSharepointTerms(CacheKeys.DeviceParameters),
+                () => LoadSharepointTerms(CacheKeys.Labels),
+                () => LoadSharepointTerms(CacheKeys.PostCategories),
+                () => LoadSharepointTerms(CacheKeys.DocumentTypes)
+                );
+
+            sw.Stop();
+
+            var el = sw.ElapsedMilliseconds;
+
+            Debug.WriteLine(el);
+        }
+
+        private void LoadSharepointTerms(String setName)
+        {
+            using (var sp = new SharepointClient(_sharepointClientParameters))
+            {
+                var sharepointName = SharepointToCacheNamesMapper.SharepointKeyByCacheKey(setName);
+
+                var nameTerms = sp.GetTerms(sharepointName);
+
+                _storage.Insert(setName, nameTerms);
+            }
+        }
+
+        private void LoadSharepointList(String listName, String query)
+        {
+            using (var sp = new SharepointClient(_sharepointClientParameters))
+            {
+                var sharepointName = SharepointToCacheNamesMapper.SharepointKeyByCacheKey(listName);
+
+                var nameTerms = sp.GetList(sharepointName, query);
+
+                _storage.Insert(listName, nameTerms);
+            }
+        }
+    }
+
+    internal class DataNotFoundException : Exception
+    {
+        public DataNotFoundException()
+        {
+        }
+
+        public DataNotFoundException(String message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        public DataNotFoundException(String message) : base(message)
+        {
+        }
+    }
+
+    internal class DataCache
+    {
+        private readonly IDataStorage _storage = new InFileDataStorage();
+
+        public static DataCache Instance { get; set; }
+
+        public IEnumerable<T> GetAndCache<T>(String name)
+        {
+            var cachedCollection = HttpRuntime.Cache.Get(name);
+
+            if (cachedCollection != null)
+            {
+                // Возвращаем найденную в кэше коллекцию
+                return (IEnumerable<T>) cachedCollection;
+            }
+
+            try
+            {
+                var storedCollection = _storage.Get<T>(name);
+
+                // Кэшируем найденную в хранилище коллекцию
+                HttpRuntime.Cache.Insert(name, storedCollection, new TimerCacheDependency());
+
+                // Возвращаем найденную в хранилище коллекцию
+                return storedCollection;
+            }
+            catch (Exception ex)
+            {
+                throw new DataNotFoundException("Unable to find data collection in storage", ex);
+            }
+        }
+    }
+
+    internal class CacheTokens
+    {
+        public static readonly String Posts = "Posts";
+    }
+
     internal class SPOnlineRepository : IRepository
     {
         public SPOnlineRepository(IConfluenceClient confluenceClient)
@@ -45,6 +206,7 @@ namespace NetPing.DAL
             {
                 var termsFileTypes = TermsFileTypes_Read();
                 Debug.WriteLine("TermsFileTypes_Read OK");
+
                 var terms = Terms_Read();
                 Debug.WriteLine("Terms_Read OK");
 
@@ -313,6 +475,8 @@ namespace NetPing.DAL
         #endregion
 
         #region :: Public Properties ::
+
+        public IEnumerable<Post> PostsProto => DataCache.Instance.GetAndCache<Post>(CacheTokens.Posts);
 
         public IEnumerable<Post> Posts
         {
@@ -1471,5 +1635,47 @@ namespace NetPing.DAL
         }
 
         #endregion
+    }
+
+    internal class LoadSharepointTermSetTask
+    {
+        private readonly String _setName;
+
+        public LoadSharepointTermSetTask(String setName)
+        {
+            _setName = setName;
+        }
+
+        public void Execute()
+        {
+            using (var sp = new SharepointClient(null))
+            {
+                sp.GetTerms(_setName);
+            }
+        }
+    }
+
+    internal class LoadSharepointCollectionTask2
+    {
+        public void Execute()
+        {
+            using (var sp = new SharepointClient(null))
+            {
+                var result = new List<Post>();
+
+                var postsList = sp.GetList("Blog_posts", Camls.Caml_Posts);
+            }
+        }
+    }
+
+    internal class SharepointClientParameters
+    {
+        public String Url { get; set; }
+
+        public Int32 RequestTimeout { get; set; }
+
+        public String User { get; set; }
+
+        public String Password { get; set; }
     }
 }

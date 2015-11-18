@@ -41,4 +41,3 @@ namespace NetPing.DAL
         String UpdateAllAsync(String name);
     }
 }
-}
