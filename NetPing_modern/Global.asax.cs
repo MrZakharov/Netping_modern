@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using NetPing.DAL;
 using NetPing.Global.Config;
+using NetPing_modern.Services.Confluence;
 
 namespace NetPing
 {
@@ -41,7 +42,7 @@ namespace NetPing
 
             var sw = Stopwatch.StartNew();
 
-            var sync = new InFileDataStorageSynchronizer(inFileDataStorage, sharepointClientParameters);
+            var sync = new InFileDataStorageSynchronizer(inFileDataStorage, sharepointClientParameters, new ConfluenceClient(new Config()));
 
             sync.Load();
 

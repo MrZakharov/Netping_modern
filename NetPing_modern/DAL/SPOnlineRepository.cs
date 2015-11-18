@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HtmlAgilityPack;
@@ -35,106 +34,75 @@ namespace NetPing.DAL
     {
         public static readonly String Names = "Names";
         public static readonly String Purposes = "Destinations";
-        public static readonly String DeviceParameters = "Device parameters";
+        public static readonly String DeviceParameterNames = "Device parameters";
         public static readonly String Labels = "Labels";
         public static readonly String PostCategories = "Posts categories";
         public static readonly String DocumentTypes = "Documents types";
+        public static readonly String HtmlInjection = "HTML_injection";
+        public static readonly String SiteTexts = "Web_texts";
+        public static readonly String DevicePhotos = "Device_photos";
+        public static readonly String DeviceParameters = "Device_parameters";
+        public static readonly String PubFiles = "Photos_to_pub";
+        public static readonly String Posts = "Blog_posts";
     }
 
     internal class CacheKeys
     {
         public static readonly String Names = "Terms";
         public static readonly String Purposes = "TermsDestinations";
-        public static readonly String DeviceParameters = "DevicesParameters";
+        public static readonly String DeviceParameterNames = "TermsDeviceParameters";
         public static readonly String Labels = "TermsLabels";
         public static readonly String PostCategories = "TermsCategories";
         public static readonly String DocumentTypes = "TermsFileTypes";
+        public static readonly String HtmlInjection = "HtmlInjection";
+        public static readonly String SiteTexts = "SiteTexts";
+        public static readonly String DevicePhotos = "DevicePhotos";
+        public static readonly String DeviceParameters = "DevicesParameters";
+        public static readonly String PubFiles = "PubFiles";
+        public static readonly String Posts = "Posts";
     }
 
-    internal static class SharepointToCacheNamesMapper
+
+    internal static class ConfluenceDataHelper
     {
-        private static readonly Dictionary<String, String> _dictionary = new Dictionary<String, String>();
-        private static readonly Dictionary<String, String> _revDictionary = new Dictionary<String, String>();
-
-        static SharepointToCacheNamesMapper()
+        public static String GetContentByUrl(this ConfluenceClient client, String url)
         {
-            _dictionary.Add(CacheKeys.Names, SharepointKeys.Names);
-            _dictionary.Add(CacheKeys.Purposes, SharepointKeys.Purposes);
-            _dictionary.Add(CacheKeys.DeviceParameters, SharepointKeys.DeviceParameters);
-            _dictionary.Add(CacheKeys.Labels, SharepointKeys.Labels);
-            _dictionary.Add(CacheKeys.PostCategories, SharepointKeys.PostCategories);
-            _dictionary.Add(CacheKeys.DocumentTypes, SharepointKeys.DocumentTypes);
+            Int32? contentID = null;
 
-            foreach (var item in _dictionary)
+            if (url != null)
             {
-                _revDictionary.Add(item.Value, item.Key);
+                contentID = client.GetContentIdFromUrl(url);
             }
-        }
 
-        public static String CacheKeyBySharepointKey(string sharepointKey)
-        {
-            return _revDictionary[sharepointKey];
-        }
+            var content = String.Empty;
 
-        public static String SharepointKeyByCacheKey(string cacheKey)
-        {
-            return _dictionary[cacheKey];
-        }
-    }
-
-    internal class InFileDataStorageSynchronizer
-    {
-        private readonly IDataStorage _storage;
-        private readonly SharepointClientParameters _sharepointClientParameters;
-
-        public InFileDataStorageSynchronizer(IDataStorage storage, SharepointClientParameters sharepointClientParameters)
-        {
-            _storage = storage;
-            _sharepointClientParameters = sharepointClientParameters;
-        }
-
-        public void Load()
-        {
-            var sw = Stopwatch.StartNew();
-
-            Parallel.Invoke(
-                () => LoadSharepointTerms(CacheKeys.Names),
-                () => LoadSharepointTerms(CacheKeys.Purposes),
-                () => LoadSharepointTerms(CacheKeys.DeviceParameters),
-                () => LoadSharepointTerms(CacheKeys.Labels),
-                () => LoadSharepointTerms(CacheKeys.PostCategories),
-                () => LoadSharepointTerms(CacheKeys.DocumentTypes)
-                );
-
-            sw.Stop();
-
-            var el = sw.ElapsedMilliseconds;
-
-            Debug.WriteLine(el);
-        }
-
-        private void LoadSharepointTerms(String setName)
-        {
-            using (var sp = new SharepointClient(_sharepointClientParameters))
+            if (contentID.HasValue)
             {
-                var sharepointName = SharepointToCacheNamesMapper.SharepointKeyByCacheKey(setName);
-
-                var nameTerms = sp.GetTerms(sharepointName);
-
-                _storage.Insert(setName, nameTerms);
+                var contentTask = client.GetContenAsync(contentID.Value);
+                content = contentTask.Result;
             }
+
+            return content;
         }
 
-        private void LoadSharepointList(String listName, String query)
+        public static String GetTitleByUrl(this ConfluenceClient client, String url)
         {
-            using (var sp = new SharepointClient(_sharepointClientParameters))
+            Int32? contentID = null;
+
+            if (url != null)
             {
-                var sharepointName = SharepointToCacheNamesMapper.SharepointKeyByCacheKey(listName);
-
-                var nameTerms = sp.GetList(sharepointName, query);
-
-                _storage.Insert(listName, nameTerms);
+                contentID = client.GetContentIdFromUrl(url);
             }
+
+            var content = String.Empty;
+
+            if (contentID.HasValue)
+            {
+                var contentTask = client.GetContentTitleAsync(contentID.Value);
+                content = contentTask.Result;
+            }
+
+            return content;
         }
     }
 
@@ -151,44 +119,6 @@ namespace NetPing.DAL
         public DataNotFoundException(String message) : base(message)
         {
         }
-    }
-
-    internal class DataCache
-    {
-        private readonly IDataStorage _storage = new InFileDataStorage();
-
-        public static DataCache Instance { get; set; }
-
-        public IEnumerable<T> GetAndCache<T>(String name)
-        {
-            var cachedCollection = HttpRuntime.Cache.Get(name);
-
-            if (cachedCollection != null)
-            {
-                // Возвращаем найденную в кэше коллекцию
-                return (IEnumerable<T>) cachedCollection;
-            }
-
-            try
-            {
-                var storedCollection = _storage.Get<T>(name);
-
-                // Кэшируем найденную в хранилище коллекцию
-                HttpRuntime.Cache.Insert(name, storedCollection, new TimerCacheDependency());
-
-                // Возвращаем найденную в хранилище коллекцию
-                return storedCollection;
-            }
-            catch (Exception ex)
-            {
-                throw new DataNotFoundException("Unable to find data collection in storage", ex);
-            }
-        }
-    }
-
-    internal class CacheTokens
-    {
-        public static readonly String Posts = "Posts";
     }
 
     internal class SPOnlineRepository : IRepository
@@ -476,7 +406,7 @@ namespace NetPing.DAL
 
         #region :: Public Properties ::
 
-        public IEnumerable<Post> PostsProto => DataCache.Instance.GetAndCache<Post>(CacheTokens.Posts);
+        public IEnumerable<Post> PostsProto => DataCache.Instance.GetAndCache<Post>(CacheKeys.Posts);
 
         public IEnumerable<Post> Posts
         {
@@ -606,7 +536,7 @@ namespace NetPing.DAL
         {
             var result = new List<DevicePhoto>();
 
-            foreach (var item in ReadSPList("Device_photos", Camls.Caml_DevicePhotos))
+            foreach (var item in ReadSPList("Device_photos", Camls.DevicePhotos))
             {
                 var pictureUrl = (item["FileLeafRef"] as String);
                 if (!String.IsNullOrEmpty(pictureUrl))
@@ -615,14 +545,10 @@ namespace NetPing.DAL
                 }
                 result.Add(new DevicePhoto
                 {
-                    Name = item["FileLeafRef"] as String
-                    ,
-                    Dev_name = ((item["Device"] == null) ? null : item["Device"] as TaxonomyFieldValue).ToSPTerm(terms)
-                    ,
-                    Url = "http://www.netping.ru/Pub/Photos/" + pictureUrl
-                    ,
-                    IsBig = pictureUrl.Contains("big") ? true : false
-                    ,
+                    Name = item["FileLeafRef"] as String,
+                    Dev_name = ((item["Device"] == null) ? null : item["Device"] as TaxonomyFieldValue).ToSPTerm(terms),
+                    Url = "http://www.netping.ru/Pub/Photos/" + pictureUrl,
+                    IsBig = pictureUrl.Contains("big") ? true : false,
                     IsCover = Convert.ToBoolean(item["Cover"])
                 });
             }
@@ -634,7 +560,7 @@ namespace NetPing.DAL
         {
             var result = new List<PubFiles>();
 
-            foreach (var item in ReadSPList("Photos_to_pub", Camls.Caml_Photos_to_pub))
+            foreach (var item in ReadSPList("Photos_to_pub", Camls.PubFiles))
             {
                 result.Add(new PubFiles
                 {
@@ -777,7 +703,7 @@ namespace NetPing.DAL
         {
             var result = new List<Post>();
 
-            foreach (var item in ReadSPList("Blog_posts", Camls.Caml_Posts))
+            foreach (var item in ReadSPList("Blog_posts", Camls.Posts))
             {
                 var link = item["Body_link"] as FieldUrlValue;
                 Int32? contentId = null;
@@ -1218,7 +1144,7 @@ namespace NetPing.DAL
         {
             var result = new List<SiteText>();
 
-            foreach (var item in ReadSPList("Web_texts", Camls.Caml_SiteTexts))
+            foreach (var item in ReadSPList("Web_texts", Camls.SiteTexts))
             {
                 var link = item["Body_link"] as FieldUrlValue;
                 Int32? contentId = null;
@@ -1512,7 +1438,7 @@ namespace NetPing.DAL
             //_context.Load(items);
             //_context.ExecuteQuery();
 
-            var items = ReadSPList("HTML_injection", Camls.Caml_HTMLInjection);
+            var items = ReadSPList("HTML_injection", Camls.HtmlInjection);
 
             var list = new List<HTMLInjection>();
             foreach (var item in items)
@@ -1663,7 +1589,7 @@ namespace NetPing.DAL
             {
                 var result = new List<Post>();
 
-                var postsList = sp.GetList("Blog_posts", Camls.Caml_Posts);
+                var postsList = sp.GetList("Blog_posts", Camls.Posts);
             }
         }
     }

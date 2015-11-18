@@ -187,14 +187,24 @@
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="DAL\CustomTermComparer.cs" />
     <Compile Include="DAL\CategoryId.cs" />
+    <Compile Include="DAL\Converters\DeviceParameterConverter.cs" />
+    <Compile Include="DAL\Converters\DevicePhotoConverter.cs" />
+    <Compile Include="DAL\Cache\DataCache.cs" />
     <Compile Include="DAL\DevicesTree.cs" />
     <Compile Include="DAL\DeviceTreeNode.cs" />
     <Compile Include="DAL\Errors.cs" />
+    <Compile Include="DAL\Converters\HtmlInjectionConverter.cs" />
     <Compile Include="DAL\IDataStorage.cs" />
+    <Compile Include="DAL\Converters\IListItemConverter.cs" />
     <Compile Include="DAL\InFileDataStorage.cs" />
+    <Compile Include="DAL\Cache\InFileDataStorageSynchronizer.cs" />
     <Compile Include="DAL\Model\PageModel.cs" />
     <Compile Include="DAL\Model\UserManualModel.cs" />
+    <Compile Include="DAL\Converters\PubFilesConverter.cs" />
+    <Compile Include="DAL\Converters\PostConverter.cs" />
     <Compile Include="DAL\SharepointClient.cs" />
+    <Compile Include="DAL\Converters\SiteTextConverter.cs" />
+    <Compile Include="DAL\Cache\SharepointToCacheNamesMapper.cs" />
     <Compile Include="DAL\SortOrdersCollection.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\SPOnlineRepository.cs" />
@@ -732,7 +742,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Data\" />
-    <Folder Include="DAL\Cache\" />
     <Folder Include="Pub\Files\" />
     <Folder Include="Pub\Photos\" />
     <Folder Include="Views\Cart\" />
