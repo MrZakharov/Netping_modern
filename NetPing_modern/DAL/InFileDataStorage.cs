@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace NetPing.DAL
@@ -39,7 +40,7 @@ namespace NetPing.DAL
             }
         }
 
-        public void Insert<T>(String key, IEnumerable<T> collection)
+        public void Set<T>(String key, IEnumerable<T> collection)
         {
             var filePath = CreateFilePath(key);
 
@@ -53,6 +54,24 @@ namespace NetPing.DAL
 
                     formatter.Serialize(fileStream, collection);
                 }
+            }
+        }
+
+        public void Append<T>(String key, IEnumerable<T> collection)
+        {
+            var filePath = CreateFilePath(key);
+
+            if (File.Exists(filePath))
+            {
+                Set(key, collection);
+            }
+            else
+            {
+                var currentCollection = Get<T>(key);
+
+                var combinedCollection = currentCollection.Union(collection);
+
+                Set(key, combinedCollection);
             }
         }
 

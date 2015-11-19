@@ -22,6 +22,7 @@ namespace NetPing.DAL
             _dictionary.Add(CacheKeys.DeviceParameters, SharepointKeys.DeviceParameters);
             _dictionary.Add(CacheKeys.PubFiles, SharepointKeys.PubFiles);
             _dictionary.Add(CacheKeys.Posts, SharepointKeys.Posts);
+            _dictionary.Add(CacheKeys.Devices, SharepointKeys.Devices);
 
             foreach (var item in _dictionary)
             {

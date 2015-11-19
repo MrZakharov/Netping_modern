@@ -87,7 +87,10 @@ namespace NetPing.DAL
             html.LoadHtml(content);
             try
             {
-                var table = GetPagePropertiesContent(html).Descendants("table").FirstOrDefault();
+                var pagePropertiesContent = GetPagePropertiesContent(html);
+
+                var table = pagePropertiesContent?.Descendants("table").FirstOrDefault();
+
                 if (table != null)
                 {
                     var result = new Dictionary<String, String>();
@@ -114,10 +117,10 @@ namespace NetPing.DAL
 
         private static HtmlNode GetPagePropertiesContent(HtmlDocument html)
         {
-            return html.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("data-macro-name")
+            return html.DocumentNode.Descendants("div").FirstOrDefault(x => x.Attributes.Contains("data-macro-name")
                                                                    &&
                                                                    x.Attributes["data-macro-name"].Value.Contains(
-                                                                       "details")).FirstOrDefault();
+                                                                       "details"));
         }
     }
 }

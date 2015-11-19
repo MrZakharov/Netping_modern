@@ -44,6 +44,9 @@ namespace NetPing.DAL
         public static readonly String DeviceParameters = "Device_parameters";
         public static readonly String PubFiles = "Photos_to_pub";
         public static readonly String Posts = "Blog_posts";
+        public static readonly String DeviceManualFiles = "Device documentation";
+        public static readonly String FirmwareFiles = "Firmwares";
+        public static readonly String Devices = "Devices";
     }
 
     internal class CacheKeys
@@ -60,6 +63,8 @@ namespace NetPing.DAL
         public static readonly String DeviceParameters = "DevicesParameters";
         public static readonly String PubFiles = "PubFiles";
         public static readonly String Posts = "Posts";
+        public static readonly String SFiles = "SFiles";
+        public static readonly String Devices = "Devices";
     }
 
 
@@ -582,7 +587,7 @@ namespace NetPing.DAL
             var result = new List<SFile>();
             var confluenceClient = new ConfluenceClient(new Config());
 
-            foreach (var item in ReadSPList("Device documentation", Camls.Caml_DevDoc))
+            foreach (var item in ReadSPList("Device documentation", Camls.DeviceManual))
             {
                 if ((item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes).OwnNameFromPath ==
                     "User guide")
@@ -602,18 +607,12 @@ namespace NetPing.DAL
                             var url = "/UserGuide/" + content.Title.Replace("/", "");
                             result.Add(new SFile
                             {
-                                Id = item.Id
-                                ,
-                                Name = item["FileLeafRef"] as String
-                                ,
-                                Title = item["Title"] as String
-                                ,
-                                Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
-                                ,
-                                File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes)
-                                ,
-                                Created = (DateTime)item["Created"]
-                                ,
+                                Id = item.Id,
+                                Name = item["FileLeafRef"] as String,
+                                Title = item["Title"] as String,
+                                Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms),
+                                File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes),
+                                Created = (DateTime)item["Created"],
                                 Url = url
                             });
                         }
@@ -627,18 +626,12 @@ namespace NetPing.DAL
                 {
                     result.Add(new SFile
                     {
-                        Id = item.Id
-                        ,
-                        Name = item["FileLeafRef"] as String
-                        ,
-                        Title = item["Title"] as String
-                        ,
-                        Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms)
-                        ,
-                        File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes)
-                        ,
-                        Created = (DateTime)item["Created"]
-                        ,
+                        Id = item.Id,
+                        Name = item["FileLeafRef"] as String,
+                        Title = item["Title"] as String,
+                        Devices = (item["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(terms),
+                        File_type = (item["File_x0020_type0"] as TaxonomyFieldValue).ToSPTerm(termsFileTypes),
+                        Created = (DateTime)item["Created"],
                         Url = (item["URL"] as FieldUrlValue).ToFileUrlStr(item["FileLeafRef"] as String)
                     });
                 }
@@ -653,7 +646,7 @@ namespace NetPing.DAL
             var list = _context.Web.Lists.GetByTitle("Firmwares");
             var camlquery = new CamlQuery();
 
-            camlquery.ViewXml = Camls.Caml_Firmwares;
+            camlquery.ViewXml = Camls.FirmwareFiles;
             var items = list.GetItems(camlquery);
             _context.Load(list);
             _context.Load(items);
@@ -928,7 +921,7 @@ namespace NetPing.DAL
                 _eviceStockUpdate = DateTime.Parse(dataTable[""]);
             }
 
-            foreach (var item in ReadSPList("Devices", Camls.Caml_Device_keys))
+            foreach (var item in ReadSPList("Devices", Camls.CamlDevices))
             {
                 //var _guidid1S = item["1C_ref"];
                 var _guidid = item["_x0031_C_ref"] as String;
@@ -1073,12 +1066,14 @@ namespace NetPing.DAL
             return str;
         }
 
-        private readonly Regex ConfluenceImageTagRegex = new Regex(@"\<img [^\>]+\>", RegexOptions.IgnoreCase);
-
         private String ReplaceConfluenceImages(String str)
         {
             return ConfluenceImageTagRegex.Replace(str, ConfluenceImage);
         }
+
+        private readonly Regex ConfluenceImageTagRegex = new Regex(@"\<img [^\>]+\>", RegexOptions.IgnoreCase);
+
+        
 
         private IEnumerable<SPTerm> TermsDestinations_Read()
         {

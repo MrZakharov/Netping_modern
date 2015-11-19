@@ -66,20 +66,15 @@ namespace NetPing_modern.Resources {
         ///                                  &lt;/OrderBy&gt;
         ///                                    &lt;Query&gt;
         ///                                    &lt;Where&gt;
-        ///										&lt;Or&gt;
-        ///											&lt;In&gt;
-        ///												&lt;FieldRef Name=&apos;Language&apos; /&gt;
-        ///												&lt;Values&gt;
-        ///													&lt;Value Type=&apos;TaxonomyFieldType&apos;&gt;English&lt;/Value&gt;
-        ///												&lt;/Values&gt;
-        ///											&lt;/In&gt;
-        ///											&lt;In&gt;
-        ///												&lt;FieldRef Name=&apos;Language&apos; /&gt;
-        ///									 [rest of string was truncated]&quot;;.
+        ///                                        &lt;And&gt;
+        ///                                            &lt;Or&gt;
+        ///                                                &lt;In&gt;
+        ///                                                    &lt;FieldRef Name=&apos;Language&apos; /&gt;
+        ///                                    [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Caml_DevDoc {
+        public static string Caml_Pub_files {
             get {
-                return ResourceManager.GetString("Caml_DevDoc", resourceCulture);
+                return ResourceManager.GetString("Caml_Pub_files", resourceCulture);
             }
         }
         
@@ -101,9 +96,9 @@ namespace NetPing_modern.Resources {
         ///       &lt;OrderBy&gt;
         ///		&lt;FieldRef Na [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Caml_Device_keys {
+        public static string CamlDevices {
             get {
-                return ResourceManager.GetString("Caml_Device_keys", resourceCulture);
+                return ResourceManager.GetString("CamlDevices", resourceCulture);
             }
         }
         
@@ -113,33 +108,20 @@ namespace NetPing_modern.Resources {
         ///                                  &lt;/OrderBy&gt;
         ///                                    &lt;Query&gt;
         ///                                    &lt;Where&gt;
-        ///                                        &lt;And&gt;
-        ///                                            &lt;Or&gt;
-        ///                                                &lt;In&gt;
-        ///                                                    &lt;FieldRef Name=&apos;Language&apos; /&gt;
-        ///                                    [rest of string was truncated]&quot;;.
+        ///										&lt;Or&gt;
+        ///											&lt;In&gt;
+        ///												&lt;FieldRef Name=&apos;Language&apos; /&gt;
+        ///												&lt;Values&gt;
+        ///													&lt;Value Type=&apos;TaxonomyFieldType&apos;&gt;English&lt;/Value&gt;
+        ///												&lt;/Values&gt;
+        ///											&lt;/In&gt;
+        ///											&lt;In&gt;
+        ///												&lt;FieldRef Name=&apos;Language&apos; /&gt;
+        ///									 [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Caml_Firmwares {
+        public static string DeviceManual {
             get {
-                return ResourceManager.GetString("Caml_Firmwares", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;View&gt;&lt;OrderBy&gt;
-        ///                                            &lt;FieldRef Name=&apos;Created&apos; Ascending=&apos;FALSE&apos; /&gt;
-        ///                                  &lt;/OrderBy&gt;
-        ///                                    &lt;Query&gt;
-        ///                                    &lt;Where&gt;
-        ///                                        &lt;And&gt;
-        ///                                            &lt;Or&gt;
-        ///                                                &lt;In&gt;
-        ///                                                    &lt;FieldRef Name=&apos;Language&apos; /&gt;
-        ///                                    [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string Caml_Pub_files {
-            get {
-                return ResourceManager.GetString("Caml_Pub_files", resourceCulture);
+                return ResourceManager.GetString("DeviceManual", resourceCulture);
             }
         }
         
@@ -157,6 +139,24 @@ namespace NetPing_modern.Resources {
         public static string DevicePhotos {
             get {
                 return ResourceManager.GetString("DevicePhotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;View&gt;&lt;OrderBy&gt;
+        ///                                            &lt;FieldRef Name=&apos;Created&apos; Ascending=&apos;FALSE&apos; /&gt;
+        ///                                  &lt;/OrderBy&gt;
+        ///                                    &lt;Query&gt;
+        ///                                    &lt;Where&gt;
+        ///                                        &lt;And&gt;
+        ///                                            &lt;Or&gt;
+        ///                                                &lt;In&gt;
+        ///                                                    &lt;FieldRef Name=&apos;Language&apos; /&gt;
+        ///                                    [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string FirmwareFiles {
+            get {
+                return ResourceManager.GetString("FirmwareFiles", resourceCulture);
             }
         }
         

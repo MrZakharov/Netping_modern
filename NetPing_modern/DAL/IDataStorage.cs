@@ -7,6 +7,8 @@ namespace NetPing.DAL
     {
         IEnumerable<T> Get<T>(String key);
 
-        void Insert<T>(String key, IEnumerable<T> collection);
+        void Set<T>(String key, IEnumerable<T> collection);
+
+        void Append<T>(String key, IEnumerable<T> collection);
     }
 }

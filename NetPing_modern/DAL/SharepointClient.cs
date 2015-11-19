@@ -45,6 +45,21 @@ namespace NetPing.DAL
             return context;
         }
 
+        public ListItem GetFolderParent(String folderUrl)
+        {
+            var itemFolder = _context.Web.GetFolderByServerRelativeUrl(folderUrl);
+            var itemFolderParent = itemFolder.ParentFolder;
+            var itemFolderParentItems = itemFolderParent.ListItemAllFields;
+
+            _context.Load(itemFolder);
+            _context.Load(itemFolderParent);
+            _context.Load(itemFolderParentItems);
+
+            _context.ExecuteQuery();
+
+            return itemFolderParentItems;
+        }
+
         public ListItemCollection GetList(String name, String query)
         {
             var list = _context.Web.Lists.GetByTitle(name);
