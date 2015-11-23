@@ -25,26 +25,18 @@ namespace NetPing
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            var cult = CultureInfo.CurrentCulture;
-            
-
             var cfg = new Config();
 
-            var sharepointClientParameters = new SharepointClientParameters()
-            {
-                Url = cfg.SPSettings.SiteUrl,
-                User = cfg.SPSettings.Login,
-                Password = cfg.SPSettings.Password,
-                RequestTimeout = cfg.SPSettings.RequestTimeout
-            };
+            var factory = new SharepointClientFactory(cfg);
 
             var inFileDataStorage = new InFileDataStorage();
 
             var sw = Stopwatch.StartNew();
 
-            var sync = new InFileDataStorageSynchronizer(inFileDataStorage, sharepointClientParameters, new ConfluenceClient(new Config()));
+            var sync = new DataStorageUpdater(inFileDataStorage, factory, new ConfluenceClient(new Config()));
 
-            sync.Load();
+
+            sync.Update();
 
             sw.Stop();
 

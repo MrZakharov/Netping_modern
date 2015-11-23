@@ -15,11 +15,11 @@ namespace NetPing.DAL
     {
         private readonly Regex tagRegex = new Regex("\\[.*\\]");
 
-        private readonly ConfluenceClient _confluenceClient;
+        private readonly IConfluenceClient _confluenceClient;
         private readonly IEnumerable<SPTerm> _names;
         private readonly IEnumerable<SPTerm> _categories;
 
-        public PostConverter(ConfluenceClient confluenceClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> categories)
+        public PostConverter(IConfluenceClient confluenceClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> categories)
         {
             _confluenceClient = confluenceClient;
             _names = names;

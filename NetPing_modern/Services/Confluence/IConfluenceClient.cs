@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using NetPing_modern.DAL.Model;
 
 namespace NetPing_modern.Services.Confluence
 {
@@ -11,5 +12,7 @@ namespace NetPing_modern.Services.Confluence
         Task<int> GetContentBySpaceAndTitle(string spaceKey, string title);
 
         int? GetContentIdFromUrl(string url);
+
+        UserManualModel GetUserManual(int id, int itemId);
     }
 }

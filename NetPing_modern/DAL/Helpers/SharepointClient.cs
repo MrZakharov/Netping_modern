@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
@@ -106,50 +108,15 @@ namespace NetPing.DAL
 
             Parallel.ForEach(guids, CreateClientContext, (id, state, context) =>
             {
-                var lsession = TaxonomySession.GetTaxonomySession(context);
-
-                var ltermSets = lsession.GetTermSetsByName(setName, englishLCID);
-
-                context.Load(lsession, s => s.TermStores);
-                context.Load(ltermSets);
-                context.ExecuteQuery();
-
-                var ltermSet = ltermSets.First();
-
-                var term = ltermSet.GetTerm(id);
-
-                context.Load(term);
-
-                context.ExecuteQuery();
-
-                var name = term.Name;
-
-                var spTerm = new SPTerm
+                try
                 {
-                    Id = term.Id,
-                    Name = name,
-                    Path = term.PathOfTerm,
-                    Properties = term.LocalCustomProperties
-                };
-
-                if (currentLCID != englishLCID) // If lcid label not avaliable or lcid==1033 keep default label
-                {
-                    var langLabel = term.GetAllLabels(currentLCID);
-
-                    context.Load(langLabel);
-                    context.ExecuteQuery();
-
-                    if (langLabel.Count != 0)
-                    {
-                        spTerm.Name = langLabel.First().Value;
-                    }
+                    GetTermItem(setName, context, englishLCID, id, currentLCID, terms, sortOrders);
                 }
-
-                terms.Add(spTerm);
-
-                if (!String.IsNullOrEmpty(term.CustomSortOrder))
+                catch (WebException)
                 {
-                    sortOrders.AddSortOrder(term.CustomSortOrder);
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+
+                    GetTermItem(setName, context, englishLCID, id, currentLCID, terms, sortOrders);
                 }
 
                 return context;
@@ -163,6 +130,56 @@ namespace NetPing.DAL
             if (terms.Count == 0) throw new Exception("No terms was readed!");
 
             return terms;
+        }
+
+        private static void GetTermItem(String setName, ClientContext context, Int32 englishLCID, Guid id, Int32 currentLCID,
+            List<SPTerm> terms, SortOrdersCollection<Guid> sortOrders)
+        {
+            var lsession = TaxonomySession.GetTaxonomySession(context);
+
+            var ltermSets = lsession.GetTermSetsByName(setName, englishLCID);
+
+            context.Load(lsession, s => s.TermStores);
+            context.Load(ltermSets);
+            context.ExecuteQuery();
+
+            var ltermSet = ltermSets.First();
+
+            var term = ltermSet.GetTerm(id);
+
+            context.Load(term);
+
+            context.ExecuteQuery();
+
+            var name = term.Name;
+
+            var spTerm = new SPTerm
+            {
+                Id = term.Id,
+                Name = name,
+                Path = term.PathOfTerm,
+                Properties = term.LocalCustomProperties
+            };
+
+            if (currentLCID != englishLCID) // If lcid label not avaliable or lcid==1033 keep default label
+            {
+                var langLabel = term.GetAllLabels(currentLCID);
+
+                context.Load(langLabel);
+                context.ExecuteQuery();
+
+                if (langLabel.Count != 0)
+                {
+                    spTerm.Name = langLabel.First().Value;
+                }
+            }
+
+            terms.Add(spTerm);
+
+            if (!String.IsNullOrEmpty(term.CustomSortOrder))
+            {
+                sortOrders.AddSortOrder(term.CustomSortOrder);
+            }
         }
 
         public void Dispose()

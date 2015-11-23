@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -17,11 +18,11 @@ namespace NetPing.DAL
 {
     internal class DeviceManualFileConverter : IListItemConverter<SFile>
     {
-        private readonly ConfluenceClient _confluenceClient;
+        private readonly IConfluenceClient _confluenceClient;
         private readonly IEnumerable<SPTerm> _names;
         private readonly IEnumerable<SPTerm> _fileTypeTerms;
 
-        public DeviceManualFileConverter(ConfluenceClient confluenceClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> fileTypeTerms)
+        public DeviceManualFileConverter(IConfluenceClient confluenceClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> fileTypeTerms)
         {
             _confluenceClient = confluenceClient;
             _names = names;
@@ -30,53 +31,71 @@ namespace NetPing.DAL
 
         public SFile Convert(ListItem listItem)
         {
-            var fileType = listItem["File_x0020_type0"] as TaxonomyFieldValue;
-
-            if (fileType.ToSPTerm(_fileTypeTerms).OwnNameFromPath == "User guide")
+            try
             {
-                var fileUrl = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString());
+                var fileType = listItem["File_x0020_type0"] as TaxonomyFieldValue;
 
-                var contentId = _confluenceClient.GetContentIdFromUrl(fileUrl);
-
-                if (contentId.HasValue)
+                if (fileType.ToSPTerm(_fileTypeTerms).OwnNameFromPath == "User guide")
                 {
-                    var content = _confluenceClient.GetUserManual(contentId.Value, listItem.Id);
+                    var fileUrl = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString());
 
-                    PushUserGuideToCache(content);
-                    var url = "/UserGuide/" + content.Title.Replace("/", "");
+                    Debug.WriteLine($"Start loading manual '{fileUrl}'");
 
-                    var sFile = new SFile
+                    var contentId = _confluenceClient.GetContentIdFromUrl(fileUrl);
+
+                    if (contentId.HasValue)
                     {
-                        Id = listItem.Id,
-                        Name = listItem["FileLeafRef"] as String,
-                        Title = listItem["Title"] as String,
-                        Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
-                        File_type = fileType.ToSPTerm(_fileTypeTerms),
-                        Created = (DateTime) listItem["Created"],
-                        Url = url
-                    };
+                        var content = _confluenceClient.GetUserManual(contentId.Value, listItem.Id);
 
-                    return sFile;
+                        PushUserGuideToCache(content);
+                        var url = "/UserGuide/" + content.Title.Replace("/", "");
+
+                        var sFile = new SFile
+                        {
+                            Id = listItem.Id,
+                            Name = listItem["FileLeafRef"] as String,
+                            Title = listItem["Title"] as String,
+                            Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
+                            File_type = fileType.ToSPTerm(_fileTypeTerms),
+                            Created = (DateTime) listItem["Created"],
+                            Url = url
+                        };
+
+                        Debug.WriteLine($"End loading manual '{fileUrl}'");
+
+                        return sFile;
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"End loading manual '{fileUrl}'");
+
+                        return null;
+                    }
+
                 }
                 else
                 {
-                    return null;
+                    var sFile = new SFile
+                    {
+                        Id = listItem.Id,
+                        Name = listItem["FileLeafRef"].ToString(),
+                        Title = listItem["Title"].ToString(),
+                        Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
+                        File_type = fileType.ToSPTerm(_fileTypeTerms),
+                        Created = (DateTime) listItem["Created"],
+                        Url = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString())
+                    };
+
+                    var fileUrl = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString());
+
+                    Debug.WriteLine($"End loading manual '{fileUrl}'");
+
+                    return sFile;
                 }
             }
-            else
+            catch(Exception ex)
             {
-                var sFile = new SFile
-                {
-                    Id = listItem.Id,
-                    Name = listItem["FileLeafRef"].ToString(),
-                    Title = listItem["Title"].ToString(),
-                    Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
-                    File_type = fileType.ToSPTerm(_fileTypeTerms),
-                    Created = (DateTime) listItem["Created"],
-                    Url = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString())
-                };
-
-                return sFile;
+                return null;
             }
         }
 

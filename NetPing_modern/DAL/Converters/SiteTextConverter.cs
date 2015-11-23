@@ -7,9 +7,9 @@ namespace NetPing.DAL
 {
     internal class SiteTextConverter : IListItemConverter<SiteText>
     {
-        private readonly ConfluenceClient _confluenceClient;
+        private readonly IConfluenceClient _confluenceClient;
 
-        public SiteTextConverter(ConfluenceClient confluenceClient)
+        public SiteTextConverter(IConfluenceClient confluenceClient)
         {
             _confluenceClient = confluenceClient;
         }

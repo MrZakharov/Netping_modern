@@ -17,14 +17,14 @@ namespace NetPing.DAL
 
         private readonly Regex ConfluenceDataBaseUrlRegex = new Regex(@"\sdata-base-url=""(?<src>[^\""]+)""");
 
-        private readonly ConfluenceClient _confluenceClient;
+        private readonly IConfluenceClient _confluenceClient;
         private readonly Dictionary<string, string> _dataTable;
         private readonly IEnumerable<SPTerm> _names;
         private readonly IEnumerable<SPTerm> _purposes;
         private readonly IEnumerable<SPTerm> _labels;
         private readonly DateTime _deviceStockUpdate;
 
-        public DeviceConverter(ConfluenceClient confluenceClient, Dictionary<String, String> dataTable, IEnumerable<SPTerm> names, IEnumerable<SPTerm> purposes, IEnumerable<SPTerm> labels, DateTime deviceStockUpdate)
+        public DeviceConverter(IConfluenceClient confluenceClient, Dictionary<String, String> dataTable, IEnumerable<SPTerm> names, IEnumerable<SPTerm> purposes, IEnumerable<SPTerm> labels, DateTime deviceStockUpdate)
         {
             _confluenceClient = confluenceClient;
             _dataTable = dataTable;

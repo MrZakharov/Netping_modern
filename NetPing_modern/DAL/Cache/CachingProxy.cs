@@ -5,11 +5,14 @@ using NetPing.Tools;
 
 namespace NetPing.DAL
 {
-    internal class DataCache
+    internal class CachingProxy
     {
-        private readonly IDataStorage _storage = new InFileDataStorage();
+        private readonly IDataStorage _storage;
 
-        public static DataCache Instance { get; set; }
+        public CachingProxy(IDataStorage storage)
+        {
+            _storage = storage;
+        }
 
         public IEnumerable<T> GetAndCache<T>(String name)
         {

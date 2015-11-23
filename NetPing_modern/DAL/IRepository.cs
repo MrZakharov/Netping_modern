@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NetPing.DAL
 {
-    public interface IRepository : IDisposable
+    public interface IRepository
     {
         IEnumerable<SPTerm> Terms { get; }
 
