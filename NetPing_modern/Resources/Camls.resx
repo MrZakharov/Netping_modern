@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Caml_DevDoc" xml:space="preserve">
+  <data name="DeviceManual" xml:space="preserve">
     <value>&lt;View&gt;&lt;OrderBy&gt;
                                             &lt;FieldRef Name='Created' Ascending='FALSE' /&gt;
                                   &lt;/OrderBy&gt;
@@ -141,7 +141,7 @@
                                     &lt;/Where&gt;
                                   &lt;/View&gt;</value>
   </data>
-  <data name="Caml_DevicePhotos" xml:space="preserve">
+  <data name="DevicePhotos" xml:space="preserve">
     <value>&lt;View&gt;
                                     &lt;Query&gt;
                                     &lt;Where&gt;
@@ -163,7 +163,7 @@
                                     &lt;/Where&gt;
                                   &lt;/View&gt;</value>
   </data>
-  <data name="Caml_Device_keys" xml:space="preserve">
+  <data name="CamlDevices" xml:space="preserve">
     <value>&lt;View&gt;
     &lt;Query&gt;
        &lt;Where&gt;
@@ -184,7 +184,7 @@
   &lt;/Query&gt;
 &lt;/View&gt;</value>
   </data>
-  <data name="Caml_Firmwares" xml:space="preserve">
+  <data name="FirmwareFiles" xml:space="preserve">
     <value>&lt;View&gt;&lt;OrderBy&gt;
                                             &lt;FieldRef Name='Created' Ascending='FALSE' /&gt;
                                   &lt;/OrderBy&gt;
@@ -214,7 +214,7 @@
                                     &lt;/Where&gt;
                                   &lt;/View&gt;</value>
   </data>
-  <data name="Caml_HTMLInjection" xml:space="preserve">
+  <data name="HtmlInjection" xml:space="preserve">
     <value>&lt;View&gt;
                                     &lt;Query&gt;
                                     &lt;Where&gt;
@@ -236,7 +236,7 @@
                                     &lt;/Where&gt;
                                   &lt;/View&gt;</value>
   </data>
-  <data name="Caml_Photos_to_pub" xml:space="preserve">
+  <data name="PubFiles" xml:space="preserve">
     <value>&lt;View&gt;&lt;OrderBy&gt;
                                             &lt;FieldRef Name='Created' Ascending='FALSE' /&gt;
                                   &lt;/OrderBy&gt;
@@ -266,7 +266,7 @@
                                     &lt;/Where&gt;
                                   &lt;/View&gt;</value>
   </data>
-  <data name="Caml_Posts" xml:space="preserve">
+  <data name="Posts" xml:space="preserve">
     <value>&lt;View&gt;
 	&lt;OrderBy&gt;
 		&lt;FieldRef Name='Created' Ascending='FALSE' /&gt;
@@ -321,7 +321,7 @@
                                     &lt;/Where&gt;
                                   &lt;/View&gt;</value>
   </data>
-  <data name="Caml_SiteTexts" xml:space="preserve">
+  <data name="SiteTexts" xml:space="preserve">
     <value>&lt;View&gt;
                                     &lt;Query&gt;
                                     &lt;Where&gt;

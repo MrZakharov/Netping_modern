@@ -85,6 +85,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Interfaces.4.0.48\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.Signed.4.0.48\lib\net40\ServiceStack.Text.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -177,17 +185,42 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\Product_itemController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
-    <Compile Include="DAL\CustomTermComparer.cs" />
-    <Compile Include="DAL\CategoryId.cs" />
-    <Compile Include="DAL\DevicesTree.cs" />
-    <Compile Include="DAL\DeviceTreeNode.cs" />
-    <Compile Include="DAL\Errors.cs" />
+    <Compile Include="DAL\Cache\CacheKeys.cs" />
+    <Compile Include="DAL\Cache\DataStorageExtensions.cs" />
+    <Compile Include="DAL\Helpers\ConfluenceDataHelper.cs" />
+    <Compile Include="DAL\Converters\DeviceConverter.cs" />
+    <Compile Include="DAL\Helpers\ISharepointClientFactory.cs" />
+    <Compile Include="DAL\Helpers\SharepointClientFactory.cs" />
+    <Compile Include="DAL\Sort\CustomTermComparer.cs" />
+    <Compile Include="DAL\Model\CategoryId.cs" />
+    <Compile Include="DAL\Converters\DeviceParameterConverter.cs" />
+    <Compile Include="DAL\Converters\DevicePhotoConverter.cs" />
+    <Compile Include="DAL\Cache\CachingProxy.cs" />
+    <Compile Include="DAL\Converters\DeviceManualFileConverter.cs" />
+    <Compile Include="DAL\Model\DataNotFoundException.cs" />
+    <Compile Include="DAL\Model\DevicesTree.cs" />
+    <Compile Include="DAL\Model\DeviceTreeNode.cs" />
+    <Compile Include="DAL\Model\Errors.cs" />
+    <Compile Include="DAL\Converters\HtmlInjectionConverter.cs" />
+    <Compile Include="DAL\Converters\FirmwareFileConverter.cs" />
+    <Compile Include="DAL\Storage\IDataStorage.cs" />
+    <Compile Include="DAL\Converters\IListItemConverter.cs" />
+    <Compile Include="DAL\Storage\InFileDataStorage.cs" />
+    <Compile Include="DAL\Cache\DataStorageUpdater.cs" />
     <Compile Include="DAL\Model\PageModel.cs" />
     <Compile Include="DAL\Model\UserManualModel.cs" />
-    <Compile Include="DAL\SortOrdersCollection.cs" />
+    <Compile Include="DAL\Converters\PubFilesConverter.cs" />
+    <Compile Include="DAL\Converters\PostConverter.cs" />
+    <Compile Include="DAL\Helpers\ProductCatalogManager.cs" />
+    <Compile Include="DAL\Helpers\SharepointClient.cs" />
+    <Compile Include="DAL\Converters\SiteTextConverter.cs" />
+    <Compile Include="DAL\Cache\SharepointToCacheNamesMapper.cs" />
+    <Compile Include="DAL\Helpers\SharepointClientParameters.cs" />
+    <Compile Include="DAL\Helpers\SharepointKeys.cs" />
+    <Compile Include="DAL\Sort\SortOrdersCollection.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\SPOnlineRepository.cs" />
-    <Compile Include="DAL\SPTermComparerByCustomSortOrder.cs" />
+    <Compile Include="DAL\Sort\SPTermComparerByCustomSortOrder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

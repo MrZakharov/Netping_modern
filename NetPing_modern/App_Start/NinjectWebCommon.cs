@@ -82,6 +82,7 @@ namespace NetPing_modern.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<ISharepointClientFactory>().To<SharepointClientFactory>().InSingletonScope();
             kernel.Bind<IRepository>().To<SPOnlineRepository>().InRequestScope();
             kernel.Bind<IConfig>().To<Config>().InSingletonScope();
             kernel.Bind<IConfluenceClient>().To<ConfluenceClient>().InRequestScope();

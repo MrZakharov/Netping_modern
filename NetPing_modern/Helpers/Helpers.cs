@@ -15,21 +15,33 @@ using NetPing_modern.Services.Confluence;
 
 namespace NetpingHelpers
 {
-    public static class Helpers
+    internal static class Helpers
     {
         public static IEnumerable<HTMLInjection> GetHtmlInjections(IRepository repository = null)
         {
             if(repository == null)
-                repository = new SPOnlineRepository(new ConfluenceClient(new Config()));
+                repository = new SPOnlineRepository(GetConfluenceClient(), GetSharepointClientFactory());
 
             return repository.HtmlInjections;
+        }
+
+        public static ConfluenceClient GetConfluenceClient()
+        {
+            return new ConfluenceClient(new Config());
+        }
+
+        public static SharepointClientFactory GetSharepointClientFactory()
+        {
+            var config = new Config();
+
+            return new SharepointClientFactory(config);
         }
 
         public static IEnumerable<Device> GetNewDevices()
         {
             // should be removed
             // repository should be instantiated by DI container
-            var repository = new SPOnlineRepository(new ConfluenceClient(new Config()));
+            var repository = new SPOnlineRepository(GetConfluenceClient(), GetSharepointClientFactory());
 
             var devices = repository.Devices.Where(dev =>
                                     dev.Label.IsEqualStrId(NetPing_modern.Properties.Resources.Guid_Label_New)
@@ -40,7 +52,7 @@ namespace NetpingHelpers
 
         public static IEnumerable<Device> GetDevDevices()
         {
-            var repository = new SPOnlineRepository(new ConfluenceClient(new Config()));
+            var repository = new SPOnlineRepository(GetConfluenceClient(), GetSharepointClientFactory());
 
             var devices = repository.Devices.Where(d => !d.Name.IsGroup() && d.Name.Path.Contains("Development"));
             devices = devices.OrderByDescending(dev => dev.Created);
@@ -51,7 +63,7 @@ namespace NetpingHelpers
         {
             // should be removed
             // repository should be instantiated by DI container
-            var repository = new SPOnlineRepository(new ConfluenceClient(new Config()));
+            var repository = new SPOnlineRepository(GetConfluenceClient(), GetSharepointClientFactory());
 
             var top_posts = repository.Posts.Where(p => p.IsTop).OrderByDescending(p=>p.Created);
 
