@@ -5,13 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Web;
+using NLog;
+
 using NetpingHelpers;
 using NetPing.Models;
 using NetPing.Tools;
 using NetPing_modern.DAL.Model;
 using NetPing_modern.Services.Confluence;
-using NLog;
-using File = System.IO.File;
 
 namespace NetPing.DAL
 {
@@ -171,42 +171,6 @@ namespace NetPing.DAL
                 Log.Error(ex, "Create devices tree error");
 
                 throw;
-            }
-        }
-
-        public void PushUserGuideToCache(UserManualModel model)
-        {
-            try
-            {
-                HttpRuntime.Cache.Insert(model.Title, model, new TimerCacheDependency());
-
-                var fileName = HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/" + model.Title.Replace("/", "") + "_" +
-                                                       CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
-                Stream streamWrite = null;
-                try
-                {
-                    streamWrite = File.Create(fileName);
-                    var binaryWrite = new BinaryFormatter();
-                    binaryWrite.Serialize(streamWrite, model);
-                    streamWrite.Close();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    var result =
-                        Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/"));
-                    if (result.Exists)
-                        PushUserGuideToCache(model);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Save user guide to file error");
-
-                    streamWrite?.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Cache user guide error");
             }
         }
         
