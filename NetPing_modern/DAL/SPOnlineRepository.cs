@@ -11,6 +11,7 @@ using NetPing.Models;
 using NetPing.Tools;
 using NetPing_modern.DAL.Model;
 using NetPing_modern.Services.Confluence;
+using NLog;
 using File = System.IO.File;
 
 namespace NetPing.DAL
@@ -23,15 +24,28 @@ namespace NetPing.DAL
 
         private readonly ProductCatalogManager _productCatalogManager;
 
+        private static readonly Logger Log = LogManager.GetLogger(LogNames.RepositoryLog);
+
         public SPOnlineRepository(IConfluenceClient confluenceClient, ISharepointClientFactory sharepointClientFactory)
         {
-            var storage = new InFileDataStorage();
-            
-            _dataProxy = new CachingProxy(storage);
+            try
+            {
+                var storage = new InFileDataStorage();
 
-            _dataUpdater = new DataStorageUpdater(storage, sharepointClientFactory, confluenceClient);
+                _dataProxy = new CachingProxy(storage);
 
-            _productCatalogManager = new ProductCatalogManager(this);
+                _dataUpdater = new DataStorageUpdater(storage, sharepointClientFactory, confluenceClient);
+
+                _productCatalogManager = new ProductCatalogManager(this);
+
+                Log.Trace($"Instance of '{nameof(SPOnlineRepository)}' created");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"'{nameof(SPOnlineRepository)}' initializing failed");
+
+                throw;
+            }
         }
 
         #region :: Public Methods ::
@@ -40,17 +54,21 @@ namespace NetPing.DAL
         {
             try
             {
-                _dataUpdater.Update();
+                Log.Trace("Starting to update all data in storage");
 
-                Debug.WriteLine("PushToCache OK");
+                _dataUpdater.Update();
 
                 if (Helpers.IsCultureRus)
                 {
                     _productCatalogManager.GenerateYml();
                 }
+
+                Log.Trace("All data in storage updated");
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Update all data in storage failed");
+
                 return ex.ToString();
             }
 
@@ -59,72 +77,48 @@ namespace NetPing.DAL
 
         public String UpdateAllAsync(String name)
         {
-            switch (name)
+            Log.Trace($"Starting to execute update action with name '{name}'");
+            
+            try
             {
-                case CacheKeys.DocumentTypes:
-                    _dataUpdater.LoadDocumentTypeTerms();
-                    break;
-                case CacheKeys.Names:
-                    _dataUpdater.LoadNameTerms();
-                    break;
-                case CacheKeys.SiteTexts:
-                    _dataUpdater.LoadSiteTexts();
-                    break;
-                case CacheKeys.Labels:
-                    _dataUpdater.LoadLabelTerms();
-                    break;
-                case CacheKeys.DeviceParameterNames:
-                    _dataUpdater.LoadDeviceParameterTerms();
-                    break;
-                case CacheKeys.PostCategories:
-                    _dataUpdater.LoadPostCategoryTerms();
-                    break;
-                case CacheKeys.Purposes:
-                    _dataUpdater.LoadPurposeTerms();
-                    break;
-                case CacheKeys.DeviceParameters:
-                    _dataUpdater.LoadDeviceParameters();
-                    break;
-                case CacheKeys.DevicePhotos:
-                    _dataUpdater.LoadDevicePhotos();
-                    break;
-                case CacheKeys.PubFiles:
-                    _dataUpdater.LoadPubFiles();
-                    break;
-                case CacheKeys.SFiles:
-                    _dataUpdater.LoadSFiles();
-                    break;
-                case CacheKeys.Posts:
-                    _dataUpdater.LoadPosts();
-                    break;
-                case CacheKeys.Devices:
-                    _dataUpdater.LoadDevices();
-                    break;
-                case "GenerateYml":
-                    if (Helpers.IsCultureRus)
+                if (name == "GenerateYml")
+                {
+                    var isCultureRus = Helpers.IsCultureRus;
+
+                    Log.Trace($"GenerateYml action requested. IsCultureRus: {isCultureRus}");
+
+                    if (isCultureRus)
                     {
                         _productCatalogManager.GenerateYml();
                     }
-                    break;
-                case "PushAll":
-                {
-                    _dataUpdater.LoadDocumentTypeTerms();
-                    _dataUpdater.LoadNameTerms();
-                    _dataUpdater.LoadSiteTexts();
-                    _dataUpdater.LoadLabelTerms();
-                    _dataUpdater.LoadDeviceParameterTerms();
-                    _dataUpdater.LoadPostCategoryTerms();
-                    _dataUpdater.LoadPurposeTerms();
-                    _dataUpdater.LoadDeviceParameters();
-                    _dataUpdater.LoadDevicePhotos();
-                    _dataUpdater.LoadPubFiles();
-                    _dataUpdater.LoadSFiles();
-                    _dataUpdater.LoadPosts();
-
-                    break;
                 }
-                default:
-                    return "404";
+                else if (name == "PushAll")
+                {
+                    _dataUpdater.Update();
+                }
+                else
+                {
+                    var updateAction = _dataUpdater.GetUpdateActionByKey(name);
+
+                    if (updateAction != null)
+                    {
+                        updateAction();
+                    }
+                    else
+                    {
+                        Log.Warn($"Update action with name '{name}' does not exist");
+
+                        return "404";
+                    }
+                }
+
+                Log.Trace($"Execution of action with name'{name}' completed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Update action with name '{name}' failed");
+
+                throw;
             }
 
             return "OK";
@@ -132,26 +126,53 @@ namespace NetPing.DAL
 
         public IEnumerable<Device> GetDevices(String id, String groupId)
         {
-            if (String.IsNullOrEmpty(id))
-                throw new ArgumentNullException(nameof(id));
+            try
+            {
+                if (String.IsNullOrEmpty(id))
+                {
+                    throw new ArgumentNullException(nameof(id));
+                }
 
-            if (String.IsNullOrEmpty(groupId))
-                throw new ArgumentNullException(nameof(groupId));
+                if (String.IsNullOrEmpty(groupId))
+                {
+                    throw new ArgumentNullException(nameof(groupId));
+                }
 
-            var group = Devices.FirstOrDefault(d => d.Url == groupId);
+                var group = Devices.FirstOrDefault(d => d.Url == groupId);
 
-            var devices = Devices.Where(d => d.Name.IsUnderOther(group.Name) && !d.Name.IsGroup());
+                if (group == null)
+                {
+                    throw new InvalidOperationException($"Unable to find group with url '{groupId}'");
+                }
 
-            return devices;
+                var devices = Devices.Where(d => d.Name.IsUnderOther(group.Name) && !d.Name.IsGroup());
+
+                return devices;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Get devices error");
+
+                throw;
+            }
         }
 
         public TreeNode<Device> DevicesTree(Device root, IEnumerable<Device> devices)
         {
-            var tree = new TreeNode<Device>(root);
+            try
+            {
+                var tree = new TreeNode<Device>(root);
 
-            BuildTree(tree, devices);
+                DevicesTreeHelper.BuildTree(tree, devices);
 
-            return tree;
+                return tree;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Create devices tree error");
+
+                throw;
+            }
         }
 
         public void PushUserGuideToCache(UserManualModel model)
@@ -179,21 +200,17 @@ namespace NetPing.DAL
                 }
                 catch (Exception ex)
                 {
-                    if (streamWrite != null) streamWrite.Close();
-                    //toDo log exception to log file
+                    Log.Error(ex, "Save user guide to file error");
+
+                    streamWrite?.Close();
                 }
             }
             catch (Exception ex)
             {
-                //toDo log exception to log file
+                Log.Error(ex, "Cache user guide error");
             }
         }
         
-        public static String GetDeviceUrl(Device device)
-        {
-            return "http://www.netping.ru/products/" + device.Url;
-        }
-
         #endregion
 
         #region :: Public Properties ::
@@ -225,20 +242,6 @@ namespace NetPing.DAL
         public IEnumerable<DeviceParameter> DevicesParameters => _dataProxy.GetAndCache<DeviceParameter>(CacheKeys.DeviceParameters);
 
         public IEnumerable<Device> Devices => _dataProxy.GetAndCache<Device>(CacheKeys.Devices);
-
-        #endregion
-
-        #region :: Private Methods ::
-        
-        private void BuildTree(TreeNode<Device> dev, IEnumerable<Device> list)
-        {
-            var childrens = list.Where(d => d.Name.Level == dev.Value.Name.Level + 1 && d.Name.Path.Contains(dev.Value.Name.Path));
-
-            foreach (var child in childrens)
-            {
-                BuildTree(dev.AddChild(child), list);
-            }
-        }
 
         #endregion
     }

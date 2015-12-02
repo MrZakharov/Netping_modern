@@ -22,11 +22,56 @@ namespace NetPing.DAL
         private Int32 _loadedModulesCounter = 0;
         private Int32 _totalModules = 15;
 
+        private Dictionary<String, Action> _updateActions = new Dictionary<String, Action>(); 
+
         public DataStorageUpdater(IDataStorage storage, ISharepointClientFactory sharepointClientFactory, IConfluenceClient confluenceClient)
         {
             _storage = storage;
             _sharepointClientFactory = sharepointClientFactory;
             _confluenceClient = confluenceClient;
+
+            InitUpdateActions();
+        }
+
+        private void InitUpdateActions()
+        {
+            _updateActions.Add(CacheKeys.DocumentTypes, LoadDocumentTypeTerms);
+
+            _updateActions.Add(CacheKeys.Names, LoadNameTerms);
+
+            _updateActions.Add(CacheKeys.SiteTexts, LoadSiteTexts);
+
+            _updateActions.Add(CacheKeys.Labels, LoadLabelTerms);
+
+            _updateActions.Add(CacheKeys.DeviceParameterNames, LoadDeviceParameterTerms);
+
+            _updateActions.Add(CacheKeys.PostCategories, LoadPostCategoryTerms);
+
+            _updateActions.Add(CacheKeys.Purposes, LoadPurposeTerms);
+
+            _updateActions.Add(CacheKeys.DeviceParameters, LoadDeviceParameters);
+
+            _updateActions.Add(CacheKeys.DevicePhotos, LoadDevicePhotos);
+
+            _updateActions.Add(CacheKeys.PubFiles, LoadPubFiles);
+
+            _updateActions.Add(CacheKeys.SFiles, LoadSFiles);
+
+            _updateActions.Add(CacheKeys.Posts, LoadPosts);
+
+            _updateActions.Add(CacheKeys.Devices, LoadDevices);
+        }
+
+        public Action GetUpdateActionByKey(String key)
+        {
+            if (!_updateActions.ContainsKey(key))
+            {
+                return null;
+            }
+
+            var action = _updateActions[key];
+
+            return action;
         }
 
         public void Update()

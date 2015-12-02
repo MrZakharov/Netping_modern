@@ -191,10 +191,12 @@
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="DAL\Cache\CacheKeys.cs" />
     <Compile Include="DAL\Cache\DataStorageExtensions.cs" />
+    <Compile Include="DAL\Helpers\DevicesTreeHelper.cs" />
     <Compile Include="DAL\Helpers\ConfluenceDataHelper.cs" />
     <Compile Include="DAL\Converters\DeviceConverter.cs" />
     <Compile Include="DAL\Helpers\ISharepointClientFactory.cs" />
     <Compile Include="DAL\Helpers\SharepointClientFactory.cs" />
+    <Compile Include="DAL\LogNames.cs" />
     <Compile Include="DAL\Sort\CustomTermComparer.cs" />
     <Compile Include="DAL\Model\CategoryId.cs" />
     <Compile Include="DAL\Converters\DeviceParameterConverter.cs" />
@@ -225,6 +227,7 @@
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\SPOnlineRepository.cs" />
     <Compile Include="DAL\Sort\SPTermComparerByCustomSortOrder.cs" />
+    <Compile Include="DAL\Helpers\UrlBuilder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
