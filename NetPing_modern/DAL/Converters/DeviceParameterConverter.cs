@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
@@ -19,12 +20,20 @@ namespace NetPing.DAL
 
         public DeviceParameter Convert(ListItem listItem)
         {
+            var name = listItem.Get<TaxonomyFieldValue>(SharepointFields.Parameter).ToSPTerm(_deviceParameterTerms);
+
+            var device = listItem.Get<TaxonomyFieldValue>(SharepointFields.Device).ToSPTerm(_names);
+
+            var valueField = Helpers.IsCultureEng ? SharepointFields.EngValue : SharepointFields.Title;
+
+            var value = listItem.Get<String>(valueField);
+
             var deviceParameter = new DeviceParameter
             {
                 Id = listItem.Id,
-                Name = (listItem["Parameter"] as TaxonomyFieldValue).ToSPTerm(_deviceParameterTerms),
-                Device = (listItem["Device"] as TaxonomyFieldValue).ToSPTerm(_names),
-                Value = (Helpers.IsCultureEng) ? listItem["ENG_value"].ToString() : listItem["Title"].ToString()
+                Name = name,
+                Device = device,
+                Value = value
             };
 
             return deviceParameter;

@@ -13,7 +13,7 @@ namespace NetPing.DAL
 {
     internal class PostConverter : IListItemConverter<Post>
     {
-        private readonly Regex tagRegex = new Regex("\\[.*\\]");
+        private readonly Regex _tagRegex = new Regex("\\[.*\\]");
 
         private readonly IConfluenceClient _confluenceClient;
         private readonly IEnumerable<SPTerm> _names;
@@ -28,11 +28,11 @@ namespace NetPing.DAL
 
         public Post Convert(ListItem listItem)
         {
-            var link = listItem["Body_link"] as FieldUrlValue;
+            var link = listItem.Get<FieldUrlValue>(SharepointFields.BodyLink);
 
-            var content = link == null ? "" : _confluenceClient.GetContentByUrl(link.Url);
+            var content = link == null ? String.Empty : _confluenceClient.GetContentByUrl(link.Url);
 
-            var title = link == null ? "" : _confluenceClient.GetTitleByUrl(link.Url);
+            var title = link == null ? String.Empty : _confluenceClient.GetTitleByUrl(link.Url);
 
             var metaHtml = GetPageProperties(content);
 
@@ -43,19 +43,35 @@ namespace NetPing.DAL
 
             if (!String.IsNullOrWhiteSpace(title))
             {
-                title = tagRegex.Replace(title, String.Empty);
+                title = _tagRegex.Replace(title, String.Empty);
             }
+
+            var id = listItem.Get<Int32>(SharepointFields.OldID);
+
+            var devices = listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.Devices).ToSPTermList(_names);
+
+            var body = content.ReplaceInternalLinks();
+
+            var category = listItem.Get<TaxonomyFieldValue>(SharepointFields.Category).ToSPTerm(_categories);
+
+            var createDate = listItem.Get<DateTime>(SharepointFields.PublicationDate);
+
+            var urlName = link?.Description.Replace(".", "x2E").Trim(' ') ?? String.Empty;
+
+            var relativeUrl = UrlBuilder.GetRelativePostUrl(urlName).ToString();
+
+            var isTopPost = listItem.Get<Boolean>(SharepointFields.IsTop);
 
             var post = new Post
             {
-                Id = (listItem["Old_id"] == null) ? 0 : Int32.Parse(listItem["Old_id"].ToString()),
+                Id = id,
                 Title = title,
-                Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
-                Body = content.ReplaceInternalLinks(),
-                Category = (listItem["Category"] as TaxonomyFieldValue).ToSPTerm(_categories),
-                Created = (DateTime) listItem["Pub_date"],
-                Url_name = "/Blog/" + (listItem["Body_link"] as FieldUrlValue).Description.Replace(".", "x2E").Trim(' '),
-                IsTop = (Boolean) listItem["TOP"],
+                Devices = devices,
+                Body = body,
+                Category = category,
+                Created = createDate,
+                Url_name = relativeUrl,
+                IsTop = isTopPost,
                 MetaHtml = metaHtml
             };
 
@@ -63,10 +79,8 @@ namespace NetPing.DAL
         }
 
         /// <summary>
-        ///     Удаляем из страницы блок PageProperties (блок с мета тегами)
+        ///  Removes from content PageProperties block (block with meta tags).
         /// </summary>
-        /// <param name="content"></param>
-        /// <returns></returns>
         private String RemovePagePropertiesInContent(String content)
         {
             var html = new HtmlDocument();
@@ -77,34 +91,45 @@ namespace NetPing.DAL
         }
 
         /// <summary>
-        ///     Находим блок PageProperties на странице
+        /// Finds PageProperties blocks in content.
         /// </summary>
-        /// <param name="content"></param>
-        /// <returns></returns>
         private Dictionary<String, String> GetPageProperties(String content)
         {
+            var trTag = "tr";
+            var tdTag = "td";
+            var tableTag = "table";
+
             var html = new HtmlDocument();
+
             html.LoadHtml(content);
+
             try
             {
                 var pagePropertiesContent = GetPagePropertiesContent(html);
-
-                var table = pagePropertiesContent?.Descendants("table").FirstOrDefault();
+                
+                var table = pagePropertiesContent?.Descendants(tableTag).FirstOrDefault();
 
                 if (table != null)
                 {
                     var result = new Dictionary<String, String>();
-                    var trNodes = table.ChildNodes[0].ChildNodes.Where(x => x.Name == "tr");
+                    
+                    var trNodes = table.ChildNodes[0].ChildNodes.Where(x => x.Name == trTag);
+
                     foreach (var tr in trNodes)
                     {
-                        var tdNodes = tr.ChildNodes.Where(x => x.Name == "td").ToArray();
+                        var tdNodes = tr.ChildNodes.Where(x => x.Name == tdTag).ToArray();
+
                         if (tdNodes.Count() == 2)
                         {
                             var key = tdNodes[0].InnerText;
+
                             if (!result.ContainsKey(key))
+                            {
                                 result.Add(tdNodes[0].InnerText, tdNodes[1].InnerText);
+                            }
                         }
                     }
+
                     return result;
                 }
                 return null;
@@ -115,12 +140,19 @@ namespace NetPing.DAL
             }
         }
 
-        private static HtmlNode GetPagePropertiesContent(HtmlDocument html)
+        private HtmlNode GetPagePropertiesContent(HtmlDocument html)
         {
-            return html.DocumentNode.Descendants("div").FirstOrDefault(x => x.Attributes.Contains("data-macro-name")
-                                                                   &&
-                                                                   x.Attributes["data-macro-name"].Value.Contains(
-                                                                       "details"));
+            var divTag = "div";
+            var dataMacroName = "data-macro-name";
+            var details = "details";
+
+            return html.DocumentNode
+                .Descendants(divTag)
+                .FirstOrDefault(x => x.Attributes.Contains(dataMacroName)
+                                     &&
+                                     x.Attributes[dataMacroName].Value
+                                         .Contains(
+                                             details));
         }
     }
 }

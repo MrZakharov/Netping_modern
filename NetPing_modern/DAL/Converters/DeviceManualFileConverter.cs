@@ -33,14 +33,35 @@ namespace NetPing.DAL
         {
             try
             {
-                var fileType = listItem["File_x0020_type0"] as TaxonomyFieldValue;
+                var userGuideFileName = "User guide";
 
-                if (fileType.ToSPTerm(_fileTypeTerms).OwnNameFromPath == "User guide")
+                var fileName = listItem.Get<String>(SharepointFields.FileLeaf);
+
+                var fileType = listItem.Get<TaxonomyFieldValue>(SharepointFields.ManualFileType).ToSPTerm(_fileTypeTerms);
+
+                var title = listItem.Get<String>(SharepointFields.Title);
+
+                var devices = listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.Devices).ToSPTermList(_names);
+
+                var created = listItem.Get<DateTime>(SharepointFields.Created);
+
+                var fileUrl = listItem.Get<FieldUrlValue>(SharepointFields.UrlUpperCase).ToFileUrlStr(fileName);
+
+                Debug.WriteLine($"Start loading manual '{fileUrl}'");
+
+                var sFile = new SFile
                 {
-                    var fileUrl = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString());
+                    Id = listItem.Id,
+                    Name = fileName,
+                    Title = title,
+                    Devices = devices,
+                    File_type = fileType,
+                    Created = created,
+                    Url = fileUrl
+                };
 
-                    Debug.WriteLine($"Start loading manual '{fileUrl}'");
-
+                if (fileType.OwnNameFromPath == userGuideFileName)
+                {
                     var contentId = _confluenceClient.GetContentIdFromUrl(fileUrl);
 
                     if (contentId.HasValue)
@@ -48,22 +69,10 @@ namespace NetPing.DAL
                         var content = _confluenceClient.GetUserManual(contentId.Value, listItem.Id);
 
                         PushUserGuideToCache(content);
-                        var url = "/UserGuide/" + content.Title.Replace("/", "");
 
-                        var sFile = new SFile
-                        {
-                            Id = listItem.Id,
-                            Name = listItem["FileLeafRef"] as String,
-                            Title = listItem["Title"] as String,
-                            Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
-                            File_type = fileType.ToSPTerm(_fileTypeTerms),
-                            Created = (DateTime) listItem["Created"],
-                            Url = url
-                        };
+                        var url = UrlBuilder.GetRelativeDeviceGuideUrl(PrepareUrlName(content)).ToString();
 
-                        Debug.WriteLine($"End loading manual '{fileUrl}'");
-
-                        return sFile;
+                        sFile.Url = url;
                     }
                     else
                     {
@@ -73,30 +82,20 @@ namespace NetPing.DAL
                     }
 
                 }
-                else
-                {
-                    var sFile = new SFile
-                    {
-                        Id = listItem.Id,
-                        Name = listItem["FileLeafRef"].ToString(),
-                        Title = listItem["Title"].ToString(),
-                        Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
-                        File_type = fileType.ToSPTerm(_fileTypeTerms),
-                        Created = (DateTime) listItem["Created"],
-                        Url = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString())
-                    };
 
-                    var fileUrl = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString());
+                Debug.WriteLine($"End loading manual '{fileUrl}'");
 
-                    Debug.WriteLine($"End loading manual '{fileUrl}'");
-
-                    return sFile;
-                }
+                return sFile;
             }
             catch(Exception ex)
             {
                 return null;
             }
+        }
+
+        private static String PrepareUrlName(UserManualModel content)
+        {
+            return content.Title.Replace("/", "");
         }
 
         private void PushUserGuideToCache(UserManualModel model)

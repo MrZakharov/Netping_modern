@@ -15,9 +15,13 @@ namespace NetPing.DAL
             }
             else
             {
-                if (typeof(T) == typeof(Boolean))
+                if (typeof (T) == typeof (Boolean) && !(field is Boolean))
                 {
-                    return (T)(object)Convert.ToBoolean(field);
+                    return (T) (object) Convert.ToBoolean(field);
+                }
+                else if (typeof (T) == typeof (Int32))
+                {
+                    return (T) (object) Int32.Parse(field.ToString());
                 }
 
                 return (T) field;

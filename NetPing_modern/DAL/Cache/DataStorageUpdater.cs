@@ -164,7 +164,9 @@ namespace NetPing.DAL
 
         private void LoadDeviceManualFiles()
         {
-            //LoadSharepointList(CacheKeys.SFiles, Camls.DeviceManual, new DeviceManualFileConverter(_confluenceClient, _storage.GetNames(), _storage.GetDocumentTypes()), SharepointKeys.DeviceManualFiles);
+            var deviceManualFileConverter = new DeviceManualFileConverter(_confluenceClient, _storage.GetNames(), _storage.GetDocumentTypes());
+
+            LoadSharepointList(CacheKeys.SFiles, Camls.DeviceManual, deviceManualFileConverter, SharepointKeys.DeviceManualFiles);
 
             var counter = IncreaseLoadCounter();
 

@@ -173,7 +173,20 @@ namespace NetPing.DAL
                 throw;
             }
         }
-        
+
+        public UserManualModel GetUserManual(String id)
+        {
+            var manuals = _dataProxy.GetAndCache<UserManualModel>(new StorageKey()
+            {
+                Name = id,
+                Directory = "UserGuides" // TODO: Вынести отдельно
+            });
+
+            var manual = manuals.FirstOrDefault();
+
+            return manual;
+        }
+
         #endregion
 
         #region :: Public Properties ::

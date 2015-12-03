@@ -10,15 +10,17 @@ namespace NetPing.DAL
 {
     internal class InFileDataStorage : IDataStorage
     {
-        private const String StoreRoot = "Content\\Data";
+        private const String StoreRootPath = "Content\\Data";
+
+        private const String InRoot = "";
         
         private readonly ConcurrentDictionary<String, Object> _locks = new ConcurrentDictionary<String, Object>();
 
-        public IEnumerable<T> Get<T>(String key)
+        public IEnumerable<T> Get<T>(StorageKey key)
         {
             var filePath = CreateFilePath(key);
 
-            var lockRoot = _locks.GetOrAdd(key, new Object());
+            var lockRoot = GetLock(key);
 
             lock (lockRoot)
             {
@@ -30,7 +32,7 @@ namespace NetPing.DAL
 
                         var storedObject = formatter.Deserialize(fileStream);
 
-                        return (IEnumerable<T>) storedObject;
+                        return (IEnumerable<T>)storedObject;
                     }
                 }
                 else
@@ -40,11 +42,11 @@ namespace NetPing.DAL
             }
         }
 
-        public void Set<T>(String key, IEnumerable<T> collection)
+        public void Set<T>(StorageKey key, IEnumerable<T> collection)
         {
             var filePath = CreateFilePath(key);
 
-            var lockRoot = _locks.GetOrAdd(key, new Object());
+            var lockRoot = GetLock(key);
 
             lock (lockRoot)
             {
@@ -57,7 +59,13 @@ namespace NetPing.DAL
             }
         }
 
-        public void Append<T>(String key, IEnumerable<T> collection)
+        private Object GetLock(StorageKey key)
+        {
+            return _locks.GetOrAdd(key.Name, new Object());
+        }
+        
+
+        public void Append<T>(StorageKey key, IEnumerable<T> collection)
         {
             var filePath = CreateFilePath(key);
 
@@ -75,13 +83,13 @@ namespace NetPing.DAL
             }
         }
 
-        private String CreateFilePath(string key)
+        private String CreateFilePath(StorageKey key)
         {
             var languageTag = CultureInfo.CurrentCulture.IetfLanguageTag;
 
-            var fileName = $"{key}_{languageTag}.dat";
+            var fileName = $"{key.Name}_{languageTag}.dat";
 
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, StoreRoot, fileName);
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, StoreRootPath, key.Directory, fileName);
 
             return filePath;
         }

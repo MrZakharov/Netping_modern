@@ -14,9 +14,9 @@ namespace NetPing.DAL
             _storage = storage;
         }
 
-        public IEnumerable<T> GetAndCache<T>(String name)
+        public IEnumerable<T> GetAndCache<T>(StorageKey key)
         {
-            var cachedCollection = HttpRuntime.Cache.Get(name);
+            var cachedCollection = HttpRuntime.Cache.Get(key.Name);
 
             if (cachedCollection != null)
             {
@@ -26,10 +26,10 @@ namespace NetPing.DAL
 
             try
             {
-                var storedCollection = _storage.Get<T>(name);
+                var storedCollection = _storage.Get<T>(key);
 
                 // Кэшируем найденную в хранилище коллекцию
-                HttpRuntime.Cache.Insert(name, storedCollection, new TimerCacheDependency());
+                HttpRuntime.Cache.Insert(key.Name, storedCollection, new TimerCacheDependency());
 
                 // Возвращаем найденную в хранилище коллекцию
                 return storedCollection;
