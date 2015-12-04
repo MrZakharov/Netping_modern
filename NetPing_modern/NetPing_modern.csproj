@@ -191,13 +191,13 @@
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="DAL\Cache\CacheKeys.cs" />
     <Compile Include="DAL\Cache\DataStorageExtensions.cs" />
-    <Compile Include="DAL\SharepointFields.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointFields.cs" />
     <Compile Include="DAL\Helpers\ListItemHelper.cs" />
     <Compile Include="DAL\Helpers\DevicesTreeHelper.cs" />
-    <Compile Include="DAL\Helpers\ConfluenceDataHelper.cs" />
+    <Compile Include="DAL\Confluence\ConfluenceDataHelper.cs" />
     <Compile Include="DAL\Converters\DeviceConverter.cs" />
-    <Compile Include="DAL\Helpers\ISharepointClientFactory.cs" />
-    <Compile Include="DAL\Helpers\SharepointClientFactory.cs" />
+    <Compile Include="DAL\Sharepoint\ISharepointClientFactory.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointClientFactory.cs" />
     <Compile Include="DAL\LogNames.cs" />
     <Compile Include="DAL\Sort\CustomTermComparer.cs" />
     <Compile Include="DAL\Model\CategoryId.cs" />
@@ -220,11 +220,11 @@
     <Compile Include="DAL\Converters\PubFilesConverter.cs" />
     <Compile Include="DAL\Converters\PostConverter.cs" />
     <Compile Include="DAL\Helpers\ProductCatalogManager.cs" />
-    <Compile Include="DAL\Helpers\SharepointClient.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointClient.cs" />
     <Compile Include="DAL\Converters\SiteTextConverter.cs" />
     <Compile Include="DAL\Cache\SharepointToCacheNamesMapper.cs" />
-    <Compile Include="DAL\Helpers\SharepointClientParameters.cs" />
-    <Compile Include="DAL\Helpers\SharepointKeys.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointClientParameters.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointKeys.cs" />
     <Compile Include="DAL\Sort\SortOrdersCollection.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\SPOnlineRepository.cs" />
@@ -485,8 +485,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Confluence\ConfluenceClient.cs" />
-    <Compile Include="Services\Confluence\IConfluenceClient.cs" />
+    <Compile Include="DAL\Confluence\ConfluenceClient.cs" />
+    <Compile Include="DAL\Confluence\IConfluenceClient.cs" />
     <Compile Include="Tools\TimerCacheDependency.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
