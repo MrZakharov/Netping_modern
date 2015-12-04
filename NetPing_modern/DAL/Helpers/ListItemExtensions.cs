@@ -3,7 +3,7 @@ using Microsoft.SharePoint.Client;
 
 namespace NetPing.DAL
 {
-    internal static class ListItemHelper
+    internal static class ListItemExtensions
     {
         public static T Get<T>(this ListItem listItem, String key)
         {

@@ -192,7 +192,7 @@
     <Compile Include="DAL\Cache\CacheKeys.cs" />
     <Compile Include="DAL\Cache\DataStorageExtensions.cs" />
     <Compile Include="DAL\Sharepoint\SharepointFields.cs" />
-    <Compile Include="DAL\Helpers\ListItemHelper.cs" />
+    <Compile Include="DAL\Helpers\ListItemExtensions.cs" />
     <Compile Include="DAL\Helpers\DevicesTreeHelper.cs" />
     <Compile Include="DAL\Confluence\ConfluenceDataHelper.cs" />
     <Compile Include="DAL\Converters\DeviceConverter.cs" />
