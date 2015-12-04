@@ -182,7 +182,7 @@ namespace NetPing.DAL
             _storage.Set(new StorageKey()
             {
                 Name = name,
-                Directory = InFileDataStorage.UserGuidFolder
+                Directory = FileDataStorage.UserGuidFolder
             }, new [] {userManualModel});
         }
 

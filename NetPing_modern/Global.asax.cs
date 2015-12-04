@@ -29,7 +29,7 @@ namespace NetPing
 
             var factory = new SharepointClientFactory(cfg);
 
-            var inFileDataStorage = new InFileDataStorage();
+            var inFileDataStorage = new FileDataStorage();
 
             var sw = Stopwatch.StartNew();
 

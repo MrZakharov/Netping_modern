@@ -214,7 +214,7 @@
     <Compile Include="DAL\StaticFilePaths.cs" />
     <Compile Include="DAL\Storage\IDataStorage.cs" />
     <Compile Include="DAL\Converters\IListItemConverter.cs" />
-    <Compile Include="DAL\Storage\InFileDataStorage.cs" />
+    <Compile Include="DAL\Storage\FileDataStorage.cs" />
     <Compile Include="DAL\Cache\DataStorageUpdater.cs" />
     <Compile Include="DAL\Model\PageModel.cs" />
     <Compile Include="DAL\Model\UserManualModel.cs" />

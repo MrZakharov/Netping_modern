@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Web;
 using NLog;
 
 using NetpingHelpers;
 using NetPing.Models;
-using NetPing.Tools;
 using NetPing_modern.DAL.Model;
 using NetPing_modern.Services.Confluence;
 
@@ -29,7 +24,7 @@ namespace NetPing.DAL
         {
             try
             {
-                var storage = new InFileDataStorage();
+                var storage = new FileDataStorage();
 
                 _dataProxy = new CachingProxy(storage);
 
@@ -191,7 +186,7 @@ namespace NetPing.DAL
                 var manuals = _dataProxy.GetAndCache<UserManualModel>(new StorageKey()
                 {
                     Name = id,
-                    Directory = InFileDataStorage.UserGuidFolder
+                    Directory = FileDataStorage.UserGuidFolder
                 });
 
                 var manual = manuals.FirstOrDefault();
