@@ -37,7 +37,7 @@ namespace NetPing.DAL
 
                 _productCatalogManager = new ProductCatalogManager(this);
 
-                Log.Trace($"Instance of '{nameof(SPOnlineRepository)}' created");
+                Log.Trace($"Instance of '{nameof(SPOnlineRepository)}' was created");
             }
             catch (Exception ex)
             {
@@ -127,6 +127,8 @@ namespace NetPing.DAL
         {
             try
             {
+                Log.Trace($"Filtered devices collection was requested. ID: {id} Group: {groupId}");
+
                 if (String.IsNullOrEmpty(id))
                 {
                     throw new ArgumentNullException(nameof(id));
@@ -146,6 +148,8 @@ namespace NetPing.DAL
 
                 var devices = Devices.Where(d => d.Name.IsUnderOther(group.Name) && !d.Name.IsGroup());
 
+                Log.Trace($"Filtered devices collection was returned. ID: {id} Group: {groupId}");
+
                 return devices;
             }
             catch (Exception ex)
@@ -160,9 +164,13 @@ namespace NetPing.DAL
         {
             try
             {
+                Log.Trace("Devices tree build was requested");
+
                 var tree = new TreeNode<Device>(root);
 
                 DevicesTreeHelper.BuildTree(tree, devices);
+
+                Log.Trace("Devices tree was built");
 
                 return tree;
             }
@@ -176,49 +184,82 @@ namespace NetPing.DAL
 
         public UserManualModel GetUserManual(String id)
         {
-            var manuals = _dataProxy.GetAndCache<UserManualModel>(new StorageKey()
+            try
             {
-                Name = id,
-                Directory = InFileDataStorage.UserGuidFolder
-            });
+                Log.Trace($"Requested user manual '{id}'");
 
-            var manual = manuals.FirstOrDefault();
+                var manuals = _dataProxy.GetAndCache<UserManualModel>(new StorageKey()
+                {
+                    Name = id,
+                    Directory = InFileDataStorage.UserGuidFolder
+                });
 
-            return manual;
+                var manual = manuals.FirstOrDefault();
+
+                Log.Trace($"User manual '{id}' was found");
+
+                return manual;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Get user manual error");
+
+                throw;
+            }
         }
 
         #endregion
 
         #region :: Public Properties ::
 
-        public IEnumerable<Post> Posts => _dataProxy.GetAndCache<Post>(CacheKeys.Posts);
+        public IEnumerable<Post> Posts => GetCollection<Post>(CacheKeys.Posts);
 
-        public IEnumerable<SFile> SFiles => _dataProxy.GetAndCache<SFile>(CacheKeys.SFiles);
+        public IEnumerable<SFile> SFiles => GetCollection<SFile>(CacheKeys.SFiles);
 
-        public IEnumerable<PubFiles> PubFiles => _dataProxy.GetAndCache<PubFiles>(CacheKeys.PubFiles);
+        public IEnumerable<PubFiles> PubFiles => GetCollection<PubFiles>(CacheKeys.PubFiles);
 
-        public IEnumerable<DevicePhoto> DevicePhotos => _dataProxy.GetAndCache<DevicePhoto>(CacheKeys.DevicePhotos);
+        public IEnumerable<DevicePhoto> DevicePhotos => GetCollection<DevicePhoto>(CacheKeys.DevicePhotos);
 
-        public IEnumerable<HTMLInjection> HtmlInjections => _dataProxy.GetAndCache<HTMLInjection>(CacheKeys.HtmlInjection);
+        public IEnumerable<HTMLInjection> HtmlInjections => GetCollection<HTMLInjection>(CacheKeys.HtmlInjection);
 
-        public IEnumerable<SPTerm> TermsLabels => _dataProxy.GetAndCache<SPTerm>(CacheKeys.Labels);
+        public IEnumerable<SPTerm> TermsLabels => GetCollection<SPTerm>(CacheKeys.Labels);
 
-        public IEnumerable<SPTerm> TermsCategories => _dataProxy.GetAndCache<SPTerm>(CacheKeys.PostCategories);
+        public IEnumerable<SPTerm> TermsCategories => GetCollection<SPTerm>(CacheKeys.PostCategories);
 
-        public IEnumerable<SPTerm> TermsDeviceParameters => _dataProxy.GetAndCache<SPTerm>(CacheKeys.DeviceParameterNames);
+        public IEnumerable<SPTerm> TermsDeviceParameters => GetCollection<SPTerm>(CacheKeys.DeviceParameterNames);
         
-        public IEnumerable<SPTerm> TermsFileTypes => _dataProxy.GetAndCache<SPTerm>(CacheKeys.DocumentTypes);
+        public IEnumerable<SPTerm> TermsFileTypes => GetCollection<SPTerm>(CacheKeys.DocumentTypes);
 
-        public IEnumerable<SPTerm> TermsDestinations => _dataProxy.GetAndCache<SPTerm>(CacheKeys.Purposes);
+        public IEnumerable<SPTerm> TermsDestinations => GetCollection<SPTerm>(CacheKeys.Purposes);
 
-        public IEnumerable<SPTerm> Terms => _dataProxy.GetAndCache<SPTerm>(CacheKeys.Names);
+        public IEnumerable<SPTerm> Terms => GetCollection<SPTerm>(CacheKeys.Names);
 
-        public IEnumerable<SiteText> SiteTexts => _dataProxy.GetAndCache<SiteText>(CacheKeys.SiteTexts);
+        public IEnumerable<SiteText> SiteTexts => GetCollection<SiteText>(CacheKeys.SiteTexts);
 
-        public IEnumerable<DeviceParameter> DevicesParameters => _dataProxy.GetAndCache<DeviceParameter>(CacheKeys.DeviceParameters);
+        public IEnumerable<DeviceParameter> DevicesParameters => GetCollection<DeviceParameter>(CacheKeys.DeviceParameters);
 
-        public IEnumerable<Device> Devices => _dataProxy.GetAndCache<Device>(CacheKeys.Devices);
+        public IEnumerable<Device> Devices => GetCollection<Device>(CacheKeys.Devices);
 
         #endregion
+
+        private IEnumerable<T> GetCollection<T>(String name)
+        {
+            try
+            {
+                Log.Trace($"Requested repository collection '{name}'. Item type: {typeof(T)}");
+
+                var collection = GetCollection<T>(name);
+
+                Log.Trace($"Collection was returned. Name: '{name}' Item type: {typeof(T)}");
+
+                return collection;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Unable to get collection '{name}'. Item type: {typeof(T)}");
+
+                throw;
+            }
+        }
     }
 }
