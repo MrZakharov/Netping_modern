@@ -179,7 +179,7 @@ namespace NetPing.DAL
             var manuals = _dataProxy.GetAndCache<UserManualModel>(new StorageKey()
             {
                 Name = id,
-                Directory = "UserGuides" // TODO: Вынести отдельно
+                Directory = InFileDataStorage.UserGuidFolder
             });
 
             var manual = manuals.FirstOrDefault();

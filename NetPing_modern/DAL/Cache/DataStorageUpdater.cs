@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.VisualBasic.FileIO;
 using NetPing.Models;
+using NetPing_modern.DAL.Model;
 using NetPing_modern.Resources;
 using NetPing_modern.Services.Confluence;
 using File = System.IO.File;
@@ -164,13 +165,24 @@ namespace NetPing.DAL
 
         private void LoadDeviceManualFiles()
         {
-            var deviceManualFileConverter = new DeviceManualFileConverter(_confluenceClient, _storage.GetNames(), _storage.GetDocumentTypes());
+            var deviceManualFileConverter = new DeviceManualFileConverter(_confluenceClient, _storage.GetNames(), _storage.GetDocumentTypes(), ManualSaver);
 
             LoadSharepointList(CacheKeys.SFiles, Camls.DeviceManual, deviceManualFileConverter, SharepointKeys.DeviceManualFiles);
 
             var counter = IncreaseLoadCounter();
 
             Debug.WriteLine($"Device manual fiels loaded. {counter}/{_totalModules}");
+        }
+
+        private void ManualSaver(UserManualModel userManualModel)
+        {
+            var name = userManualModel.Title.Replace("/","");
+
+            _storage.Set(new StorageKey()
+            {
+                Name = name,
+                Directory = InFileDataStorage.UserGuidFolder
+            }, new [] {userManualModel});
         }
 
         public void LoadPosts()

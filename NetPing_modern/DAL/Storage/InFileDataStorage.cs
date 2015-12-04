@@ -10,6 +10,8 @@ namespace NetPing.DAL
 {
     internal class InFileDataStorage : IDataStorage
     {
+        public const String UserGuidFolder = "UserGuides";
+
         private const String StoreRootPath = "Content\\Data";
 
         private const String InRoot = "";

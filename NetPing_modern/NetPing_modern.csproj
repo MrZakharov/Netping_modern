@@ -191,7 +191,7 @@
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="DAL\Cache\CacheKeys.cs" />
     <Compile Include="DAL\Cache\DataStorageExtensions.cs" />
-    <Compile Include="DAL\Converters\SharepointFields.cs" />
+    <Compile Include="DAL\SharepointFields.cs" />
     <Compile Include="DAL\Helpers\ListItemHelper.cs" />
     <Compile Include="DAL\Helpers\DevicesTreeHelper.cs" />
     <Compile Include="DAL\Helpers\ConfluenceDataHelper.cs" />
