@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,36 +13,47 @@ namespace NetPing_modern.Services.Confluence
 {
     internal class ConfluenceClient : IConfluenceClient
     {
+        private readonly IConfig _config;
+
+        private readonly Dictionary<Int32, String> _cache = new Dictionary<Int32, String>();
+
+        private readonly Regex _imgRegex = new Regex(@"\<img class=""confluence-embedded-image""[^\>]+src=""(?<src>[^""]+)""[^>]+data-base-url=""(?<baseurl>[^""]+)""[^>]+\>");
+
+        private const String WikiPrefix = "/wiki";
+
+        private readonly Regex _contentIdRegex = new Regex(@"pageId=(?<id>\d+)");
+
+        private readonly Regex _spaceTitleRegex = new Regex(@"\/display\/(?<spaceKey>[\w \.\-\+%]+)\/(?<title>[\w \.\-\+%]+)?");
 
         public class ContentNotFoundException : Exception
         {
-            public ContentNotFoundException(int contentId) : base(string.Format("Confluence content with id = {0} was not found", contentId))
+            public ContentNotFoundException(Int32 contentId) : base(
+                $"Confluence content with id = {contentId} was not found")
             {
 
             }
 
-            public ContentNotFoundException(string spaceKey, string title)
-                : base(string.Format("Confluence content with space key = '{0}' and title = '{1}' was not found", spaceKey, title))
+            public ContentNotFoundException(String spaceKey, String title)
+                : base($"Confluence content with space key = '{spaceKey}' and title = '{title}' was not found")
             {
             }
         }
-
-        private IConfig _config;
-        private readonly Dictionary<int, string> _cache = new Dictionary<int, string>();
 
         public ConfluenceClient(IConfig config)
         {
             _config = config;
         }
 
-        private async Task<string> GetContentAsync(int id, Func<int, string, string> parser)
+        private async Task<String> GetContentAsync(Int32 id, Func<Int32, String, String> parser)
         {
             if (_cache.ContainsKey(id))
             {
                 return parser(id, _cache[id]);
             }
 
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(string.Format("{0}:{1}", _config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password));
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(
+                $"{_config.ConfluenceSettings.Login}:{_config.ConfluenceSettings.Password}");
+
             var base64Auth = System.Convert.ToBase64String(plainTextBytes);
 
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
@@ -56,34 +66,32 @@ namespace NetPing_modern.Services.Confluence
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Auth);
 
                 var response =
-                    client.GetAsync(string.Format("wiki/rest/api/content/{0}?expand=body.view&os_authType=basic", id));
+                    client.GetAsync($"wiki/rest/api/content/{id}?expand=body.view&os_authType=basic");
+
                 if (response.Result.IsSuccessStatusCode)
                 {
                     StreamContent content = (StreamContent)response.Result.Content;
                     var task = content.ReadAsStringAsync();
-                    string result = task.Result;
-                    string parsed = parser(id, result);
-                    /*using (StreamWriter outfile = new StreamWriter("C:\\tmp\\confluence\\" + id.ToString() + ".txt"))
-                    {
-                        outfile.Write(parsed);
-                    }*/
+                    String result = task.Result;
+                    String parsed = parser(id, result);
+                    
                     return parsed;
                 }
             }
             throw new ContentNotFoundException(id);
         }
 
-        public async Task<string> GetContenAsync(int id)
+        public async Task<String> GetContenAsync(Int32 id)
         {
             return await GetContentAsync(id, ParseResult);
         }
 
-        public async Task<string> GetContentTitleAsync(int id)
+        public async Task<String> GetContentTitleAsync(Int32 id)
         {
             return await GetContentAsync(id, ParseTitle);
         }
 
-        private string ParseTitle(int id, string content)
+        private String ParseTitle(Int32 id, String content)
         {
             if (!_cache.ContainsKey(id))
             {
@@ -93,16 +101,18 @@ namespace NetPing_modern.Services.Confluence
             if (IsJson(content))
             {
                 dynamic obj = JObject.Parse(content);
+
                 if (obj.type == "page")
                 {
                     return obj.title;
                 }
-                throw new NotImplementedException(string.Format("The type {0} is not implemented", obj.type));
+
+                throw new NotImplementedException(String.Format("The type {0} is not implemented", obj.type));
             }
             return content;
         }
 
-        private string ParseResult(int id, string result)
+        private String ParseResult(Int32 id, String result)
         {
             if (!_cache.ContainsKey(id))
             {
@@ -116,17 +126,19 @@ namespace NetPing_modern.Services.Confluence
             return result;
         }
 
-        private string ParseJson(string result)
+        private String ParseJson(String result)
         {
             dynamic obj = JObject.Parse(result);
+
             if (obj.type == "page")
             {
                 return ParsePage(obj);
             }
-            throw new NotImplementedException(string.Format("The type {0} is not implemented", obj.type));
+
+            throw new NotImplementedException(String.Format("The type {0} is not implemented", obj.type));
         }
 
-        private string ParsePage(dynamic page)
+        private String ParsePage(dynamic page)
         {
             if (page.link != null)
             {
@@ -141,18 +153,15 @@ namespace NetPing_modern.Services.Confluence
                 value = FixImageLinks(value.ToString());
                 return value;
             }
-            return string.Empty;
+            return String.Empty;
         }
 
-        private readonly Regex _imgRegex = new Regex(@"\<img class=""confluence-embedded-image""[^\>]+src=""(?<src>[^""]+)""[^>]+data-base-url=""(?<baseurl>[^""]+)""[^>]+\>");
-        private const string WikiPrefix = "/wiki";
-
-        private object FixImageLinks(string value)
+        private Object FixImageLinks(String value)
         {
             return _imgRegex.Replace(value, new MatchEvaluator(ConfluenceImage));
         }
 
-        private string ConfluenceImage(Match match)
+        private String ConfluenceImage(Match match)
         {
             var str = match.ToString();
             if (match.Success)
@@ -175,12 +184,12 @@ namespace NetPing_modern.Services.Confluence
             return str;
         }
 
-        private bool IsJson(string result)
+        private Boolean IsJson(String result)
         {
             return result.StartsWith("{") && result.EndsWith("}");
         }
 
-        public async Task<int> GetContentBySpaceAndTitle(string spaceKey, string title)
+        public async Task<Int32> GetContentBySpaceAndTitle(String spaceKey, String title)
         {
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
             var handler = new HttpClientHandler { Credentials = credential };
@@ -191,12 +200,12 @@ namespace NetPing_modern.Services.Confluence
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response =
-                    client.GetAsync(string.Format("wiki/rest/api/content?title={0}&spaceKey={1}&os_authType=basic", title, spaceKey));
+                    client.GetAsync(String.Format("wiki/rest/api/content?title={0}&spaceKey={1}&os_authType=basic", title, spaceKey));
                 if (response.Result.IsSuccessStatusCode)
                 {
                     StreamContent content = (StreamContent)response.Result.Content;
                     var task = content.ReadAsStringAsync();
-                    string stringContent = task.Result;
+                    String stringContent = task.Result;
                     dynamic results = JObject.Parse(stringContent);
                     if (results.results != null)
                     {
@@ -204,7 +213,7 @@ namespace NetPing_modern.Services.Confluence
                         {
                             if (results.results[0].id != null)
                             {
-                                return int.Parse(results.results[0].id.Value);
+                                return Int32.Parse(results.results[0].id.Value);
                             }
                         }
                     }
@@ -214,27 +223,7 @@ namespace NetPing_modern.Services.Confluence
             throw new ContentNotFoundException(spaceKey, title);
         }
 
-        private readonly Regex _contentIdRegex = new Regex(@"pageId=(?<id>\d+)");
-/*
-        public int? GetContentIdFromUrl(string url)
-        {
-            var mc = _contentIdRegex.Matches(url);
-            if (mc.Count > 0)
-            {
-                Match m = mc[0];
-                if (m.Success)
-                {
-                    Group group = m.Groups["id"];
-                    int id = int.Parse(group.Value);
-
-                    return id;
-                }
-            }
-            return null;
-        }
- */
-        private readonly Regex _spaceTitleRegex = new Regex(@"\/display\/(?<spaceKey>[\w \.\-\+%]+)\/(?<title>[\w \.\-\+%]+)?");
-        public int? GetContentIdFromUrl(string url)
+        public Int32? GetContentIdFromUrl(String url)
         {
             var mc = _contentIdRegex.Matches(url);
 
@@ -244,7 +233,7 @@ namespace NetPing_modern.Services.Confluence
                 if (m.Success)
                 {
                     Group group = m.Groups["id"];
-                    int id= int.Parse(group.Value);
+                    Int32 id= Int32.Parse(group.Value);
                     if (id > 0) return id;
 
                 }
@@ -258,13 +247,13 @@ namespace NetPing_modern.Services.Confluence
                     if (m.Success)
                     {
                         Group spaceKeyGroup = m.Groups["spaceKey"];
-                        string spaceKey = spaceKeyGroup.Value;
+                        String spaceKey = spaceKeyGroup.Value;
 
                         Group titleGroup = m.Groups["title"];
-                        string title = titleGroup.Value;
+                        String title = titleGroup.Value;
 
                         var contentTask = GetContentBySpaceAndTitle(spaceKey, title);
-                        int contentId = contentTask.Result;
+                        Int32 contentId = contentTask.Result;
                         if (contentId > 0) return contentId;
                     }
                 }
@@ -272,7 +261,7 @@ namespace NetPing_modern.Services.Confluence
             return null;
         }
 
-        public UserManualModel GetUserManual(int id, int itemId)
+        public UserManualModel GetUserManual(Int32 id, Int32 itemId)
         {
             var userManual = new UserManualModel();
             userManual.ItemId = itemId;
@@ -285,18 +274,18 @@ namespace NetPing_modern.Services.Confluence
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response =
-                    client.GetAsync(string.Format("wiki/rest/api/content/{0}?os_authType=basic", id));
+                    client.GetAsync(String.Format("wiki/rest/api/content/{0}?os_authType=basic", id));
                 if (response.Result.IsSuccessStatusCode)
                 {
                     StreamContent content = (StreamContent)response.Result.Content;
                     var task = content.ReadAsStringAsync();
-                    string stringContent = task.Result;
+                    String stringContent = task.Result;
                     dynamic results = JObject.Parse(stringContent);
                     var regex = new Regex("\\[([^)]*)\\] ");
-                    if(results.id != null && !string.IsNullOrEmpty(results.title.Value))
+                    if(results.id != null && !String.IsNullOrEmpty(results.title.Value))
                     {
-                        userManual.Id = int.Parse(results.id.Value);
-                        userManual.Title = regex.Replace((results.title.Value as string).Replace(".", "%2E"), string.Empty);
+                        userManual.Id = Int32.Parse(results.id.Value);
+                        userManual.Title = regex.Replace((results.title.Value as String).Replace(".", "%2E"), String.Empty);
                         userManual.Pages = GetUserManualPages(userManual.Id);
                     }
                 }
@@ -305,7 +294,7 @@ namespace NetPing_modern.Services.Confluence
             return userManual;
         }
 
-        private ICollection<PageModel> GetUserManualPages(int id)
+        private ICollection<PageModel> GetUserManualPages(Int32 id)
         {
             var pages = new List<PageModel>();
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
@@ -317,12 +306,12 @@ namespace NetPing_modern.Services.Confluence
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response =
-                    client.GetAsync(string.Format("wiki/rest/api/content/{0}/child/page?os_authType=basic", id));
+                    client.GetAsync(String.Format("wiki/rest/api/content/{0}/child/page?os_authType=basic", id));
                 if (response.Result.IsSuccessStatusCode)
                 {
                     StreamContent content = (StreamContent)response.Result.Content;
                     var task = content.ReadAsStringAsync();
-                    string stringContent = task.Result;
+                    String stringContent = task.Result;
                     dynamic results = JObject.Parse(stringContent);
                     var regex = new Regex("\\[([^)]*)\\] ");
                     if (results.results != null)
@@ -331,10 +320,10 @@ namespace NetPing_modern.Services.Confluence
                         {
                            foreach(var result in results.results)
                            {
-                               var pageId = int.Parse(result.id.Value);
-                               var pageTitle = regex.Replace((result.title.Value as string).Replace(".", "%2E"), string.Empty);
+                               var pageId = Int32.Parse(result.id.Value);
+                               var pageTitle = regex.Replace((result.title.Value as String).Replace(".", "%2E"), String.Empty);
                                var subPages = new List<PageModel>();
-                               var pageContent = string.Empty;
+                               var pageContent = String.Empty;
                                if (IsTreePage(pageId))
                                    subPages = GetUserManualPages(pageId);
                                else
@@ -355,7 +344,7 @@ namespace NetPing_modern.Services.Confluence
             return pages;
         }
 
-        private string GetUserManualPageContent(int id)
+        private String GetUserManualPageContent(Int32 id)
         {
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
             var handler = new HttpClientHandler { Credentials = credential };
@@ -366,12 +355,12 @@ namespace NetPing_modern.Services.Confluence
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response =
-                    client.GetAsync(string.Format("wiki/rest/api/content/{0}?os_authType=basic&expand=body.view", id));
+                    client.GetAsync(String.Format("wiki/rest/api/content/{0}?os_authType=basic&expand=body.view", id));
                 if (response.Result.IsSuccessStatusCode)
                 {
                     StreamContent content = (StreamContent)response.Result.Content;
                     var task = content.ReadAsStringAsync();
-                    string stringContent = task.Result;
+                    String stringContent = task.Result;
                     dynamic results = JObject.Parse(stringContent);
                     if (results.body != null && results.body.view != null && results.body.view.value != null)
                     {
@@ -380,10 +369,10 @@ namespace NetPing_modern.Services.Confluence
                 }
             }
 
-            return string.Empty;
+            return String.Empty;
         }
 
-        private bool IsTreePage(int id)
+        private Boolean IsTreePage(Int32 id)
         {
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
             var handler = new HttpClientHandler { Credentials = credential };
@@ -394,12 +383,12 @@ namespace NetPing_modern.Services.Confluence
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response =
-                    client.GetAsync(string.Format("wiki/rest/api/content/{0}/child/page?os_authType=basic", id));
+                    client.GetAsync(String.Format("wiki/rest/api/content/{0}/child/page?os_authType=basic", id));
                 if (response.Result.IsSuccessStatusCode)
                 {
                     StreamContent content = (StreamContent)response.Result.Content;
                     var task = content.ReadAsStringAsync();
-                    string stringContent = task.Result;
+                    String stringContent = task.Result;
                     dynamic results = JObject.Parse(stringContent);
                     if (results.size != null)
                     {

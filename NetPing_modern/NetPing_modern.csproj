@@ -211,6 +211,7 @@
     <Compile Include="DAL\Model\Errors.cs" />
     <Compile Include="DAL\Converters\HtmlInjectionConverter.cs" />
     <Compile Include="DAL\Converters\FirmwareFileConverter.cs" />
+    <Compile Include="DAL\StaticFilePaths.cs" />
     <Compile Include="DAL\Storage\IDataStorage.cs" />
     <Compile Include="DAL\Converters\IListItemConverter.cs" />
     <Compile Include="DAL\Storage\InFileDataStorage.cs" />

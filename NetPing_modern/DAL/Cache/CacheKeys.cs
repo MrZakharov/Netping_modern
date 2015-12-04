@@ -18,6 +18,5 @@ namespace NetPing.DAL
         public const String Posts = "Posts";
         public const String SFiles = "SFiles";
         public const String Devices = "Devices";
-        public const String UserGuides = "UserGuides";
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.VisualBasic.FileIO;
 using NetPing.Models;
+using NetPing_modern.DAL;
 using NetPing_modern.DAL.Model;
 using NetPing_modern.Resources;
 using NetPing_modern.Services.Confluence;
@@ -23,7 +24,7 @@ namespace NetPing.DAL
         private Int32 _loadedModulesCounter = 0;
         private Int32 _totalModules = 15;
 
-        private Dictionary<String, Action> _updateActions = new Dictionary<String, Action>(); 
+        private readonly Dictionary<String, Action> _updateActions = new Dictionary<String, Action>(); 
 
         public DataStorageUpdater(IDataStorage storage, ISharepointClientFactory sharepointClientFactory, IConfluenceClient confluenceClient)
         {
@@ -381,8 +382,8 @@ namespace NetPing.DAL
             var names = _storage.GetNames();
             var purposes = _storage.Get<SPTerm>(CacheKeys.Purposes);
             var labels = _storage.Get<SPTerm>(CacheKeys.Labels);
-            
-            var stockCsv = HttpContext.Current.Server.MapPath("~/Pub/Data/netping_ru_stock.csv");
+
+            var stockCsv = StaticFilePaths.StockFilePath;
 
             var dataTable = new Dictionary<String, String>();
 
@@ -391,14 +392,13 @@ namespace NetPing.DAL
             if (File.Exists(stockCsv))
             {
                 dataTable = GetDataTableFromCSVFile(stockCsv);
-                deviceStockUpdate = DateTime.Parse(dataTable[""]);
+                deviceStockUpdate = DateTime.Parse(dataTable[String.Empty]);
             }
 
             var deviceConverter = new DeviceConverter(_confluenceClient, dataTable, names,purposes,labels,deviceStockUpdate);
 
             var devices = GetSharepointList(CacheKeys.Devices, Camls.CamlDevices, deviceConverter).ToList();
-
-
+            
             foreach (var dev in devices)
             {
                 dev.Posts =
@@ -409,8 +409,7 @@ namespace NetPing.DAL
                     files.Where(
                         fl => dev.Name.IsIncludeAnyFromOthers(fl.Devices) || dev.Name.IsUnderAnyOthers(fl.Devices))
                         .ToList();
-
-
+                
                 // collect device parameters 
                 dev.DeviceParameters = devicesParameters.Where(par => par.Device == dev.Name).ToList();
 
@@ -455,12 +454,12 @@ namespace NetPing.DAL
             return -1;
         }
 
-        private Dictionary<String, String> GetDataTableFromCSVFile(String csv_file_path)
+        private Dictionary<String, String> GetDataTableFromCSVFile(String csvFilePath)
         {
             var csvData = new Dictionary<String, String>();
             try
             {
-                using (var csvReader = new TextFieldParser(csv_file_path))
+                using (var csvReader = new TextFieldParser(csvFilePath))
                 {
                     csvReader.SetDelimiters(",");
                     csvReader.HasFieldsEnclosedInQuotes = true;
@@ -471,6 +470,7 @@ namespace NetPing.DAL
                     while (!csvReader.EndOfData)
                     {
                         var fields = csvReader.ReadFields();
+
                         csvData.Add(fields[0], fields[1]);
                     }
                 }

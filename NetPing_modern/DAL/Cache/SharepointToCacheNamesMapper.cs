@@ -5,40 +5,40 @@ namespace NetPing.DAL
 {
     internal static class SharepointToCacheNamesMapper
     {
-        private static readonly Dictionary<string, string> _dictionary = new Dictionary<string, string>();
-        private static readonly Dictionary<string, string> _revDictionary = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> Dictionary = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> RevDictionary = new Dictionary<string, string>();
 
         static SharepointToCacheNamesMapper()
         {
-            _dictionary.Add(CacheKeys.Names, SharepointKeys.Names);
-            _dictionary.Add(CacheKeys.Purposes, SharepointKeys.Purposes);
-            _dictionary.Add(CacheKeys.DeviceParameterNames, SharepointKeys.DeviceParameterNames);
-            _dictionary.Add(CacheKeys.Labels, SharepointKeys.Labels);
-            _dictionary.Add(CacheKeys.PostCategories, SharepointKeys.PostCategories);
-            _dictionary.Add(CacheKeys.DocumentTypes, SharepointKeys.DocumentTypes);
-            _dictionary.Add(CacheKeys.HtmlInjection, SharepointKeys.HtmlInjection);
-            _dictionary.Add(CacheKeys.SiteTexts, SharepointKeys.SiteTexts);
-            _dictionary.Add(CacheKeys.DevicePhotos, SharepointKeys.DevicePhotos);
-            _dictionary.Add(CacheKeys.DeviceParameters, SharepointKeys.DeviceParameters);
-            _dictionary.Add(CacheKeys.PubFiles, SharepointKeys.PubFiles);
-            _dictionary.Add(CacheKeys.Posts, SharepointKeys.Posts);
-            _dictionary.Add(CacheKeys.Devices, SharepointKeys.Devices);
-            _dictionary.Add(CacheKeys.SFiles, SharepointKeys.SFiles);
+            Dictionary.Add(CacheKeys.Names, SharepointKeys.Names);
+            Dictionary.Add(CacheKeys.Purposes, SharepointKeys.Purposes);
+            Dictionary.Add(CacheKeys.DeviceParameterNames, SharepointKeys.DeviceParameterNames);
+            Dictionary.Add(CacheKeys.Labels, SharepointKeys.Labels);
+            Dictionary.Add(CacheKeys.PostCategories, SharepointKeys.PostCategories);
+            Dictionary.Add(CacheKeys.DocumentTypes, SharepointKeys.DocumentTypes);
+            Dictionary.Add(CacheKeys.HtmlInjection, SharepointKeys.HtmlInjection);
+            Dictionary.Add(CacheKeys.SiteTexts, SharepointKeys.SiteTexts);
+            Dictionary.Add(CacheKeys.DevicePhotos, SharepointKeys.DevicePhotos);
+            Dictionary.Add(CacheKeys.DeviceParameters, SharepointKeys.DeviceParameters);
+            Dictionary.Add(CacheKeys.PubFiles, SharepointKeys.PubFiles);
+            Dictionary.Add(CacheKeys.Posts, SharepointKeys.Posts);
+            Dictionary.Add(CacheKeys.Devices, SharepointKeys.Devices);
+            Dictionary.Add(CacheKeys.SFiles, SharepointKeys.SFiles);
 
-            foreach (var item in _dictionary)
+            foreach (var item in Dictionary)
             {
-                _revDictionary.Add(item.Value, item.Key);
+                RevDictionary.Add(item.Value, item.Key);
             }
         }
 
         public static String CacheKeyBySharepointKey(string sharepointKey)
         {
-            return _revDictionary[sharepointKey];
+            return RevDictionary[sharepointKey];
         }
 
         public static String SharepointKeyByCacheKey(string cacheKey)
         {
-            return _dictionary[cacheKey];
+            return Dictionary[cacheKey];
         }
     }
 }
