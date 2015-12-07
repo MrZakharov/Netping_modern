@@ -771,6 +771,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Data\" />
+    <Folder Include="Helper\" />
     <Folder Include="Pub\Files\" />
     <Folder Include="Pub\Photos\" />
     <Folder Include="Views\Cart\" />

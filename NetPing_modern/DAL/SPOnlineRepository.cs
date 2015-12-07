@@ -243,7 +243,7 @@ namespace NetPing.DAL
             {
                 Log.Trace($"Requested repository collection '{name}'. Item type: {typeof(T)}");
 
-                var collection = GetCollection<T>(name);
+                var collection = _dataProxy.GetAndCache<T>(name);
 
                 Log.Trace($"Collection was returned. Name: '{name}' Item type: {typeof(T)}");
 

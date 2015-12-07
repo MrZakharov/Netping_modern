@@ -13,10 +13,12 @@ namespace NetPing.DAL
         private static readonly Uri _firmwares = new Uri("Pub/Firmwares", UriKind.Relative);
         private static readonly Uri _userGuide = new Uri("UserGuide", UriKind.Relative);
 
-        private static readonly Uri _productsUrl =new Uri(SiteRoot, _products);
+        private static readonly Uri _productsUrl = new Uri(SiteRoot, _products);
         private static readonly Uri _pubFilesUrl = new Uri(SiteRoot, _pubFiles);
         private static readonly Uri _photosUrl = new Uri(SiteRoot, _photos);
         private static readonly Uri _firmwaresUrl = new Uri(SiteRoot, _firmwares);
+        private static readonly Uri _blogUrl = new Uri(SiteRoot, _blog);
+        private static readonly Uri _userGuideUrl = new Uri(SiteRoot, _userGuide);
 
         public static Uri GetDeviceUrl(String deviceName)
         {
@@ -46,18 +48,18 @@ namespace NetPing.DAL
             return fileUrl;
         }
 
-        public static Uri GetRelativePostUrl(String postName)
+        public static String GetRelativePostUrl(String postName)
         {
-            var fileUrl = new Uri(_blog, postName);
+            var fileUrl = new Uri(_blogUrl, postName);
 
-            return fileUrl;
+            return fileUrl.PathAndQuery;
         }
 
-        public static Uri GetRelativeDeviceGuideUrl(String guideName)
+        public static String GetRelativeDeviceGuideUrl(String guideName)
         {
-            var fileUrl = new Uri(_userGuide, guideName);
+            var fileUrl = new Uri(_userGuideUrl, guideName);
 
-            return fileUrl;
+            return fileUrl.PathAndQuery;
         }
     }
 }
