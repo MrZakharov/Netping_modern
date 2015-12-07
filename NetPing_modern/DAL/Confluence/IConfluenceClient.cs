@@ -1,18 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using NetPing_modern.DAL.Model;
 
 namespace NetPing_modern.Services.Confluence
 {
     public interface IConfluenceClient
     {
-        Task<string> GetContenAsync(int id);
+        Task<String> GetContenAsync(Int32 id);
 
-        Task<string> GetContentTitleAsync(int id);
+        Task<String> GetContentTitleAsync(Int32 id);
 
-        Task<int> GetContentBySpaceAndTitle(string spaceKey, string title);
+        Task<Int32> GetContentBySpaceAndTitle(String spaceKey, String title);
 
-        int? GetContentIdFromUrl(string url);
+        Int32? GetContentIdFromUrl(String url);
 
-        UserManualModel GetUserManual(int id, int itemId);
+        UserManualModel GetUserManual(Int32 id, Int32 itemId);
     }
 }

@@ -504,8 +504,25 @@ namespace NetPing.DAL
 
                     var items = sp.GetList(sharepointName, query);
 
-                    var convertedList = items.ToList().Select(converter.Convert).Where(i => i != null).ToList();
+                    var convertedList = new List<T>();
 
+                    foreach (var item in items)
+                    {
+                        try
+                        {
+                            var converted = converter.Convert(item);
+
+                            if (converted != null)
+                            {
+                                convertedList.Add(converted);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' Item: '{item.DisplayName}'");
+                        }
+                    }
+                    
                     return convertedList;
                 }
             }
