@@ -18,7 +18,7 @@ namespace NetPing.DAL
 
         private readonly ProductCatalogManager _productCatalogManager;
 
-        private static readonly Logger Log = LogManager.GetLogger(LogNames.RepositoryLog);
+        private static readonly Logger Log = LogManager.GetLogger(LogNames.Repository);
 
         public SPOnlineRepository(IConfluenceClient confluenceClient, ISharepointClientFactory sharepointClientFactory)
         {

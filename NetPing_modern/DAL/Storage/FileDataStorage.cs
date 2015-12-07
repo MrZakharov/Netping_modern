@@ -17,7 +17,7 @@ namespace NetPing.DAL
         
         private readonly ConcurrentDictionary<String, Object> _locks = new ConcurrentDictionary<String, Object>();
 
-        private static readonly Logger Log = LogManager.GetLogger(LogNames.StorageLog);
+        private static readonly Logger Log = LogManager.GetLogger(LogNames.Storage);
 
         public IEnumerable<T> Get<T>(StorageKey key)
         {
