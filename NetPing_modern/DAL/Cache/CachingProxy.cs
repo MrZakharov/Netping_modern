@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using NetPing.Tools;
+using NLog;
 
 namespace NetPing.DAL
 {
     internal class CachingProxy
     {
         private readonly IDataStorage _storage;
+
+        private static readonly Logger Log = LogManager.GetLogger(LogNames.Cache);
 
         public CachingProxy(IDataStorage storage)
         {
@@ -20,7 +23,6 @@ namespace NetPing.DAL
 
             if (cachedCollection != null)
             {
-                // Возвращаем найденную в кэше коллекцию
                 return (IEnumerable<T>) cachedCollection;
             }
 
@@ -28,14 +30,14 @@ namespace NetPing.DAL
             {
                 var storedCollection = _storage.Get<T>(key);
 
-                // Кэшируем найденную в хранилище коллекцию
                 HttpRuntime.Cache.Insert(key.Name, storedCollection, new TimerCacheDependency());
 
-                // Возвращаем найденную в хранилище коллекцию
                 return storedCollection;
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Get collection from storage error");
+
                 throw new DataNotFoundException("Unable to find data collection in storage", ex);
             }
         }

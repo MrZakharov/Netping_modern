@@ -7,5 +7,6 @@ namespace NetPing.DAL
         public static readonly String Repository = "App.Repository";
         public static readonly String Storage = "App.Storage";
         public static readonly String Loader = "App.Loader";
+        public static readonly String Cache = "App.Cache";
     }
 }
