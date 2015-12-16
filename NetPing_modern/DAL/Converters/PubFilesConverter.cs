@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
@@ -17,14 +18,20 @@ namespace NetPing.DAL
 
         public PubFiles Convert(ListItem listItem)
         {
-            var filesPath = "http://netping.ru/Pub/Pub/";
+            var fileName = listItem.Get<String>(SharepointFields.FileLeaf);
+
+            var fileUrl = UrlBuilder.GetPublicFilesUrl(fileName);
+
+            var fileType = listItem.Get<TaxonomyFieldValue>(SharepointFields.FileType).ToSPTerm(_fileTypeTerms);
+
+            var urlLink = listItem.Get<FieldUrlValue>(SharepointFields.Url).Url;
 
             var pubFiles = new PubFiles
             {
-                Name = listItem["FileLeafRef"].ToString(),
-                File_type = (listItem["File_type"] as TaxonomyFieldValue).ToSPTerm(_fileTypeTerms),
-                Url = filesPath + listItem["FileLeafRef"],
-                Url_link = (listItem["Url"] as FieldUrlValue)?.Url
+                Name = fileName,
+                File_type = fileType,
+                Url = fileUrl.ToString(),
+                Url_link = urlLink
             };
 
             return pubFiles;

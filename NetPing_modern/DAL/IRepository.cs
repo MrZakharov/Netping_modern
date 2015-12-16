@@ -1,6 +1,7 @@
 ﻿using NetPing.Models;
 using System;
 using System.Collections.Generic;
+using NetPing_modern.DAL.Model;
 
 namespace NetPing.DAL
 {
@@ -35,6 +36,8 @@ namespace NetPing.DAL
         IEnumerable<Device> GetDevices(String id, String groupId);
 
         IEnumerable<HTMLInjection> HtmlInjections { get; }
+
+        UserManualModel GetUserManual(String id);
 
         String UpdateAll();
 

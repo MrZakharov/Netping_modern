@@ -18,25 +18,36 @@ namespace NetPing.DAL
 
         public DevicePhoto Convert(ListItem listItem)
         {
-            var pictureUrl = listItem["FileLeafRef"].ToString();
+            var pictureName = listItem.Get<String>(SharepointFields.FileLeaf);
 
-            if (!String.IsNullOrEmpty(pictureUrl))
+            var deviceName = listItem.Get<TaxonomyFieldValue>(SharepointFields.Device).ToSPTerm(_names);
+
+            if (!String.IsNullOrEmpty(pictureName))
             {
-                pictureUrl = pictureUrl.Replace(" ", String.Empty);
+                pictureName = pictureName.Replace(" ", String.Empty);
             }
 
-            var photosPath = "http://www.netping.ru/Pub/Photos/";
+            var photosUrl = UrlBuilder.GetPhotosUrl(pictureName).ToString();
+
+            var isBigPhoto = IsBigPhoto(pictureName);
+
+            var isCover = listItem.Get<Boolean>(SharepointFields.Cover);
 
             var devicePhoto = new DevicePhoto
             {
-                Name = listItem["FileLeafRef"].ToString(),
-                Dev_name = (listItem["Device"] as TaxonomyFieldValue).ToSPTerm(_names),
-                Url = photosPath + pictureUrl,
-                IsBig = pictureUrl.Contains("big") ? true : false,
-                IsCover = System.Convert.ToBoolean(listItem["Cover"])
+                Name = pictureName,
+                Dev_name = deviceName,
+                Url = photosUrl,
+                IsBig = isBigPhoto,
+                IsCover = isCover
             };
 
             return devicePhoto;
+        }
+
+        private Boolean IsBigPhoto(String pictureName)
+        {
+            return pictureName?.Contains("big") ?? false;
         }
     }
 }

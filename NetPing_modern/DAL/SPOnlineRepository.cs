@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Web;
+using NLog;
+
 using NetpingHelpers;
 using NetPing.Models;
-using NetPing.Tools;
 using NetPing_modern.DAL.Model;
 using NetPing_modern.Services.Confluence;
-using File = System.IO.File;
 
 namespace NetPing.DAL
 {
@@ -23,15 +18,28 @@ namespace NetPing.DAL
 
         private readonly ProductCatalogManager _productCatalogManager;
 
+        private static readonly Logger Log = LogManager.GetLogger(LogNames.Repository);
+
         public SPOnlineRepository(IConfluenceClient confluenceClient, ISharepointClientFactory sharepointClientFactory)
         {
-            var storage = new InFileDataStorage();
-            
-            _dataProxy = new CachingProxy(storage);
+            try
+            {
+                var storage = new FileDataStorage();
 
-            _dataUpdater = new DataStorageUpdater(storage, sharepointClientFactory, confluenceClient);
+                _dataProxy = new CachingProxy(storage);
 
-            _productCatalogManager = new ProductCatalogManager(this);
+                _dataUpdater = new DataStorageUpdater(storage, sharepointClientFactory, confluenceClient);
+
+                _productCatalogManager = new ProductCatalogManager(this);
+
+                Log.Trace($"Instance of '{nameof(SPOnlineRepository)}' was created");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"'{nameof(SPOnlineRepository)}' initializing failed");
+
+                throw;
+            }
         }
 
         #region :: Public Methods ::
@@ -40,17 +48,21 @@ namespace NetPing.DAL
         {
             try
             {
-                _dataUpdater.Update();
+                Log.Trace("Starting to update all data in storage");
 
-                Debug.WriteLine("PushToCache OK");
+                _dataUpdater.Update();
 
                 if (Helpers.IsCultureRus)
                 {
                     _productCatalogManager.GenerateYml();
                 }
+
+                Log.Trace("All data in storage updated");
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Update all data in storage failed");
+
                 return ex.ToString();
             }
 
@@ -59,72 +71,48 @@ namespace NetPing.DAL
 
         public String UpdateAllAsync(String name)
         {
-            switch (name)
+            Log.Trace($"Starting to execute update action with name '{name}'");
+            
+            try
             {
-                case CacheKeys.DocumentTypes:
-                    _dataUpdater.LoadDocumentTypeTerms();
-                    break;
-                case CacheKeys.Names:
-                    _dataUpdater.LoadNameTerms();
-                    break;
-                case CacheKeys.SiteTexts:
-                    _dataUpdater.LoadSiteTexts();
-                    break;
-                case CacheKeys.Labels:
-                    _dataUpdater.LoadLabelTerms();
-                    break;
-                case CacheKeys.DeviceParameterNames:
-                    _dataUpdater.LoadDeviceParameterTerms();
-                    break;
-                case CacheKeys.PostCategories:
-                    _dataUpdater.LoadPostCategoryTerms();
-                    break;
-                case CacheKeys.Purposes:
-                    _dataUpdater.LoadPurposeTerms();
-                    break;
-                case CacheKeys.DeviceParameters:
-                    _dataUpdater.LoadDeviceParameters();
-                    break;
-                case CacheKeys.DevicePhotos:
-                    _dataUpdater.LoadDevicePhotos();
-                    break;
-                case CacheKeys.PubFiles:
-                    _dataUpdater.LoadPubFiles();
-                    break;
-                case CacheKeys.SFiles:
-                    _dataUpdater.LoadSFiles();
-                    break;
-                case CacheKeys.Posts:
-                    _dataUpdater.LoadPosts();
-                    break;
-                case CacheKeys.Devices:
-                    _dataUpdater.LoadDevices();
-                    break;
-                case "GenerateYml":
-                    if (Helpers.IsCultureRus)
+                if (name == "GenerateYml")
+                {
+                    var isCultureRus = Helpers.IsCultureRus;
+
+                    Log.Trace($"GenerateYml action requested. IsCultureRus: {isCultureRus}");
+
+                    if (isCultureRus)
                     {
                         _productCatalogManager.GenerateYml();
                     }
-                    break;
-                case "PushAll":
-                {
-                    _dataUpdater.LoadDocumentTypeTerms();
-                    _dataUpdater.LoadNameTerms();
-                    _dataUpdater.LoadSiteTexts();
-                    _dataUpdater.LoadLabelTerms();
-                    _dataUpdater.LoadDeviceParameterTerms();
-                    _dataUpdater.LoadPostCategoryTerms();
-                    _dataUpdater.LoadPurposeTerms();
-                    _dataUpdater.LoadDeviceParameters();
-                    _dataUpdater.LoadDevicePhotos();
-                    _dataUpdater.LoadPubFiles();
-                    _dataUpdater.LoadSFiles();
-                    _dataUpdater.LoadPosts();
-
-                    break;
                 }
-                default:
-                    return "404";
+                else if (name == "PushAll")
+                {
+                    _dataUpdater.Update();
+                }
+                else
+                {
+                    var updateAction = _dataUpdater.GetUpdateActionByKey(name);
+
+                    if (updateAction != null)
+                    {
+                        updateAction();
+                    }
+                    else
+                    {
+                        Log.Warn($"Update action with name '{name}' does not exist");
+
+                        return "404";
+                    }
+                }
+
+                Log.Trace($"Execution of action with name'{name}' completed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Update action with name '{name}' failed");
+
+                throw;
             }
 
             return "OK";
@@ -132,114 +120,141 @@ namespace NetPing.DAL
 
         public IEnumerable<Device> GetDevices(String id, String groupId)
         {
-            if (String.IsNullOrEmpty(id))
-                throw new ArgumentNullException(nameof(id));
+            try
+            {
+                Log.Trace($"Filtered devices collection was requested. ID: {id} Group: {groupId}");
 
-            if (String.IsNullOrEmpty(groupId))
-                throw new ArgumentNullException(nameof(groupId));
+                if (String.IsNullOrEmpty(id))
+                {
+                    throw new ArgumentNullException(nameof(id));
+                }
 
-            var group = Devices.FirstOrDefault(d => d.Url == groupId);
+                if (String.IsNullOrEmpty(groupId))
+                {
+                    throw new ArgumentNullException(nameof(groupId));
+                }
 
-            var devices = Devices.Where(d => d.Name.IsUnderOther(group.Name) && !d.Name.IsGroup());
+                var group = Devices.FirstOrDefault(d => d.Url == groupId);
 
-            return devices;
+                if (group == null)
+                {
+                    throw new InvalidOperationException($"Unable to find group with url '{groupId}'");
+                }
+
+                var devices = Devices.Where(d => d.Name.IsUnderOther(group.Name) && !d.Name.IsGroup());
+
+                Log.Trace($"Filtered devices collection was returned. ID: {id} Group: {groupId}");
+
+                return devices;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Get devices error");
+
+                throw;
+            }
         }
 
         public TreeNode<Device> DevicesTree(Device root, IEnumerable<Device> devices)
         {
-            var tree = new TreeNode<Device>(root);
-
-            BuildTree(tree, devices);
-
-            return tree;
-        }
-
-        public void PushUserGuideToCache(UserManualModel model)
-        {
             try
             {
-                HttpRuntime.Cache.Insert(model.Title, model, new TimerCacheDependency());
+                Log.Trace("Devices tree build was requested");
 
-                var fileName = HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/" + model.Title.Replace("/", "") + "_" +
-                                                       CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
-                Stream streamWrite = null;
-                try
-                {
-                    streamWrite = File.Create(fileName);
-                    var binaryWrite = new BinaryFormatter();
-                    binaryWrite.Serialize(streamWrite, model);
-                    streamWrite.Close();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    var result =
-                        Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~/Content/Data/UserGuides/"));
-                    if (result.Exists)
-                        PushUserGuideToCache(model);
-                }
-                catch (Exception ex)
-                {
-                    if (streamWrite != null) streamWrite.Close();
-                    //toDo log exception to log file
-                }
+                var tree = new TreeNode<Device>(root);
+
+                DevicesTreeHelper.BuildTree(tree, devices);
+
+                Log.Trace("Devices tree was built");
+
+                return tree;
             }
             catch (Exception ex)
             {
-                //toDo log exception to log file
+                Log.Error(ex, "Create devices tree error");
+
+                throw;
             }
         }
-        
-        public static String GetDeviceUrl(Device device)
+
+        public UserManualModel GetUserManual(String id)
         {
-            return "http://www.netping.ru/products/" + device.Url;
+            try
+            {
+                Log.Trace($"Requested user manual '{id}'");
+
+                var manuals = _dataProxy.GetAndCache<UserManualModel>(new StorageKey()
+                {
+                    Name = id,
+                    Directory = FileDataStorage.UserGuidFolder
+                });
+
+                var manual = manuals.FirstOrDefault();
+
+                Log.Trace($"User manual '{id}' was found");
+
+                return manual;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Get user manual error");
+
+                throw;
+            }
         }
 
         #endregion
 
         #region :: Public Properties ::
 
-        public IEnumerable<Post> Posts => _dataProxy.GetAndCache<Post>(CacheKeys.Posts);
+        public IEnumerable<Post> Posts => GetCollection<Post>(CacheKeys.Posts);
 
-        public IEnumerable<SFile> SFiles => _dataProxy.GetAndCache<SFile>(CacheKeys.SFiles);
+        public IEnumerable<SFile> SFiles => GetCollection<SFile>(CacheKeys.SFiles);
 
-        public IEnumerable<PubFiles> PubFiles => _dataProxy.GetAndCache<PubFiles>(CacheKeys.PubFiles);
+        public IEnumerable<PubFiles> PubFiles => GetCollection<PubFiles>(CacheKeys.PubFiles);
 
-        public IEnumerable<DevicePhoto> DevicePhotos => _dataProxy.GetAndCache<DevicePhoto>(CacheKeys.DevicePhotos);
+        public IEnumerable<DevicePhoto> DevicePhotos => GetCollection<DevicePhoto>(CacheKeys.DevicePhotos);
 
-        public IEnumerable<HTMLInjection> HtmlInjections => _dataProxy.GetAndCache<HTMLInjection>(CacheKeys.HtmlInjection);
+        public IEnumerable<HTMLInjection> HtmlInjections => GetCollection<HTMLInjection>(CacheKeys.HtmlInjection);
 
-        public IEnumerable<SPTerm> TermsLabels => _dataProxy.GetAndCache<SPTerm>(CacheKeys.Labels);
+        public IEnumerable<SPTerm> TermsLabels => GetCollection<SPTerm>(CacheKeys.Labels);
 
-        public IEnumerable<SPTerm> TermsCategories => _dataProxy.GetAndCache<SPTerm>(CacheKeys.PostCategories);
+        public IEnumerable<SPTerm> TermsCategories => GetCollection<SPTerm>(CacheKeys.PostCategories);
 
-        public IEnumerable<SPTerm> TermsDeviceParameters => _dataProxy.GetAndCache<SPTerm>(CacheKeys.DeviceParameterNames);
+        public IEnumerable<SPTerm> TermsDeviceParameters => GetCollection<SPTerm>(CacheKeys.DeviceParameterNames);
         
-        public IEnumerable<SPTerm> TermsFileTypes => _dataProxy.GetAndCache<SPTerm>(CacheKeys.DocumentTypes);
+        public IEnumerable<SPTerm> TermsFileTypes => GetCollection<SPTerm>(CacheKeys.DocumentTypes);
 
-        public IEnumerable<SPTerm> TermsDestinations => _dataProxy.GetAndCache<SPTerm>(CacheKeys.Purposes);
+        public IEnumerable<SPTerm> TermsDestinations => GetCollection<SPTerm>(CacheKeys.Purposes);
 
-        public IEnumerable<SPTerm> Terms => _dataProxy.GetAndCache<SPTerm>(CacheKeys.Names);
+        public IEnumerable<SPTerm> Terms => GetCollection<SPTerm>(CacheKeys.Names);
 
-        public IEnumerable<SiteText> SiteTexts => _dataProxy.GetAndCache<SiteText>(CacheKeys.SiteTexts);
+        public IEnumerable<SiteText> SiteTexts => GetCollection<SiteText>(CacheKeys.SiteTexts);
 
-        public IEnumerable<DeviceParameter> DevicesParameters => _dataProxy.GetAndCache<DeviceParameter>(CacheKeys.DeviceParameters);
+        public IEnumerable<DeviceParameter> DevicesParameters => GetCollection<DeviceParameter>(CacheKeys.DeviceParameters);
 
-        public IEnumerable<Device> Devices => _dataProxy.GetAndCache<Device>(CacheKeys.Devices);
+        public IEnumerable<Device> Devices => GetCollection<Device>(CacheKeys.Devices);
 
         #endregion
 
-        #region :: Private Methods ::
-        
-        private void BuildTree(TreeNode<Device> dev, IEnumerable<Device> list)
+        private IEnumerable<T> GetCollection<T>(String name)
         {
-            var childrens = list.Where(d => d.Name.Level == dev.Value.Name.Level + 1 && d.Name.Path.Contains(dev.Value.Name.Path));
-
-            foreach (var child in childrens)
+            try
             {
-                BuildTree(dev.AddChild(child), list);
+                Log.Trace($"Requested repository collection '{name}'. Item type: {typeof(T)}");
+
+                var collection = _dataProxy.GetAndCache<T>(name);
+
+                Log.Trace($"Collection was returned. Name: '{name}' Item type: {typeof(T)}");
+
+                return collection;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Unable to get collection '{name}'. Item type: {typeof(T)}");
+
+                throw;
             }
         }
-
-        #endregion
     }
 }

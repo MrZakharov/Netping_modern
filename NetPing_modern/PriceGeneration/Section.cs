@@ -65,8 +65,8 @@ namespace NetPing_modern.PriceGeneration
                 }
 
                 product.ImageFileName = GetImageFileName(device);
-                var url = SPOnlineRepository.GetDeviceUrl(device);
-                product.Url = url;
+                var url = UrlBuilder.GetDeviceUrl(device.Url);
+                product.Url = url.ToString();
 
                 result.Add(product);
             }

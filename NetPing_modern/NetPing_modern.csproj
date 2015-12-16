@@ -85,6 +85,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Interfaces.4.0.48\lib\portable-wp80+sl5+net40+win8+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
       <Private>True</Private>
@@ -186,11 +190,15 @@
     <Compile Include="Controllers\Product_itemController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="DAL\Cache\CacheKeys.cs" />
-    <Compile Include="DAL\Cache\DataStorageExtensions.cs" />
-    <Compile Include="DAL\Helpers\ConfluenceDataHelper.cs" />
+    <Compile Include="DAL\Storage\DataStorageExtensions.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointFields.cs" />
+    <Compile Include="DAL\Helpers\ListItemExtensions.cs" />
+    <Compile Include="DAL\Helpers\DevicesTreeHelper.cs" />
+    <Compile Include="DAL\Confluence\ConfluenceDataHelper.cs" />
     <Compile Include="DAL\Converters\DeviceConverter.cs" />
-    <Compile Include="DAL\Helpers\ISharepointClientFactory.cs" />
-    <Compile Include="DAL\Helpers\SharepointClientFactory.cs" />
+    <Compile Include="DAL\Sharepoint\ISharepointClientFactory.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointClientFactory.cs" />
+    <Compile Include="DAL\LogNames.cs" />
     <Compile Include="DAL\Sort\CustomTermComparer.cs" />
     <Compile Include="DAL\Model\CategoryId.cs" />
     <Compile Include="DAL\Converters\DeviceParameterConverter.cs" />
@@ -203,24 +211,27 @@
     <Compile Include="DAL\Model\Errors.cs" />
     <Compile Include="DAL\Converters\HtmlInjectionConverter.cs" />
     <Compile Include="DAL\Converters\FirmwareFileConverter.cs" />
+    <Compile Include="DAL\StaticFilePaths.cs" />
     <Compile Include="DAL\Storage\IDataStorage.cs" />
     <Compile Include="DAL\Converters\IListItemConverter.cs" />
-    <Compile Include="DAL\Storage\InFileDataStorage.cs" />
-    <Compile Include="DAL\Cache\DataStorageUpdater.cs" />
+    <Compile Include="DAL\Storage\FileDataStorage.cs" />
+    <Compile Include="DAL\Storage\DataStorageUpdater.cs" />
     <Compile Include="DAL\Model\PageModel.cs" />
     <Compile Include="DAL\Model\UserManualModel.cs" />
     <Compile Include="DAL\Converters\PubFilesConverter.cs" />
     <Compile Include="DAL\Converters\PostConverter.cs" />
     <Compile Include="DAL\Helpers\ProductCatalogManager.cs" />
-    <Compile Include="DAL\Helpers\SharepointClient.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointClient.cs" />
     <Compile Include="DAL\Converters\SiteTextConverter.cs" />
     <Compile Include="DAL\Cache\SharepointToCacheNamesMapper.cs" />
-    <Compile Include="DAL\Helpers\SharepointClientParameters.cs" />
-    <Compile Include="DAL\Helpers\SharepointKeys.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointClientParameters.cs" />
+    <Compile Include="DAL\Sharepoint\SharepointKeys.cs" />
     <Compile Include="DAL\Sort\SortOrdersCollection.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\SPOnlineRepository.cs" />
     <Compile Include="DAL\Sort\SPTermComparerByCustomSortOrder.cs" />
+    <Compile Include="DAL\Helpers\UrlBuilder.cs" />
+    <Compile Include="DAL\Storage\StorageKey.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -475,8 +486,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Confluence\ConfluenceClient.cs" />
-    <Compile Include="Services\Confluence\IConfluenceClient.cs" />
+    <Compile Include="DAL\Confluence\ConfluenceClient.cs" />
+    <Compile Include="DAL\Confluence\IConfluenceClient.cs" />
     <Compile Include="Tools\TimerCacheDependency.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
@@ -681,6 +692,12 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="fonts\atlassian-icons.woff" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -754,6 +771,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Data\" />
+    <Folder Include="Helper\" />
     <Folder Include="Pub\Files\" />
     <Folder Include="Pub\Photos\" />
     <Folder Include="Views\Cart\" />

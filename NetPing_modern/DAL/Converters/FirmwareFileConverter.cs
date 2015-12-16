@@ -23,25 +23,33 @@ namespace NetPing.DAL
 
         public SFile Convert(ListItem listItem)
         {
-            var folder = _sharepointClient.GetFolderParent(listItem["FileDirRef"].ToString());
+            var firmwareFileType = "4dadfd09-f883-4f42-9178-ded2fe88016b";
+            var firmwareFileType2 = "e3de2072-1eb2-4b6d-a7e2-3319bf89836d";
 
-            var fileType = _fileTypeTerms.FirstOrDefault(t => t.Id == new Guid("4dadfd09-f883-4f42-9178-ded2fe88016b"));
+            var fileType = _fileTypeTerms.FirstOrDefault(t => t.Id == new Guid(firmwareFileType));
 
-            if ((listItem["DocType"] as TaxonomyFieldValue).TermGuid == "e3de2072-1eb2-4b6d-a7e2-3319bf89836d")
+            var docType = listItem.Get<TaxonomyFieldValue>(SharepointFields.DocType);
+            
+            if (docType.TermGuid == firmwareFileType2)
             {
-                fileType =
-                    _fileTypeTerms.FirstOrDefault(t => t.Id == new Guid("e3de2072-1eb2-4b6d-a7e2-3319bf89836d"));
+                fileType = _fileTypeTerms.FirstOrDefault(t => t.Id == new Guid(firmwareFileType2));
             }
+
+            var name = listItem.Get<String>(SharepointFields.FileLeaf);
+            var title = listItem.Get<String>(SharepointFields.Title);
+            var devices = listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.Devices).ToSPTermList(_names);
+            var createDate = listItem.Get<DateTime>(SharepointFields.Created);
+            var url = UrlBuilder.GetFirmwaresUrl(name).ToString();
 
             var firmwareFile = new SFile
             {
                 Id = listItem.Id,
-                Name = listItem["FileLeafRef"] as String,
-                Title = listItem["Title"] as String,
-                Devices = (folder["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
+                Name = name,
+                Title = title,
+                Devices = devices,
                 File_type = fileType,
-                Created = (DateTime)listItem["Created"],
-                Url = "http://netping.ru/Pub/Firmwares/" + (listItem["FileLeafRef"] as String)
+                Created = createDate,
+                Url = url
             };
 
             return firmwareFile;

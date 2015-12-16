@@ -1,18 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Web;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using NetpingHelpers;
 using NetPing.Models;
-using NetPing.Tools;
 using NetPing_modern.DAL.Model;
 using NetPing_modern.Services.Confluence;
-using File = System.IO.File;
 
 namespace NetPing.DAL
 {
@@ -21,49 +15,60 @@ namespace NetPing.DAL
         private readonly IConfluenceClient _confluenceClient;
         private readonly IEnumerable<SPTerm> _names;
         private readonly IEnumerable<SPTerm> _fileTypeTerms;
+        private readonly Action<UserManualModel> _manualSaver;
 
-        public DeviceManualFileConverter(IConfluenceClient confluenceClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> fileTypeTerms)
+        public DeviceManualFileConverter(IConfluenceClient confluenceClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> fileTypeTerms, Action<UserManualModel> manualSaver)
         {
             _confluenceClient = confluenceClient;
             _names = names;
             _fileTypeTerms = fileTypeTerms;
+            _manualSaver = manualSaver;
         }
 
         public SFile Convert(ListItem listItem)
         {
             try
             {
-                var fileType = listItem["File_x0020_type0"] as TaxonomyFieldValue;
+                var userGuideFileName = "User guide";
 
-                if (fileType.ToSPTerm(_fileTypeTerms).OwnNameFromPath == "User guide")
+                var fileName = listItem.Get<String>(SharepointFields.FileLeaf);
+
+                var fileType = listItem.Get<TaxonomyFieldValue>(SharepointFields.ManualFileType).ToSPTerm(_fileTypeTerms);
+
+                var title = listItem.Get<String>(SharepointFields.Title);
+
+                var devices = listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.Devices).ToSPTermList(_names);
+
+                var created = listItem.Get<DateTime>(SharepointFields.Created);
+
+                var fileUrl = listItem.Get<FieldUrlValue>(SharepointFields.UrlUpperCase).ToFileUrlStr(fileName);
+
+                Debug.WriteLine($"Start loading manual '{fileUrl}'");
+
+                var sFile = new SFile
                 {
-                    var fileUrl = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString());
+                    Id = listItem.Id,
+                    Name = fileName,
+                    Title = title,
+                    Devices = devices,
+                    File_type = fileType,
+                    Created = created,
+                    Url = fileUrl
+                };
 
-                    Debug.WriteLine($"Start loading manual '{fileUrl}'");
-
+                if (fileType.OwnNameFromPath == userGuideFileName)
+                {
                     var contentId = _confluenceClient.GetContentIdFromUrl(fileUrl);
 
                     if (contentId.HasValue)
                     {
                         var content = _confluenceClient.GetUserManual(contentId.Value, listItem.Id);
 
-                        PushUserGuideToCache(content);
-                        var url = "/UserGuide/" + content.Title.Replace("/", "");
+                        _manualSaver(content);
 
-                        var sFile = new SFile
-                        {
-                            Id = listItem.Id,
-                            Name = listItem["FileLeafRef"] as String,
-                            Title = listItem["Title"] as String,
-                            Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
-                            File_type = fileType.ToSPTerm(_fileTypeTerms),
-                            Created = (DateTime) listItem["Created"],
-                            Url = url
-                        };
+                        var url = UrlBuilder.GetRelativeDeviceGuideUrl(PrepareUrlName(content)).ToString();
 
-                        Debug.WriteLine($"End loading manual '{fileUrl}'");
-
-                        return sFile;
+                        sFile.Url = url;
                     }
                     else
                     {
@@ -73,25 +78,10 @@ namespace NetPing.DAL
                     }
 
                 }
-                else
-                {
-                    var sFile = new SFile
-                    {
-                        Id = listItem.Id,
-                        Name = listItem["FileLeafRef"].ToString(),
-                        Title = listItem["Title"].ToString(),
-                        Devices = (listItem["Devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
-                        File_type = fileType.ToSPTerm(_fileTypeTerms),
-                        Created = (DateTime) listItem["Created"],
-                        Url = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString())
-                    };
 
-                    var fileUrl = (listItem["URL"] as FieldUrlValue).ToFileUrlStr(listItem["FileLeafRef"].ToString());
+                Debug.WriteLine($"End loading manual '{fileUrl}'");
 
-                    Debug.WriteLine($"End loading manual '{fileUrl}'");
-
-                    return sFile;
-                }
+                return sFile;
             }
             catch(Exception ex)
             {
@@ -99,52 +89,9 @@ namespace NetPing.DAL
             }
         }
 
-        private void PushUserGuideToCache(UserManualModel model)
+        private String PrepareUrlName(UserManualModel content)
         {
-            try
-            {
-                HttpRuntime.Cache.Insert(model.Title, model, new TimerCacheDependency());
-
-                var fileName = $"{model.Title.Replace("/", "")}_{CultureInfo.CurrentCulture.IetfLanguageTag}.dat";
-
-                var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content\\Data\\UserGuides", fileName);
-                
-                Stream streamWrite = null;
-
-                var dir = Path.GetDirectoryName(filePath);
-
-                if (!Directory.Exists(dir))
-                {
-                    var folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content\\Data\\UserGuides", fileName);
-
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                try
-                {
-                    streamWrite = File.Create(filePath);
-                    var binaryWrite = new BinaryFormatter();
-                    binaryWrite.Serialize(streamWrite, model);
-                    streamWrite.Close();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    var folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content\\Data\\UserGuides", fileName);
-
-                    var result = Directory.CreateDirectory(folderPath);
-                    if (result.Exists)
-                        PushUserGuideToCache(model);
-                }
-                catch (Exception ex)
-                {
-                    if (streamWrite != null) streamWrite.Close();
-                    //toDo log exception to log file
-                }
-            }
-            catch (Exception ex)
-            {
-                //toDo log exception to log file
-            }
+            return content.Title.Replace("/", "");
         }
     }
 }

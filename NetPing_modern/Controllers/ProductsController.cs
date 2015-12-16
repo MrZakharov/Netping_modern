@@ -221,21 +221,19 @@ namespace NetPing_modern.Controllers
         {
             ViewBag.Posts = NetpingHelpers.Helpers.GetTopPosts();
             ViewBag.Devices = NetpingHelpers.Helpers.GetNewDevices();
-
-            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E").Replace("!2F", "%2F") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
-
+            
             var sections = NavigationProvider.GetAllSections();
             var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
 
             UserManualViewModel model = null;
-            if (System.IO.File.Exists(file_name))
+            
+            try
             {
-                try
+                var guide =
+                    _repository.GetUserManual(id.Replace(".", "%2E").Replace("!2F", "%2F") + "_" +
+                                              CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+                if (guide != null)
                 {
-                    var stream = System.IO.File.OpenRead(file_name);
-                    BinaryFormatter binaryWrite = new BinaryFormatter();
-                    var guide = binaryWrite.Deserialize(stream) as UserManualModel;
-
                     model = new UserManualViewModel
                     {
                         Id = guide.Id,
@@ -246,19 +244,23 @@ namespace NetPing_modern.Controllers
                     };
 
                     Device device = null;
-                    if(model.ItemId > 0)
+                    if (model.ItemId > 0)
                         device = devices.FirstOrDefault(d => d.SFiles.Any(sf => sf.Id == model.ItemId));
                     else
                         device = devices.FirstOrDefault(d => d.SFiles.Any(f => id.Contains(f.Title)));
-                    var group = _repository.Devices.FirstOrDefault(d => d.Name.IsGroup() && d.Name.IsIncludeOther(device.Name) && !string.IsNullOrEmpty(d.Url));
+                    var group =
+                        _repository.Devices.FirstOrDefault(
+                            d =>
+                                d.Name.IsGroup() && d.Name.IsIncludeOther(device.Name) &&
+                                !string.IsNullOrEmpty(d.Url));
                     var section = sections.FirstOrDefault(s => s.Url == group.Url);
 
                     model.Device = device;
                     model.Section = section ?? new SectionModel
-                        {
-                            Title = "Other",
-                            Url = "/"
-                        };
+                    {
+                        Title = "Other",
+                        Url = "/"
+                    };
 
                     if (string.IsNullOrEmpty(page))
                         return View("~/Views/Products/UserGuide.cshtml", model);
@@ -269,10 +271,10 @@ namespace NetPing_modern.Controllers
                         return View("~/Views/Products/UserGuidePage.cshtml", m);
                     }
                 }
-                catch(Exception ex)
-                {
-                    throw;
-                }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
 
             return View("~/Views/Products/UserGuide.cshtml", model);

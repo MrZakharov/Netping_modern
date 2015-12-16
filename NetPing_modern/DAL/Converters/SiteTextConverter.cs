@@ -1,3 +1,4 @@
+using System;
 using Microsoft.SharePoint.Client;
 using NetpingHelpers;
 using NetPing.Models;
@@ -16,13 +17,13 @@ namespace NetPing.DAL
 
         public SiteText Convert(ListItem listItem)
         {
-            var link = listItem["Body_link"] as FieldUrlValue;
+            var link = listItem.Get<FieldUrlValue>(SharepointFields.BodyLink);
 
-            var content = link == null ? "" : _confluenceClient.GetContentByUrl(link.Url);
+            var content = link == null ? String.Empty : _confluenceClient.GetContentByUrl(link.Url);
 
             var siteText = new SiteText
             {
-                Tag = listItem["Title"].ToString(),
+                Tag = listItem.Get<String>(SharepointFields.Title),
                 Text = content.ReplaceInternalLinks()
             };
 

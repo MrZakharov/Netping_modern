@@ -54,15 +54,16 @@ namespace NetPing.DAL
                     AddOffers(childCategoryNode, shop, categoryNode);
                 }
             }
+
             shop.LocalDeliveryCost = 350;
 
-            YmlGenerator.Generate(catalog, HttpContext.Current.Server.MapPath("/Content/Data/netping.xml"));
+            YmlGenerator.Generate(catalog, StaticFilePaths.CatalogFilePath);
         }
 
-        private static String GetDeviceUrl(Device device)
-        {
-            return "http://www.netping.ru/products/" + device.Url;
-        }
+        //private static String GetDeviceUrl(Device device)
+        //{
+        //    return "http://www.netping.ru/products/" + device.Url;
+        //}
 
         private static void AddOffers(DeviceTreeNode offerNode, Shop shop, DeviceTreeNode childCategoryNode)
         {
@@ -90,10 +91,12 @@ namespace NetPing.DAL
                 descr = htmlDoc.DocumentNode.InnerText.Replace("&#160;", " ");
             }
 
+            var deviceUrl = UrlBuilder.GetDeviceUrl(offerNode.Device.Url).ToString();
+
             shop.Offers.Add(new Offer
             {
                 Id = offerNode.Id,
-                Url = GetDeviceUrl(offerNode.Device),
+                Url = deviceUrl,
                 Price = (Int32)(offerNode.Device.Price.HasValue ? offerNode.Device.Price.Value : 0),
                 CategoryId = childCategoryNode.Id,
                 Picture = offerNode.Device.GetCoverPhoto(true).Url,

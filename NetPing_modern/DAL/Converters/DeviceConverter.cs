@@ -13,18 +13,20 @@ namespace NetPing.DAL
 {
     internal class DeviceConverter : IListItemConverter<Device>
     {
-        private readonly Regex ConfluenceImgSrcRegex = new Regex(@"\ssrc=""/wiki(?<src>[^\""]+)""");
-
-        private readonly Regex ConfluenceDataBaseUrlRegex = new Regex(@"\sdata-base-url=""(?<src>[^\""]+)""");
-
         private readonly IConfluenceClient _confluenceClient;
-        private readonly Dictionary<string, string> _dataTable;
+        private readonly Dictionary<String, String> _dataTable;
         private readonly IEnumerable<SPTerm> _names;
         private readonly IEnumerable<SPTerm> _purposes;
         private readonly IEnumerable<SPTerm> _labels;
         private readonly DateTime _deviceStockUpdate;
 
-        public DeviceConverter(IConfluenceClient confluenceClient, Dictionary<String, String> dataTable, IEnumerable<SPTerm> names, IEnumerable<SPTerm> purposes, IEnumerable<SPTerm> labels, DateTime deviceStockUpdate)
+        public DeviceConverter(
+            IConfluenceClient confluenceClient, 
+            Dictionary<String, String> dataTable, 
+            IEnumerable<SPTerm> names, 
+            IEnumerable<SPTerm> purposes, 
+            IEnumerable<SPTerm> labels, 
+            DateTime deviceStockUpdate)
         {
             _confluenceClient = confluenceClient;
             _dataTable = dataTable;
@@ -36,39 +38,58 @@ namespace NetPing.DAL
 
         public Device Convert(ListItem listItem)
         {
-            var guidID = listItem["_x0031_C_ref"] as String;
+            var guidID = listItem.Get<String>(SharepointFields.DeviceStockID);
 
-            var _stock = guidID != null && _dataTable.ContainsKey(guidID) ? _dataTable[guidID] : "-1";
+            var emptyStockNumber = "-1";
+
+            var stock = guidID != null && _dataTable.ContainsKey(guidID) ? _dataTable[guidID] : emptyStockNumber;
+
+            var stockNumber = Int16.Parse(stock);
+
+            var title = listItem.Get<String>(SharepointFields.Title);
+
+            var name = listItem.Get<TaxonomyFieldValue>(SharepointFields.Name).ToSPTerm(_names);
+
+            var purposes = listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.Purpose).ToSPTermList(_purposes);
+
+            var linkedDevices =
+                listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.LinkedDevices).ToSPTermList(_names);
+
+            var price = listItem.Get<Double?>(SharepointFields.Price);
+
+            var label = listItem.Get<TaxonomyFieldValue>(SharepointFields.Label).ToSPTerm(_labels);
+
+            var created = listItem.Get<DateTime>(SharepointFields.Created);
+
+            var url = listItem.Get<String>(SharepointFields.Url);
 
             var device = new Device
             {
                 Id = listItem.Id,
-                OldKey = listItem["Title"] as String,
-                Name = (listItem["Name"] as TaxonomyFieldValue).ToSPTerm(_names),
-                Destination = (listItem["Destination"] as TaxonomyFieldValueCollection).ToSPTermList(_purposes),
-                Connected_devices = (listItem["Connected_devices"] as TaxonomyFieldValueCollection).ToSPTermList(_names),
-                Price = listItem["Price"] as Double?,
-                Label = (listItem["Label"] as TaxonomyFieldValue).ToSPTerm(_labels),
-                Created = (DateTime)listItem["Created"],
-                Url = listItem["Url"] as String,
-                DeviceStockUpdate = _deviceStockUpdate
-                ,
-                DeviceStock = Int16.Parse(_stock)
+                OldKey = title,
+                Name = name,
+                Destination = purposes,
+                Connected_devices = linkedDevices,
+                Price = price,
+                Label = label,
+                Created = created,
+                Url = url,
+                DeviceStockUpdate = _deviceStockUpdate,
+                DeviceStock = stockNumber
             };
 
+            var shortDescriptionField = listItem.Get<FieldUrlValue>(SharepointFields.ShortDescription);
 
-            var urlField = listItem["Short_descr"] as FieldUrlValue;
-
-            if (urlField != null)
+            if (shortDescriptionField != null)
             {
-                LoadFromConfluence(device, d => d.Short_description, urlField.Url);
+                LoadFromConfluence(device, d => d.Short_description, shortDescriptionField.Url);
             }
 
-            urlField = listItem["Long_descr"] as FieldUrlValue;
+            var longDescriptionField = listItem.Get<FieldUrlValue>(SharepointFields.LongDescription);
 
-            if (urlField != null)
+            if (longDescriptionField != null)
             {
-                LoadFromConfluence(device, d => d.Long_description, urlField.Url);
+                LoadFromConfluence(device, d => d.Long_description, longDescriptionField.Url);
             }
 
             return device;
@@ -77,22 +98,27 @@ namespace NetPing.DAL
         private void LoadFromConfluence(Device device, Expression<Func<Device, String>> expression, String url)
         {
             var meta = ModelMetadata.FromLambdaExpression(expression, new ViewDataDictionary<Device>());
+
             var propertyInfo = typeof(Device).GetProperty(meta.PropertyName);
 
-
             var id = _confluenceClient.GetContentIdFromUrl(url);
+
             if (id == null)
             {
                 propertyInfo.SetValue(device, String.Empty);
+
                 return;
             }
 
             var contentTask = _confluenceClient.GetContenAsync((Int32)id);
+
             var content = contentTask.Result;
+
             if (!String.IsNullOrWhiteSpace(content))
             {
-                var propertyValue = ReplaceConfluenceImages(StylishHeaders3(CleanSpanStyles(CleanFonts((content)))));
-                propertyInfo.SetValue(device, propertyValue);
+                var preparedContent = DescriptionContentConverter.Convert(content);
+
+                propertyInfo.SetValue(device, preparedContent);
             }
 
             if (propertyInfo.GetValue(device) == null)
@@ -101,67 +127,80 @@ namespace NetPing.DAL
             }
         }
 
-
-        private String CleanSpanStyles(String str)
+        private class DescriptionContentConverter
         {
-            for (var tagstart = str.IndexOf("<span"); tagstart != -1; tagstart = str.IndexOf("<span", tagstart + 1))
+            private static readonly Regex ConfluenceImgSrcRegex = new Regex(@"\ssrc=""/wiki(?<src>[^\""]+)""");
+
+            private static readonly Regex ConfluenceDataBaseUrlRegex = new Regex(@"\sdata-base-url=""(?<src>[^\""]+)""");
+
+            private static readonly Regex ConfluenceImageTagRegex = new Regex(@"\<img [^\>]+\>", RegexOptions.IgnoreCase);
+
+            public static String Convert(String content)
             {
-                var tagend = str.IndexOf('>', tagstart);
-                var tag = str.Substring(tagstart, tagend - tagstart + 1);
-                if (tag.Contains("style"))
-                {
-                    str = str.Remove(
-                        tag.IndexOf("style") + tagstart,
-                        tag.LastIndexOf('"') - tag.IndexOf("style") + 1);
-                }
+                return ReplaceConfluenceImages(
+                            RemoveSpanTagsWithStyle(
+                                RemoveFontTagsWithColor(content)));
             }
-            return str;
-        }
 
-        private String CleanFonts(String str)
-        {
-            for (var tagstart = str.IndexOf("<font"); tagstart != -1; tagstart = str.IndexOf("<font", tagstart + 1))
+            private static String RemoveFontTagsWithColor(String content)
             {
-                var tagend = str.IndexOf('>', tagstart);
-                var tag = str.Substring(tagstart, tagend - tagstart + 1);
-                if (tag.Contains("color"))
-                {
-                    str = str.Remove(
-                        tag.IndexOf("color") + tagstart,
-                        tag.LastIndexOf('"') - tag.IndexOf("color") + 1);
-                }
+                return RemoveTagWithAttribute(content, "font", "color");
             }
-            return str;
-        }
 
-        private String StylishHeaders3(String str)
-        {
-            //str = str.Replace("<h3", "<h3 class=\"shutter collapsed\"><span class=dashed>");
-            //str = str.Replace("</h3>", "</span></h3>");
-            return str;
-        }
-
-        private String ReplaceConfluenceImages(String str)
-        {
-            return ConfluenceImageTagRegex.Replace(str, ConfluenceImage);
-        }
-
-        private String ConfluenceImage(Match match)
-        {
-            var s = match.ToString();
-            if (s.Contains("confluence-embedded-image"))
+            private static String RemoveSpanTagsWithStyle(String content)
             {
-                var src = ConfluenceImgSrcRegex.Match(s);
-                var baseUrl = ConfluenceDataBaseUrlRegex.Match(s);
-                if (src.Success && baseUrl.Success)
-                {
-                    return ConfluenceImgSrcRegex.Replace(s,
-                        String.Format(" src=\"{0}\"", baseUrl.Groups["src"].Value + src.Groups["src"].Value));
-                }
+                return RemoveTagWithAttribute(content, "span", "style");
             }
-            return s;
-        }
 
-        private readonly Regex ConfluenceImageTagRegex = new Regex(@"\<img [^\>]+\>", RegexOptions.IgnoreCase);
+            private static String RemoveTagWithAttribute(String content, String tagName, String attributeName)
+            {
+                var removedTagStart = $"<{tagName}";
+                var removedTagEnd = '>';
+
+                for (var tagStart = content.IndexOf(removedTagStart, StringComparison.Ordinal);
+                    tagStart != -1;
+                    tagStart = content.IndexOf(removedTagStart, tagStart + 1, StringComparison.Ordinal))
+                {
+                    var tagEnd = content.IndexOf(removedTagEnd, tagStart);
+
+                    var tag = content.Substring(tagStart, tagEnd - tagStart + 1);
+
+                    if (tag.Contains(attributeName))
+                    {
+                        content = content.Remove(
+                            tag.IndexOf(attributeName, StringComparison.Ordinal) + tagStart,
+                            tag.LastIndexOf('"') - tag.IndexOf(attributeName, StringComparison.Ordinal) + 1);
+                    }
+                }
+
+                return content;
+            }
+
+            private static String ReplaceConfluenceImages(String content)
+            {
+                return ConfluenceImageTagRegex.Replace(content, ConfluenceImageEvaluator);
+            }
+
+            private static String ConfluenceImageEvaluator(Match match)
+            {
+                var matchToken = match.ToString();
+
+                if (matchToken.Contains("confluence-embedded-image"))
+                {
+                    var src = ConfluenceImgSrcRegex.Match(matchToken);
+
+                    var baseUrl = ConfluenceDataBaseUrlRegex.Match(matchToken);
+
+                    if (src.Success && baseUrl.Success)
+                    {
+                        var replacement = $" src=\"{baseUrl.Groups["src"].Value + src.Groups["src"].Value}\"";
+
+                        return ConfluenceImgSrcRegex.Replace(matchToken, replacement);
+                    }
+                }
+
+                return matchToken;
+            }
+        }
     }
 }
