@@ -71,10 +71,17 @@
         var email = $("#emailK").val().trim();
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var address = $("#addressK").val().trim();
+        var index = $("#IndexCode").val().trim();
+        var phone = $("#phone").val().trim();
+        var regexIndex = /[0-9]{6}/;
         var isvalid = true;
         if (!regex.test(email)) {
             isvalid = false;
             $("#emailK").addClass('invalid');
+        }
+        if (!regexIndex.test(index)) {
+            isvalid = false;
+            $("#IndexCode").addClass('invalid');
         }
         if (fio.length == 0) {
             isvalid = false;
@@ -84,10 +91,14 @@
             isvalid = false;
             $("#addressK").addClass('invalid');
         }
+        if (phone.length == 0) {
+            isvalid = false;
+            $("#phone").addClass('invalid');
+        }
+
         if (!isvalid)
             return;
         var requisites = $("#requisites").val();
-        var phone = $("#phone").val().trim();
         //var shipping = $("input:radio[name=shipping]:checked").val();
         var requestData = {
             Name: fio,
@@ -96,7 +107,8 @@
             Requisites: requisites,
             //Shipping: shipping,
             Data: data,
-            Phone: phone
+            Phone: phone,
+            IndexCode: index
         };
         
         $('#cartPopup').append('<div id="cart-preloader" class="cart-preloader"><img style="margin: 0 10px;vertical-align: middle;" height=16 src="/Content/Images/preloader.gif" /> Формировние заказа...</div>');

@@ -47,13 +47,14 @@
             <h2>@Cart.OrderData</h2>
             <input type="text" id="FIOK" placeholder="@Cart.FullName" />
             <input type="text" id="emailK" placeholder="@Cart.EMail" />
-            <input type="text" id="addressK" placeholder="@Cart.ShippingAddress" />
+            <input style="display:inline-block; width:19%;" type="text" id="IndexCode" placeholder="@Cart.IndexCode" />
+            <input style="display:inline-block; width:79%;" type="text" id="addressK" placeholder="@Cart.ShippingAddress" />
             <input type="text" id="phone" placeholder="@Cart.Phone" />
             <textarea id="requisites" rows="10" placeholder="@Cart.InvoiceDetails"></textarea>
             <div class="clear"></div>
-            <div class="delivery">
+            @*<div class="delivery">
                 Доставка по России бесплатно!
-            </div>
+            </div>*@
         </div>
         <input type="button" class="btn btn-primary accept" id="sendDataCartButton" value="@Cart.Done" />
     </div>
