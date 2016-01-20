@@ -33,6 +33,9 @@ namespace NetPing
 
             var sw = Stopwatch.StartNew();
 
+            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
+
             var sync = new DataStorageUpdater(inFileDataStorage, factory, new ConfluenceClient(new Config()));
 
 

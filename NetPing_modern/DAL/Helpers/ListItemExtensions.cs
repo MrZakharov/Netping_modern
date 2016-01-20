@@ -23,8 +23,17 @@ namespace NetPing.DAL
                 {
                     return (T) (object) Int32.Parse(field.ToString());
                 }
+                else if (typeof (T) == typeof (Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection) )
+                {
 
-                return (T) field;
+           //         Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValue aa;
+           //         Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection bb;
+           //         bb = (Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection) (object) aa;
+                   
+
+                }
+
+                return (T) (object) field;
             }
         }
     }

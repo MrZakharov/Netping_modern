@@ -76,14 +76,14 @@ namespace NetPing.DAL
                 #endregion
                 
                 #region :: Step 2 ::
-
+/*
                 Parallel.Invoke(
                     LoadDevicePhotos,
                     LoadDeviceParameters,
                     LoadPubFiles,
                     LoadPosts,
                     LoadDeviceManualFiles);
-
+                    */
                 Log.Trace($"Step 2 data loaded. From start: {loadTimeMeasurer.ElapsedMilliseconds} ms");
 
                 #endregion

@@ -22,6 +22,8 @@ namespace NetPing.DAL
 
         public SPOnlineRepository(IConfluenceClient confluenceClient, ISharepointClientFactory sharepointClientFactory)
         {
+          
+
             try
             {
                 var storage = new FileDataStorage();
