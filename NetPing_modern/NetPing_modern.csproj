@@ -690,6 +690,7 @@
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="Views\Shared\PreorderForm.cshtml" />
     <Content Include="Views\InnerPages\UCacheStock.cshtml" />
+    <Content Include="Views\InnerPages\UCacheAsyncIndividual.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
