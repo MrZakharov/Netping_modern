@@ -146,8 +146,6 @@ namespace NetPing.DAL
         }
 
 
-
-
         public IEnumerable<Device> Devices
         {
             get
@@ -807,6 +805,8 @@ namespace NetPing.DAL
                     //   GeneratePriceList();
                     GenerateYml();
                 }
+
+
             }
             catch (Exception ex)
             {

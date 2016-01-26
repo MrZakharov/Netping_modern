@@ -47,8 +47,13 @@ namespace NetPing.Controllers
 
         #region Async Cache update
 
-        public ActionResult UCacheAsync()
+        public ActionResult UCacheAsync(string id)
         {
+            if (!string.IsNullOrEmpty(id))
+            {
+                ViewBag.termsItem = id;
+                return View("UCacheAsyncIndividual");
+            }
             return View();
         }
 
