@@ -1,8 +1,7 @@
 ﻿@using System.Globalization
-@using NetpingHelpers
 @using NetPing.Models
-@using NetPing_modern.Helpers
 @using NetPing_modern.Resources.Views.MainPage
+@using NetpingHelpers
 @{
     ViewBag.Title = Index.Page_title;
     ViewBag.Description = Index.Page_description;
@@ -107,7 +106,7 @@
                 foreach (Post post in ViewBag.posts)
                 {
 
-                  if(NetpingHelpers.Helpers.IsCultureEng)
+                  if( Helpers.IsCultureEng)
                   {
                     <div class="content_news_latest_date @post.Category.OwnNameFromPath Eng">
                     <span class="content_news_latest_date_span">@post.Created.ToShortDateString()</span>

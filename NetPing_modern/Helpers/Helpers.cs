@@ -15,7 +15,7 @@ using NetPing_modern.Services.Confluence;
 
 namespace NetpingHelpers
 {
-    internal static class Helpers
+     public static class Helpers
     {
         public static IEnumerable<HTMLInjection> GetHtmlInjections(IRepository repository = null)
         {
@@ -102,7 +102,7 @@ namespace NetpingHelpers
             if (url == null) return "http://netping.ru/Pub/Files/" + file_name;
               else return url.Url;
         }
-
+/*
         public static List<SPTerm> ListNamesToListDesitnations(this List<SPTerm> names,IEnumerable<Device> devices)
         {
             List<SPTerm> result = new List<SPTerm>();
@@ -118,7 +118,7 @@ namespace NetpingHelpers
             }
             return result;
         }
-
+        */
         public static string ToShortTextHTML(this string str,string url)
         {
             str=Regex.Replace(str, @"<(.|n)*?>", string.Empty).Replace("&nbsp", " ").Replace("&#160;"," "); // To clear text from HTML
@@ -138,7 +138,7 @@ namespace NetpingHelpers
 
 
         // Get device names terms list, return destinations list for this devices
-        public static List<SPTerm> DevicesToDestinations(this List<SPTerm> values, IRepository repository)
+     /*   public static List<SPTerm> DevicesToDestinations(this List<SPTerm> values, IRepository repository)
         {
             List<SPTerm> result=new List<SPTerm>();
             if (values == null || values.Count < 1)
@@ -152,7 +152,7 @@ namespace NetpingHelpers
 
             return result;
         }
-
+        */
         // Replace links inside Sharepoint HTML body
         public static string ReplaceInternalLinks(this string value)
         {

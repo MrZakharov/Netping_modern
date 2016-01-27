@@ -15,7 +15,7 @@ using Ninject.Infrastructure.Language;
 
 namespace NetPing.DAL
 {
-    internal class SharepointClient : IDisposable
+    public class SharepointClient : IDisposable
     {
         private readonly SharepointClientParameters _parameters;
         private readonly ClientContext _context;

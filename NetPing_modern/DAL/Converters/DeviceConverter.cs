@@ -50,7 +50,7 @@ namespace NetPing.DAL
 
             var name = listItem.Get<TaxonomyFieldValue>(SharepointFields.Name).ToSPTerm(_names);
 
-            var purposes = listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.Purpose).ToSPTermList(_purposes);
+            var purposes = listItem.Get<TaxonomyFieldValue>(SharepointFields.Purpose).ToSPTerm(_purposes);
 
             var linkedDevices =
                 listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.LinkedDevices).ToSPTermList(_names);

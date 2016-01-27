@@ -2,7 +2,7 @@ using NetPing.Global.Config;
 
 namespace NetPing.DAL
 {
-    internal class SharepointClientFactory : ISharepointClientFactory
+    public class SharepointClientFactory : ISharepointClientFactory
     {
         private readonly IConfig _config;
 

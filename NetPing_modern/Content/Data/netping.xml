@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE yml_catalog SYSTEM "shops.dtd">
-<<<<<<< HEAD
-<yml_catalog date="2015-10-23 17:08">
-=======
-<yml_catalog date="2015-11-03 16:03">
->>>>>>> refs/remotes/origin/PageProperties
+<yml_catalog date="2016-01-20 19:11">
   <shop>
     <name>Netping.ru</name>
     <company>Netping.ru</company>
@@ -13,293 +9,23 @@
       <currency id="RUR" rate="1" plus="0" />
     </currencies>
     <categories>
-      <category id="12">Готовые решения для мониторинга серверных комнат и шкафов</category>
-      <category id="11">Готовые решения для удаленного управления электропитанием</category>
-      <category id="10">Готовые решения на основе POE</category>
-      <category id="4">Каталог датчиков для устройств Netping</category>
       <category id="6">Каталог устойств мониторинг серверных комнат и шкафов</category>
       <category id="7">Каталог устройств удалённого управления и распределения электропитания Netping</category>
+      <category id="4">Каталог датчиков для устройств Netping</category>
+      <category id="12">Готовые решения для мониторинга серверных комнат и шкафов</category>
+      <category id="10">Готовые решения на основе POE</category>
+      <category id="11">Готовые решения для удаленного управления электропитанием</category>
       <category id="3">Каталог аксессуаров для устройств Netping</category>
       <category id="8">Неуправляемые POE коммутаторы</category>
     </categories>
     <local_delivery_cost>350</local_delivery_cost>
     <offers>
-      <offer id="91" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/gotovoe-reshenie-dlya-monitoringa-servernoj-komnaty-na-osnove-uniping-server-solution-v3-sms</url>
-        <price>21430</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>12</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/Server_room_monitor_solution_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Готовое решение для мониторинга серверной комнаты на основе Uniping server solution v3/SMS</vendorCode>
-        <model>Готовое решение для мониторинга серверной комнаты на основе Uniping server solution v3/SMS</model>
-        <description>Наиболее типовыми задачами мониторинга серверных комнат являются: мониторинг климата и окружающей среды при работе компьютерного оборудования,мониторинг доступа в помещение и наличия движения в серверной комнате,мониторинг наличия электропитания. Система мониторинга должна постоянно отслеживать эти параметры и уведомлять дежурный персонал в случае необходимости.Данное решение для мониторинга серверных комнат на основе устройства Uniping server solution v3/SMS позволяет собирать информацию с внешних датчиков и отправлять E-mail или SMS-уведомления дежурному персоналу в случае необходимости. Для сбора и накопления статистики используется интеграция устройства по протоколу SNMP с системами мониторинга сети Zabbix или PRTG network monitor.  </description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="92" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/monitoring-bankomatov-i-platjozhnykh-terminalov-pri-pomoshhi-netping</url>
-        <price>10629</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>11</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/ATM_solution_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Мониторинг банкоматов и платёжных терминалов при помощи Netping</vendorCode>
-        <model>Мониторинг банкоматов и платёжных терминалов при помощи Netping</model>
-        <description>Типовой задачей в обслуживании банкоматов и платёжных терминалов является обеспечение их надёжной работы. Для этого немаловажно постоянно отслеживать условия работы критичных блоков, а также иметь возможность удалённо перезагружать, включать или выключать электропитание внутренних устройств. Важно поддерживать контроль над банкоматом при проблемах основного канала связи, интегрировать систему мониторинга в общую систему управления и отслеживания работы банкоматов.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="59" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/poe-3-ports-injector</url>
-        <price>3376</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>10</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_solut_poe_3injector_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>POE инжектор на 3 порта</vendorCode>
-        <model>POE инжектор на 3 порта</model>
-        <description>POE инжектор на 3 порта, способен обеспечить 3 внешних устройства питанием по стандарту POE IEEE 802.3af/at </description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="26" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/thermo-sensor-1-wire</url>
-        <price>777</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_1WireTermosensor_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Термодатчик 1-wire, (THS), 2м</vendorCode>
-        <model>Термодатчик 1-wire, (THS), 2м</model>
-        <description>Датчик температуры -55C ... +125C с интерфейсом 1-wire. Длина шлейфа 2 м.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="25" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/humidity-sensor-1-wire</url>
-        <price>1920</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_1WireHumiditysensor_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Датчик влажности 1-wire, (HS), 2м</vendorCode>
-        <model>Датчик влажности 1-wire, (HS), 2м</model>
-        <description>Датчик относительной влажности воздуха с интерфейсом 1-wire и встроенным датчиком температуры. Длина провода 2 м.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="41" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/thermo-sensor-TS</url>
-        <price>633</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_TermosensorTS_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Термодатчик TS, 1м</vendorCode>
-        <model>Термодатчик TS, 1м</model>
-        <description>Термодатчик для измерения температуры окружающего воздуха внутри помещения. -55C..+125C. Избегайте попадания воды на термодатчик!</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="42" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/thermo-sensor-WT</url>
-        <price>725</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_TermosensorWT_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Thermo sensor WT</vendorCode>
-        <model>Thermo sensor WT</model>
-        <description>Термодатчик для измерения температуры воздуха и воды -55C..+125C. Герметичный корпус, допускает погружение в воду.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="107" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/humidity-sensor-ws2</url>
-        <price>1944</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_HumidityWS2_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Датчик влажности WS-2, 2м</vendorCode>
-        <model>Датчик влажности WS-2, 2м</model>
-        <description>Датчик относительной влажности воздуха для измерения относительной влажности в % со встроенным датчиком температуры.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="39" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/smoke-sensor</url>
-        <price>910</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_smoke_sensor_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Датчик дыма (ИП212-141), 2м</vendorCode>
-        <model>Датчик дыма (ИП212-141), 2м</model>
-        <description>Датчик дыма предназначен для обнаружения возгораний с задымлением в закрытых помещениях. Подключается к устройствам Uniping.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="36" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/sensor-220V</url>
-        <price>713</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_sensor220V_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Датчик наличия 220В (мод. HRS05005), 1м</vendorCode>
-        <model>Датчик наличия 220В (мод. HRS05005), 1м</model>
-        <description>Датчик позволяет определить наличие 220В в розетке питания. Датчик выполнен в виде адаптера под евророзетку.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="32" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/door-sensor-metall</url>
-        <price>288</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_metall_kontakt_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Датчик охранный (Извещатель охранный ИО102-20/Б2П, 2м)</vendorCode>
-        <model>Датчик охранный (Извещатель охранный ИО102-20/Б2П, 2м)</model>
-        <description>Датчик открытия/закрытия двери (ИО102-20/Б2П). Предназначен для установки на металлическую дверь шкафа или комнаты. Содержит герконовые контакты (&amp;quot;сухой контакт&amp;quot;). </description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="44" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-datchik-protechki</url>
-        <price>1600</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_water_sensr_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Датчик протечки, модель 2605, 2м</vendorCode>
-        <model>Датчик протечки, модель 2605, 2м</model>
-        <description>Датчик протечки позволяет определить наличие воды в точке установки датчика. </description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="33" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-datchik-dvijenija</url>
-        <price>1047</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_moove_sensor_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Датчик движения (PYRONIX COLT QUAD PI ПИК детектор), 2м</vendorCode>
-        <model>Датчик движения (PYRONIX COLT QUAD PI ПИК детектор), 2м</model>
-        <description>Датчик предназначен для регистрации наличия движения. Позволяет регистрировать любое движение в зоне 10 м. Подключается к устройствам Uniping.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="37" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-shock-sensor</url>
-        <price>715</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_shock_sensor_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Датчик удара PI-90D, 1м</vendorCode>
-        <model>Датчик удара PI-90D, 1м</model>
-        <description>Датчик удара позволяет регистрировать удары и вибрации поверхности, на которой он установлен, а также громкие хлопки, акустические удары. Обычно используется для уведомлений о случаях вандализма на удалённых узлах и в шкафах с оборудованием.</description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
-      <offer id="38" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/sirena-ac10</url>
-        <price>662</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>4</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_sirena_big.png</picture>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>true</delivery>
-        <typePrefix />
-        <vendor>NetPing</vendor>
-        <vendorCode>Сирена сигнальная (АС-10), 2м</vendorCode>
-        <model>Сирена сигнальная (АС-10), 2м</model>
-        <description>Сирена AC-10 предназначена для подключения к устройствам модельного ряда UniPing. Сирена позволяет выдавать звуковые оповещения по команде от интерфейса устройства Uniping. </description>
-        <sales_notes>предоплата</sales_notes>
-        <manufacturer_warranty>P2Y</manufacturer_warranty>
-        <country_of_origin>Россия</country_of_origin>
-      </offer>
       <offer id="49" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/uniping-server-solution-v3-sms</url>
+        <url>http://www.netping.ru/uniping-server-solution-v3-sms</url>
         <price>13225</price>
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_UniPing_server_v3_SMS_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_bases_UniPing_server_v3_SMS_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -313,11 +39,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="109" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/uniping-server-solution-v3</url>
+        <url>http://www.netping.ru/uniping-server-solution-v3</url>
         <price>10235</price>
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_UniPing_server_v3_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_bases_UniPing_server_v3_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -331,11 +57,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="47" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-sms</url>
+        <url>http://www.netping.ru/netping-sms</url>
         <price>6383</price>
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_SMS_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_bases_SMS_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -349,11 +75,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="51" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/uniping-v3</url>
+        <url>http://www.netping.ru/uniping-v3</url>
         <price>5405</price>
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_v3_UniPing_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_bases_v3_UniPing_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -367,11 +93,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="50" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-io-v2</url>
+        <url>http://www.netping.ru/netping-io-v2</url>
         <price>2024</price>
         <currencyId>RUR</currencyId>
         <categoryId>6</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_v2netpingIO_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_bases_v2netpingIO_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -385,11 +111,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="53" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-8-pwr-220-v3-sms</url>
+        <url>http://www.netping.ru/netping-8-pwr-220-v3-sms</url>
         <price>16401</price>
         <currencyId>RUR</currencyId>
         <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_8PWR_SMS_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_power_8PWR_SMS_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -403,11 +129,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="52" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-4-pwr-220-v3-sms</url>
+        <url>http://www.netping.ru/netping-4-pwr-220-v3-sms</url>
         <price>10925</price>
         <currencyId>RUR</currencyId>
         <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_4PWR_SMS_220_v3_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_power_4PWR_SMS_220_v3_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -421,11 +147,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="58" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v2-sms</url>
+        <url>http://www.netping.ru/netping-2-pwr-220-v2-sms</url>
         <price>7475</price>
         <currencyId>RUR</currencyId>
         <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_V2SMS2PWR220_big2.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_power_V2SMS2PWR220_big2.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -439,11 +165,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="57" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v1-sms</url>
+        <url>http://www.netping.ru/netping-2-pwr-220-v1-sms</url>
         <price>6792</price>
         <currencyId>RUR</currencyId>
         <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_SMS2PWR220-v1_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_power_SMS2PWR220-v1_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -457,11 +183,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="54" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-2-pwr-220-v3-eth</url>
+        <url>http://www.netping.ru/netping-2-pwr-220-v3-eth</url>
         <price>5060</price>
         <currencyId>RUR</currencyId>
         <categoryId>7</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_power_ETH_2PWR220_v2_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_power_ETH_2PWR220_v2_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -474,12 +200,282 @@
         <manufacturer_warranty>P2Y</manufacturer_warranty>
         <country_of_origin>Россия</country_of_origin>
       </offer>
+      <offer id="26" type="vendor.model" available="true">
+        <url>http://www.netping.ru/thermo-sensor-1-wire</url>
+        <price>777</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_1WireTermosensor_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Термодатчик 1-wire, (THS), 2м</vendorCode>
+        <model>Термодатчик 1-wire, (THS), 2м</model>
+        <description>Датчик температуры -55C ... +125C с интерфейсом 1-wire. Длина шлейфа 2 м.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="25" type="vendor.model" available="true">
+        <url>http://www.netping.ru/humidity-sensor-1-wire</url>
+        <price>1920</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_1WireHumiditysensor_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Датчик влажности 1-wire, (HS), 2м</vendorCode>
+        <model>Датчик влажности 1-wire, (HS), 2м</model>
+        <description>Датчик относительной влажности воздуха с интерфейсом 1-wire и встроенным датчиком температуры. Длина провода 2 м.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="41" type="vendor.model" available="true">
+        <url>http://www.netping.ru/thermo-sensor-TS</url>
+        <price>633</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_TermosensorTS_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Термодатчик TS, 1м</vendorCode>
+        <model>Термодатчик TS, 1м</model>
+        <description>Термодатчик для измерения температуры окружающего воздуха внутри помещения. -55C..+125C. Избегайте попадания воды на термодатчик!</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="42" type="vendor.model" available="true">
+        <url>http://www.netping.ru/thermo-sensor-WT</url>
+        <price>725</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_TermosensorWT_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Thermo sensor WT</vendorCode>
+        <model>Thermo sensor WT</model>
+        <description>Термодатчик для измерения температуры воздуха и воды -55C..+125C. Герметичный корпус, допускает погружение в воду.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="107" type="vendor.model" available="true">
+        <url>http://www.netping.ru/humidity-sensor-ws2</url>
+        <price>1944</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_HumidityWS2_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Датчик влажности WS-2, 2м</vendorCode>
+        <model>Датчик влажности WS-2, 2м</model>
+        <description>Датчик относительной влажности воздуха для измерения относительной влажности в % со встроенным датчиком температуры.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="39" type="vendor.model" available="true">
+        <url>http://www.netping.ru/smoke-sensor</url>
+        <price>910</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_smoke_sensor_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Датчик дыма (ИП212-141), 2м</vendorCode>
+        <model>Датчик дыма (ИП212-141), 2м</model>
+        <description>Датчик дыма предназначен для обнаружения возгораний с задымлением в закрытых помещениях. Подключается к устройствам Uniping.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="36" type="vendor.model" available="true">
+        <url>http://www.netping.ru/sensor-220V</url>
+        <price>713</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_sensor220V_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Датчик наличия 220В (мод. HRS05005), 1м</vendorCode>
+        <model>Датчик наличия 220В (мод. HRS05005), 1м</model>
+        <description>Датчик позволяет определить наличие 220В в розетке питания. Датчик выполнен в виде адаптера под евророзетку.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="32" type="vendor.model" available="true">
+        <url>http://www.netping.ru/door-sensor-metall</url>
+        <price>288</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_metall_kontakt_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Датчик охранный (Извещатель охранный ИО102-20/Б2П, 2м)</vendorCode>
+        <model>Датчик охранный (Извещатель охранный ИО102-20/Б2П, 2м)</model>
+        <description>Датчик открытия/закрытия двери (ИО102-20/Б2П). Предназначен для установки на металлическую дверь шкафа или комнаты. Содержит герконовые контакты (&amp;quot;сухой контакт&amp;quot;). </description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="44" type="vendor.model" available="true">
+        <url>http://www.netping.ru/netping-datchik-protechki</url>
+        <price>1600</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_water_sensr_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Датчик протечки, модель 2605, 2м</vendorCode>
+        <model>Датчик протечки, модель 2605, 2м</model>
+        <description>Датчик протечки позволяет определить наличие воды в точке установки датчика. </description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="33" type="vendor.model" available="true">
+        <url>http://www.netping.ru/netping-datchik-dvijenija</url>
+        <price>1047</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_moove_sensor_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Датчик движения (PYRONIX COLT QUAD PI ПИК детектор), 2м</vendorCode>
+        <model>Датчик движения (PYRONIX COLT QUAD PI ПИК детектор), 2м</model>
+        <description>Датчик предназначен для регистрации наличия движения. Позволяет регистрировать любое движение в зоне 10 м. Подключается к устройствам Uniping.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="37" type="vendor.model" available="true">
+        <url>http://www.netping.ru/netping-shock-sensor</url>
+        <price>715</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_shock_sensor_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Датчик удара PI-90D, 1м</vendorCode>
+        <model>Датчик удара PI-90D, 1м</model>
+        <description>Датчик удара позволяет регистрировать удары и вибрации поверхности, на которой он установлен, а также громкие хлопки, акустические удары. Обычно используется для уведомлений о случаях вандализма на удалённых узлах и в шкафах с оборудованием.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="38" type="vendor.model" available="true">
+        <url>http://www.netping.ru/sirena-ac10</url>
+        <price>662</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>4</categoryId>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_sirena_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Сирена сигнальная (АС-10), 2м</vendorCode>
+        <model>Сирена сигнальная (АС-10), 2м</model>
+        <description>Сирена AC-10 предназначена для подключения к устройствам модельного ряда UniPing. Сирена позволяет выдавать звуковые оповещения по команде от интерфейса устройства Uniping. </description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="91" type="vendor.model" available="true">
+        <url>http://www.netping.ru/gotovoe-reshenie-dlya-monitoringa-servernoj-komnaty-na-osnove-uniping-server-solution-v3-sms</url>
+        <price>21430</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>12</categoryId>
+        <picture>http://www.netping.ru/Pub/Server_room_monitor_solution_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Готовое решение для мониторинга серверной комнаты на основе Uniping server solution v3/SMS</vendorCode>
+        <model>Готовое решение для мониторинга серверной комнаты на основе Uniping server solution v3/SMS</model>
+        <description>Наиболее типовыми задачами мониторинга серверных комнат являются: мониторинг климата и окружающей среды при работе компьютерного оборудования,мониторинг доступа в помещение и наличия движения в серверной комнате,мониторинг наличия электропитания. Система мониторинга должна постоянно отслеживать эти параметры и уведомлять дежурный персонал в случае необходимости.Данное решение для мониторинга серверных комнат на основе устройства Uniping server solution v3/SMS позволяет собирать информацию с внешних датчиков и отправлять E-mail или SMS-уведомления дежурному персоналу в случае необходимости. Для сбора и накопления статистики используется интеграция устройства по протоколу SNMP с системами мониторинга сети Zabbix или PRTG network monitor.  </description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="59" type="vendor.model" available="true">
+        <url>http://www.netping.ru/poe-3-ports-injector</url>
+        <price>3376</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>10</categoryId>
+        <picture>http://www.netping.ru/Pub/_solut_poe_3injector_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>POE инжектор на 3 порта</vendorCode>
+        <model>POE инжектор на 3 порта</model>
+        <description>POE инжектор на 3 порта, способен обеспечить 3 внешних устройства питанием по стандарту POE IEEE 802.3af/at </description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
+      <offer id="92" type="vendor.model" available="true">
+        <url>http://www.netping.ru/monitoring-bankomatov-i-platjozhnykh-terminalov-pri-pomoshhi-netping</url>
+        <price>10629</price>
+        <currencyId>RUR</currencyId>
+        <categoryId>11</categoryId>
+        <picture>http://www.netping.ru/Pub/ATM_solution_big.png</picture>
+        <store>true</store>
+        <pickup>true</pickup>
+        <delivery>true</delivery>
+        <typePrefix />
+        <vendor>NetPing</vendor>
+        <vendorCode>Мониторинг банкоматов и платёжных терминалов при помощи Netping</vendorCode>
+        <model>Мониторинг банкоматов и платёжных терминалов при помощи Netping</model>
+        <description>Типовой задачей в обслуживании банкоматов и платёжных терминалов является обеспечение их надёжной работы. Для этого немаловажно постоянно отслеживать условия работы критичных блоков, а также иметь возможность удалённо перезагружать, включать или выключать электропитание внутренних устройств. Важно поддерживать контроль над банкоматом при проблемах основного канала связи, интегрировать систему мониторинга в общую систему управления и отслеживания работы банкоматов.</description>
+        <sales_notes>предоплата</sales_notes>
+        <manufacturer_warranty>P2Y</manufacturer_warranty>
+        <country_of_origin>Россия</country_of_origin>
+      </offer>
       <offer id="46" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-mini-ups</url>
-        <price>2801</price>
+        <url>http://www.netping.ru/netping-mini-ups</url>
+        <price>3690</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_nping_bases_mini_UPS_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_nping_bases_mini_UPS_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -493,11 +489,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="43" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-IRC-TR-v2</url>
+        <url>http://www.netping.ru/netping-IRC-TR-v2</url>
         <price>2383</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_v2_IRC-TR_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_v2_IRC-TR_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -511,11 +507,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="14" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/rozetka-ac-din-socket</url>
+        <url>http://www.netping.ru/rozetka-ac-din-socket</url>
         <price>1139</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_AC_DIN_socket_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_AC_DIN_socket_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -529,11 +525,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="15" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/perehodnik-ups-c-kabelem</url>
+        <url>http://www.netping.ru/perehodnik-ups-c-kabelem</url>
         <price>633</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_Adapter_PWR220_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_Adapter_PWR220_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -547,11 +543,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="22" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/power-socket-adapter-ups</url>
+        <url>http://www.netping.ru/power-socket-adapter-ups</url>
         <price>403</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_UPS_adapter_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_UPS_adapter_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -565,11 +561,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="24" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/vap11n-wifi-bridge</url>
-        <price>1955</price>
+        <url>http://www.netping.ru/vap11n-wifi-bridge</url>
+        <price>2500</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_VAP11N_WiFi_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_VAP11N_WiFi_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -583,11 +579,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="29" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/injector-poe-802-3-af</url>
+        <url>http://www.netping.ru/injector-poe-802-3-af</url>
         <price>532</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_Inj_af_POE_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_Inj_af_POE_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -601,11 +597,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="40" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/POE-splitter-12V</url>
-        <price>870</price>
+        <url>http://www.netping.ru/POE-splitter-12V</url>
+        <price>1020</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_split_af_POE_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_split_af_POE_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -619,11 +615,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="34" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/power-adapter-48V-1_5A</url>
-        <price>1214</price>
+        <url>http://www.netping.ru/power-adapter-48V-1_5A</url>
+        <price>1760</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_Power_48V_ps_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_Power_48V_ps_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -637,11 +633,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="18" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/cable-extender-1-wire-5m</url>
+        <url>http://www.netping.ru/cable-extender-1-wire-5m</url>
         <price>684</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_extender1wire5m_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_extender1wire5m_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -655,11 +651,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="16" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/cable-extender-1-wire-10m</url>
+        <url>http://www.netping.ru/cable-extender-1-wire-10m</url>
         <price>862</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_extender1wire10m_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_extender1wire10m_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -673,11 +669,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="17" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/cable-extender-1-wire-2m</url>
+        <url>http://www.netping.ru/cable-extender-1-wire-2m</url>
         <price>235</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_extender1wire2m_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_extender1wire2m_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -691,11 +687,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="21" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-cable-extender-4m</url>
+        <url>http://www.netping.ru/netping-cable-extender-4m</url>
         <price>288</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_sensors_extender4_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_sensors_extender4_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -709,11 +705,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="23" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-connection-board-v2</url>
+        <url>http://www.netping.ru/netping-connection-board-v2</url>
         <price>2594</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_v2_Connection_Board_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_v2_Connection_Board_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -727,11 +723,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="20" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/netping-relay-board</url>
+        <url>http://www.netping.ru/netping-relay-board</url>
         <price>3335</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_mains_relay_board_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_mains_relay_board_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -745,11 +741,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="35" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/power-adapter-12V-0_5A</url>
+        <url>http://www.netping.ru/power-adapter-12V-0_5A</url>
         <price>549</price>
         <currencyId>RUR</currencyId>
         <categoryId>3</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_acces_sensr_Power_sup_netping_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_acces_sensr_Power_sup_netping_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -763,11 +759,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="63" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/poe-switch-np-sm4</url>
+        <url>http://www.netping.ru/poe-switch-np-sm4</url>
         <price>2162</price>
         <currencyId>RUR</currencyId>
         <categoryId>8</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_swtch_poeeq_4SM_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_swtch_poeeq_4SM_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>
@@ -781,11 +777,11 @@
         <country_of_origin>Россия</country_of_origin>
       </offer>
       <offer id="64" type="vendor.model" available="true">
-        <url>http://www.netping.ru/products/poe-switch-ps104gt</url>
-        <price>6300</price>
+        <url>http://www.netping.ru/poe-switch-ps104gt</url>
+        <price>6800</price>
         <currencyId>RUR</currencyId>
         <categoryId>8</categoryId>
-        <picture>http://www.netping.ru/Pub/Photos/_swtch_poeeq_ps104gt_big.png</picture>
+        <picture>http://www.netping.ru/Pub/_swtch_poeeq_ps104gt_big.png</picture>
         <store>true</store>
         <pickup>true</pickup>
         <delivery>true</delivery>

@@ -31,19 +31,15 @@ namespace NetPing
 
             var inFileDataStorage = new FileDataStorage();
 
-            var sw = Stopwatch.StartNew();
 
             System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.CurrentCulture;
             System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
 
-            var sync = new DataStorageUpdater(inFileDataStorage, factory, new ConfluenceClient(new Config()));
-
-
-            sync.Update();
-
-            sw.Stop();
-
-            var elapsed = sw.ElapsedMilliseconds;
+//            var sw = Stopwatch.StartNew();
+            //        var sync = new DataStorageUpdater(inFileDataStorage, factory, new ConfluenceClient(new Config()));
+            //           sync.Update();
+            //           sw.Stop();
+            //           var elapsed = sw.ElapsedMilliseconds;
 
             Debug.WriteLine("");
         }

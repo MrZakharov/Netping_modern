@@ -15,7 +15,7 @@ namespace NetPing.Models
         public int Id { get; set; }
         public string OldKey { get; set; }
         public SPTerm Name { get; set; }
-        public List<SPTerm> Destination { get; set; }
+        public SPTerm Destination { get; set; }
         public double? Price { get; set; }
         public string GetCurrency
         { get

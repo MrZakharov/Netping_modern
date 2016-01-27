@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace NetPing_modern.Controllers
+namespace  NetPing_modern.Controllers
 {
     public class BaseController : Controller
     {

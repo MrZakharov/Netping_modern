@@ -11,7 +11,7 @@ using NetPing_modern.DAL.Model;
 
 namespace NetPing_modern.Services.Confluence
 {
-    internal class ConfluenceClient : IConfluenceClient
+    public class ConfluenceClient : IConfluenceClient
     {
         private readonly IConfig _config;
 

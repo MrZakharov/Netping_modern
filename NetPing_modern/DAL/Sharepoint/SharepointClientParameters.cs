@@ -2,7 +2,7 @@
 
 namespace NetPing.DAL
 {
-    internal class SharepointClientParameters
+    public class SharepointClientParameters
     {
         public String Url { get; set; }
 
