@@ -186,4 +186,7 @@
   <data name="OrderSent" xml:space="preserve">
     <value>Ваш заказ отправлен в обработку</value>
   </data>
+  <data name="IndexCode" xml:space="preserve">
+    <value>Индекс</value>
+  </data>
 </root>
