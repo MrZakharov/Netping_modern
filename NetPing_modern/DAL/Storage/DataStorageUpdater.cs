@@ -59,6 +59,9 @@ namespace NetPing.DAL
                 
                 var loadTimeMeasurer = Stopwatch.StartNew();
 
+                System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.CurrentCulture;
+                System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
+
                 #region :: Step 1 ::
 
                 Parallel.Invoke(
