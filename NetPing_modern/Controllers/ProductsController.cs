@@ -230,8 +230,7 @@ namespace NetPing_modern.Controllers
             try
             {
                 var guide =
-                    _repository.GetUserManual(id.Replace(".", "%2E").Replace("!2F", "%2F") + "_" +
-                                              CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+                    _repository.GetUserManual(id.Replace(".", "%2E").Replace("!2F", "%2F") );
                 if (guide != null)
                 {
                     model = new UserManualViewModel
@@ -297,8 +296,20 @@ namespace NetPing_modern.Controllers
         [ValidateInput(false)]
         public ActionResult GetSubPage(string id, string page, string subPage)
         {
-            string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
 
+            var devices = _repository.Devices.Where(d => !d.Name.IsGroup());
+            var guide =
+                    _repository.GetUserManual(id.Replace(".", "%2E").Replace("!2F", "%2F"));
+            var pg = guide.Pages.SingleOrDefault(p => p.Title.Replace("?", "").Replace(":", "") == page.Replace(".", "%2E"));
+            PageModel model = pg.Pages.SingleOrDefault(p => p.Title.Replace(":", "").Contains(subPage.Replace(".", "%2E")));
+
+
+
+            return View("~/Views/Products/UserGuidePage.cshtml", model);
+
+            //           string file_name = HttpContext.Server.MapPath("~/Content/Data/UserGuides/" + id.Replace(".", "%2E") + "_" + CultureInfo.CurrentCulture.IetfLanguageTag + ".dat");
+
+            /*
             PageModel model = null;
             if(System.IO.File.Exists(file_name))
             {
@@ -310,8 +321,9 @@ namespace NetPing_modern.Controllers
 
                 return View("~/Views/Products/UserGuidePage.cshtml", model);
             }
-
+            
             return new EmptyResult();
+            */
         }
     }
 

@@ -7,6 +7,10 @@ namespace NetPing.DAL
         public static readonly String BodyLink = "Body_link";
         public static readonly String Title = "Title";
         public static readonly String FileLeaf = "FileLeafRef";
+        public static readonly String FileDir = "FileDirRef";
+        public static readonly String FileRef = "FileRef";
+
+
         public static readonly String FileType = "File_type";
         public static readonly String Url = "Url";
         public static readonly String Device = "Device";

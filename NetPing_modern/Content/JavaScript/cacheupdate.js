@@ -1,17 +1,4 @@
 ﻿var taskNames = [
-    "TermsFileTypes",
-    "Terms",
-    "TermsLabels",
-    "TermsCategories",
-    "TermsDeviceParameters",
-    "TermsDestinations",
-    "SiteTexts",
-    "DevicesParameters",
-    "DevicePhotos",
-    "PubFiles",
-    "SFiles",
-    "Posts",
-    "Devices",
     "GenerateYml",
     "PushAll"
 ];

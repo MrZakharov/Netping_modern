@@ -6,12 +6,12 @@ namespace NetPing.DAL
     {
         public static readonly Uri SiteRoot = new Uri("http://www.netping.ru");
 
-        private static readonly Uri _products = new Uri("products", UriKind.Relative);
-        private static readonly Uri _pubFiles = new Uri("Pub/Pub", UriKind.Relative);
-        private static readonly Uri _photos = new Uri("Pub/Photos", UriKind.Relative);
-        private static readonly Uri _blog = new Uri("Blog", UriKind.Relative);
-        private static readonly Uri _firmwares = new Uri("Pub/Firmwares", UriKind.Relative);
-        private static readonly Uri _userGuide = new Uri("UserGuide", UriKind.Relative);
+        private static readonly Uri _products = new Uri("products/", UriKind.Relative);
+        private static readonly Uri _pubFiles = new Uri("Pub/Pub/", UriKind.Relative);
+        private static readonly Uri _photos = new Uri("Pub/Photos/", UriKind.Relative);
+        private static readonly Uri _blog = new Uri("Blog/", UriKind.Relative);
+        private static readonly Uri _firmwares = new Uri("Pub/Firmwares/", UriKind.Relative);
+        private static readonly Uri _userGuide = new Uri("UserGuide/", UriKind.Relative);
 
         private static readonly Uri _productsUrl = new Uri(SiteRoot, _products);
         private static readonly Uri _pubFilesUrl = new Uri(SiteRoot, _pubFiles);

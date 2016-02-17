@@ -2,6 +2,6 @@
 {
     internal interface ISharepointClientFactory
     {
-        SharepointClient Create();
+        SharepointClient Create(bool isfirmware = false);
     }
 }

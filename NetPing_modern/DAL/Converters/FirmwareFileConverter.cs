@@ -13,12 +13,14 @@ namespace NetPing.DAL
         private readonly SharepointClient _sharepointClient;
         private readonly IEnumerable<SPTerm> _names;
         private readonly IEnumerable<SPTerm> _fileTypeTerms;
+        private readonly ListItemCollection _firmwarefolders;
 
-        public FirmwareFileConverter(SharepointClient sharepointClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> fileTypeTerms)
+        public FirmwareFileConverter(SharepointClient sharepointClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> fileTypeTerms,ListItemCollection firmwarefolders)
         {
             _sharepointClient = sharepointClient;
             _names = names;
             _fileTypeTerms = fileTypeTerms;
+            _firmwarefolders = firmwarefolders;
         }
 
         public SFile Convert(ListItem listItem)
@@ -35,11 +37,17 @@ namespace NetPing.DAL
                 fileType = _fileTypeTerms.FirstOrDefault(t => t.Id == new Guid(firmwareFileType2));
             }
 
+
+            string folder = listItem.Get<String>(SharepointFields.FileDir);
+            string parent_folder = folder.Substring(0, folder.LastIndexOf('/'));
+
             var name = listItem.Get<String>(SharepointFields.FileLeaf);
             var title = listItem.Get<String>(SharepointFields.Title);
-            var devices = listItem.Get<TaxonomyFieldValueCollection>(SharepointFields.Devices).ToSPTermList(_names);
+            var devices = _firmwarefolders.First(fldr => parent_folder == fldr.Get<String>(SharepointFields.FileRef)).Get<TaxonomyFieldValueCollection>(SharepointFields.Devices).ToSPTermList(_names);
             var createDate = listItem.Get<DateTime>(SharepointFields.Created);
             var url = UrlBuilder.GetFirmwaresUrl(name).ToString();
+
+
 
             var firmwareFile = new SFile
             {

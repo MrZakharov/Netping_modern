@@ -76,16 +76,17 @@ namespace NetPing.DAL
                 #endregion
                 
                 #region :: Step 2 ::
-
+    
+    
                 Parallel.Invoke(
                     LoadDevicePhotos,
                     LoadDeviceParameters,
                     LoadPubFiles,
                     LoadPosts,
                     LoadDeviceManualFiles);
-                    
+                  
                 Log.Trace($"Step 2 data loaded. From start: {loadTimeMeasurer.ElapsedMilliseconds} ms");
-
+               
                 #endregion
 
                 #region :: Step 3 ::
@@ -152,7 +153,7 @@ namespace NetPing.DAL
                             .ToList();
 
                     // collect device parameters 
-                    dev.DeviceParameters = devicesParameters.Where(par => par.Device == dev.Name).ToList();
+                    dev.DeviceParameters = devicesParameters.Where(par => par.Device.Id == dev.Name.Id).ToList();
 
                     // Get device photos
                     dev.DevicePhotos = photos.Where(p => p.Dev_name.Id == dev.Name.Id).ToList();
@@ -184,10 +185,11 @@ namespace NetPing.DAL
         {
             try
             {
-                using (var sp = _sharepointClientFactory.Create())
+                using (var sp = _sharepointClientFactory.Create(true))
                 {
+
                     var firmwareFileConverter = new FirmwareFileConverter(sp, _storage.GetNames(),
-                        _storage.GetDocumentTypes());
+                        _storage.GetDocumentTypes(), sp.GetList(SharepointKeys.FirmwareFiles, ""));
 
                     LoadSharepointListAsAppend(CacheKeys.SFiles, Camls.FirmwareFiles, firmwareFileConverter,
                         SharepointKeys.FirmwareFiles);
@@ -486,16 +488,21 @@ namespace NetPing.DAL
 
         private void LoadSharepointListAsAppend<T>(String listName, String query, IListItemConverter<T> converter, String sharepointName = null)
         {
-            var convertedList = GetSharepointList(listName, query, converter, sharepointName);
+
+            var isfirmware = false;
+
+            if (sharepointName == SharepointKeys.FirmwareFiles) isfirmware = true;
+
+            var convertedList = GetSharepointList(listName, query, converter, sharepointName,isfirmware);
 
             _storage.Append(listName, convertedList);
         }
 
-        private IEnumerable<T> GetSharepointList<T>(String listName, String query, IListItemConverter<T> converter, String sharepointName = null)
+        private IEnumerable<T> GetSharepointList<T>(String listName, String query, IListItemConverter<T> converter, String sharepointName = null, bool isfirmware = false)
         {
             try
             {
-                using (var sp = _sharepointClientFactory.Create())
+                using (var sp = _sharepointClientFactory.Create(isfirmware))
                 {
                     if (sharepointName == null)
                     {
@@ -609,9 +616,13 @@ namespace NetPing.DAL
                     //read column names  
                     csvReader.ReadLine();
 
+                    bool iskeyempty = false;
                     while (!csvReader.EndOfData)
                     {
                         var fields = csvReader.ReadFields();
+
+                        if (fields[0] == "" && iskeyempty) break;
+                        if (fields[0] == "") iskeyempty = true;
 
                         csvData.Add(fields[0], fields[1]);
                     }

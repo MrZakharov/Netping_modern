@@ -21,6 +21,19 @@ namespace NetPing.Global.Config
             }
         }
 
+        [ConfigurationProperty("SiteUrlFirmware", IsRequired = true)]
+        public string SiteUrlFirmware
+        {
+            get
+            {
+                return this["SiteUrlFirmware"] as string;
+            }
+            set
+            {
+                this["SiteUrlFirmware"] = value;
+            }
+        }
+
         [ConfigurationProperty("Login", IsRequired = true)]
         public string Login
         {

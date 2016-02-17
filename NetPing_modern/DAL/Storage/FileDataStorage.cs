@@ -96,16 +96,15 @@ namespace NetPing.DAL
 
                 var filePath = CreateFilePath(key);
 
-                if (File.Exists(filePath))
+                if (!File.Exists(filePath))
                 {
                     Set(key, collection);
                 }
                 else
                 {
-                    var currentCollection = Get<T>(key);
+                    IEnumerable<T> currentCollection = Get<T>(key);
 
-                    var combinedCollection = currentCollection.Union(collection);
-
+                    var combinedCollection =  currentCollection.Union(collection).ToList();
                     Set(key, combinedCollection);
                 }
             }
