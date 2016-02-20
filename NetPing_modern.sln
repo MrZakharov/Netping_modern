@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetPing_modern", "NetPing_modern\NetPing_modern.csproj", "{F453E5A2-B0BD-4690-8887-F5A6A944371F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{27129F28-7703-4EC4-B41C-B51D0DC1EF4A} = {27129F28-7703-4EC4-B41C-B51D0DC1EF4A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetPing.PriceGeneration", "NetPing.PriceGeneration\NetPing.PriceGeneration.csproj", "{27129F28-7703-4EC4-B41C-B51D0DC1EF4A}"
 EndProject
