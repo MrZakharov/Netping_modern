@@ -221,6 +221,9 @@ C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Antlr3.Runtime
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\AutoMapper.dll
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Base32.dll
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\HtmlAgilityPack.dll
+C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.dll
+C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.Runtime.dll
+C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.Taxonomy.dll
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Microsoft.Web.Mvc.dll
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\NetPing.PriceGeneration.dll
@@ -320,6 +323,3 @@ C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\obj\Debug\NetPing_
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\obj\Debug\ru\NetPing_modern.resources.dll
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.dll
 C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\obj\Debug\NetPing_modern.pdb
-C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.dll
-C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.Runtime.dll
-C:\Users\panchenko\Source\Repos\Netping_modern\NetPing_modern\bin\Microsoft.SharePoint.Client.Taxonomy.dll

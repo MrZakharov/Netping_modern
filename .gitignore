@@ -17,22 +17,14 @@
 *.pdb
 *.Cache
 
-NetPing_modern.v11.suo
 
 # Build results
 
-[Dd]ebug/
-[Rr]elease/
-x64/
-build/
-[Bb]in/
-[Oo]bj/
-NetPing_modern/obj/
-NetPing_modern/bin/
 
-# MSTest test Results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
+*/NetPing_modern/bin/*
+*/NetPing_modern/obj/*
+
+
 
 *_i.c
 *_p.c
@@ -58,6 +50,9 @@ NetPing_modern/bin/
 *.log
 *.scc
 *.bak
-NetPing_modern/Content/Data/netping.xml
-NetPing_modern.v12.suo
-NetPing_modern/Content/Data/netping.xml
+
+
+
+
+**/packages/**/*
+**/packages/Custom/
