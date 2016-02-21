@@ -20,9 +20,12 @@
 
 # Build results
 
+# */NetPing_modern/bin/Netping_modern.dll
 
-*/NetPing_modern/bin/*
-*/NetPing_modern/obj/*
+# */NetPing_modern/bin/*/**
+# **/NetPing_modern/obj/**
+# **/NetPing_modern/NetPing.PriceGeneration/bin/Debug/**
+# **/NetPing_modern/Content/Logs/**
 
 
 
@@ -55,4 +58,7 @@
 
 
 **/packages/**/*
-**/packages/Custom/
+!*/packages/Custom/
+
+
+#/NetPing.PriceGeneration/obj

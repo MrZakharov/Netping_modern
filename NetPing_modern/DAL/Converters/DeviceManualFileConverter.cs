@@ -7,6 +7,7 @@ using NetpingHelpers;
 using NetPing.Models;
 using NetPing_modern.DAL.Model;
 using NetPing_modern.Services.Confluence;
+using NLog;
 
 namespace NetPing.DAL
 {
@@ -16,6 +17,8 @@ namespace NetPing.DAL
         private readonly IEnumerable<SPTerm> _names;
         private readonly IEnumerable<SPTerm> _fileTypeTerms;
         private readonly Action<UserManualModel> _manualSaver;
+
+        private static readonly Logger Log = LogManager.GetLogger(LogNames.Loader);
 
         public DeviceManualFileConverter(IConfluenceClient confluenceClient, IEnumerable<SPTerm> names, IEnumerable<SPTerm> fileTypeTerms, Action<UserManualModel> manualSaver)
         {
@@ -44,6 +47,7 @@ namespace NetPing.DAL
                 var fileUrl = listItem.Get<FieldUrlValue>(SharepointFields.UrlUpperCase).ToFileUrlStr(fileName);
 
                 Debug.WriteLine($"Start loading manual '{fileUrl}'");
+                Log.Trace($"Start loading manual '{fileUrl}'");
 
                 var sFile = new SFile
                 {
@@ -73,6 +77,7 @@ namespace NetPing.DAL
                     else
                     {
                         Debug.WriteLine($"End loading manual '{fileUrl}'");
+                        Log.Trace($"End loading manual '{fileUrl}'");
 
                         return null;
                     }
@@ -80,6 +85,7 @@ namespace NetPing.DAL
                 }
 
                 Debug.WriteLine($"End loading manual '{fileUrl}'");
+                Log.Trace($"End loading manual '{fileUrl}'");
 
                 return sFile;
             }

@@ -708,6 +708,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\NpENG-site.pubxml" />
+    <None Include="Properties\PublishProfiles\NpRU-site.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -728,7 +729,6 @@
     <Content Include="yandex_582f0c5a998f9328.txt" />
     <None Include="Properties\PublishProfiles\Local public.pubxml" />
     <None Include="Properties\PublishProfiles\netping_pub.pubxml" />
-    <None Include="Properties\PublishProfiles\Test1.pubxml" />
     <Content Include="robots.txt" />
     <Content Include="Views\Products\Device_view.cshtml" />
     <Content Include="Views\Products\Compare.cshtml" />
@@ -769,7 +769,6 @@
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\InnerPages\Ucache.cshtml" />
-    <None Include="Properties\PublishProfiles\Test2_eng.pubxml" />
     <Content Include="Views\Shared\Korzina.cshtml" />
     <Content Include="Views\InnerPages\Question.cshtml" />
     <Content Include="Views\Shared\Cart.cshtml" />
