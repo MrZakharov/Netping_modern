@@ -1,6 +1,7 @@
 ﻿var taskNames = [
-    "GenerateYml",
-    "PushAll"
+    "PushAll",
+    "GenerateYml"
+    
 ];
 
 $(document).ready(function () {

@@ -1,17 +1,54 @@
-﻿@{
-    Layout = "~/Views/Shared/Inner_master.cshtml";
-    ViewBag.Title = "Cache update";
-}
+﻿<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="/Content/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/Themes/reset.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Themes/reset.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Themes/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Themes/adaptive.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Themes/adaptive-header-footer.css">
+    <script src="~/Content/JavaScript/jquery1.8.3min.js" type="text/javascript"></script>
+    <script src="~/Content/JavaScript/modernizr.js" type="text/javascript"></script>
+    <script src="~/Content/JavaScript/main.js" type="text/javascript"></script>
+    <link rel='stylesheet' type='text/css' href='~/Content/Themes/cart/cart.css'>
 
-@section Head_Css {
     <link href="~/Content/Themes/reset.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Themes/main.css" rel="stylesheet" type="text/css" />
-}
 
-@section Head{
+
     <script src="~/Content/JavaScript/cacheupdate.js"></script>
-}
+</head>
+<body>
+    <div class="header_background">
+        <div class="header_top"></div>
+        <div class="header_bottom"></div>
+    </div>
+    <div class="page">
+        <div class="main">
+            <div class="content">
+            {
 
-@section Content_left {
-    <div id="update-messages"></div>
-}
+
+                    <div class="content_left">
+                        <div id="update-messages"></div>
+                    </div>
+
+
+                    <div class="content_right">
+                        <div class="title">
+                        </div>
+
+                        <div class="title">
+                        </div>
+                    </div>
+                <div class="clear"></div>
+            </div>
+            <!--end content-->
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

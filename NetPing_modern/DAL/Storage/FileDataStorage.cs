@@ -63,6 +63,8 @@ namespace NetPing.DAL
                     throw new ArgumentNullException(nameof(collection), "Unable to set null collection");
                 }
 
+                System.Web.HttpRuntime.Cache.Insert(key.Name, collection, new NetPing.Tools.TimerCacheDependency());  // Update RAM cash on set storage
+
                 var filePath = CreateFilePath(key);
 
                 var lockRoot = GetLock(key);
