@@ -47,6 +47,23 @@ namespace NetPing.DAL
             return context;
         }
 
+        public void DownloadFileToLocal(string fileref,string localpath, string filename)
+        {
+            if (!fileref.Contains("https:"))
+            {
+                fileref = UrlBuilder.GetSPFullUrl(fileref).ToString();
+            }
+
+            System.IO.Directory.CreateDirectory(localpath);
+
+            var client = new WebClient();
+            client.Credentials = _context.Credentials;
+            client.Headers.Add("X-FORMS_BASED_AUTH_ACCEPTED", "f");
+
+           client.DownloadFile(fileref, localpath+filename);
+            client.Dispose();
+        }
+
         public ListItem GetFolderParent(String folderUrl)
         {
             var itemFolder = _context.Web.GetFolderByServerRelativeUrl(folderUrl);

@@ -16,7 +16,7 @@ namespace NetPing.DAL
             _names = names;
         }
 
-        public DevicePhoto Convert(ListItem listItem)
+        public DevicePhoto Convert(ListItem listItem, SharepointClient sp)
         {
             var pictureName = listItem.Get<String>(SharepointFields.FileLeaf);
 
@@ -41,6 +41,9 @@ namespace NetPing.DAL
                 IsBig = isBigPhoto,
                 IsCover = isCover
             };
+
+            var pictureRef= listItem.Get<String>(SharepointFields.FileRef);
+            sp.DownloadFileToLocal(pictureRef, UrlBuilder.LocalPath_photos,pictureName);
 
             return devicePhoto;
         }

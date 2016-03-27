@@ -17,6 +17,9 @@ namespace NetpingHelpers
 {
      public static class Helpers
     {
+
+
+
         public static IEnumerable<HTMLInjection> GetHtmlInjections(IRepository repository = null)
         {
             if(repository == null)
@@ -29,6 +32,8 @@ namespace NetpingHelpers
         {
             return new ConfluenceClient(new Config());
         }
+
+
 
         public static SharepointClientFactory GetSharepointClientFactory()
         {

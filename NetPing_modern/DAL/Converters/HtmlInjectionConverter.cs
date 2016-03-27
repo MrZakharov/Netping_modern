@@ -6,7 +6,7 @@ namespace NetPing.DAL
 {
     internal class HtmlInjectionConverter : IListItemConverter<HTMLInjection>
     {
-        HTMLInjection IListItemConverter<HTMLInjection>.Convert(ListItem listItem)
+        HTMLInjection IListItemConverter<HTMLInjection>.Convert(ListItem listItem, SharepointClient sp)
         {
             var html = listItem.Get<String>(SharepointFields.Html);
             var page = listItem.Get<String>(SharepointFields.Page);

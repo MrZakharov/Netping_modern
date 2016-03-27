@@ -18,7 +18,7 @@ namespace NetPing.DAL
             _names = names;
         }
 
-        public DeviceParameter Convert(ListItem listItem)
+        public DeviceParameter Convert(ListItem listItem, SharepointClient sp)
         {
             var name = listItem.Get<TaxonomyFieldValue>(SharepointFields.Parameter).ToSPTerm(_deviceParameterTerms);
 

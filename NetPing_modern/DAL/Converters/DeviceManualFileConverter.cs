@@ -28,13 +28,13 @@ namespace NetPing.DAL
             _manualSaver = manualSaver;
         }
 
-        public SFile Convert(ListItem listItem)
+        public SFile Convert(ListItem listItem, SharepointClient sp)
         {
             try
             {
                 var userGuideFileName = "User guide";
 
-                var fileName = listItem.Get<String>(SharepointFields.FileLeaf);
+                var fileName = listItem.Get<String>(SharepointFields.Title);
 
                 var fileType = listItem.Get<TaxonomyFieldValue>(SharepointFields.ManualFileType).ToSPTerm(_fileTypeTerms);
 
@@ -44,7 +44,7 @@ namespace NetPing.DAL
 
                 var created = listItem.Get<DateTime>(SharepointFields.Created);
 
-                var fileUrl = listItem.Get<FieldUrlValue>(SharepointFields.UrlUpperCase).ToFileUrlStr(fileName);
+                var fileUrl = listItem.Get<FieldUrlValue>(SharepointFields.UrlUpperCase).Url;
 
                 Debug.WriteLine($"Start loading manual '{fileUrl}'");
                 Log.Trace($"Start loading manual '{fileUrl}'");
@@ -57,8 +57,8 @@ namespace NetPing.DAL
                     Devices = devices,
                     File_type = fileType,
                     Created = created,
-                    Url = fileUrl
-                };
+                    Url = UrlBuilder.GetPublicFilesUrl(fileName).ToString()
+            };
 
                 if (fileType.OwnNameFromPath == userGuideFileName)
                 {
@@ -81,7 +81,11 @@ namespace NetPing.DAL
 
                         return null;
                     }
-
+                    
+                } else
+                {
+                    //var fileRef= listItem.Get<FieldUrlValue>(SharepointFields.UrlUpperCase).Url;
+                    sp.DownloadFileToLocal(fileUrl, UrlBuilder.LocalPath_pubfiles, fileName);
                 }
 
                 Debug.WriteLine($"End loading manual '{fileUrl}'");

@@ -16,7 +16,7 @@ namespace NetPing.DAL
             _fileTypeTerms = fileTypeTerms;
         }
 
-        public PubFiles Convert(ListItem listItem)
+        public PubFiles Convert(ListItem listItem, SharepointClient sp)
         {
             var fileName = listItem.Get<String>(SharepointFields.FileLeaf);
 
@@ -33,6 +33,10 @@ namespace NetPing.DAL
                 Url = fileUrl.ToString(),
                 Url_link = urlLink
             };
+
+            var fileRef = listItem.Get<String>(SharepointFields.FileRef);
+            sp.DownloadFileToLocal(fileRef, UrlBuilder.LocalPath_pubfiles,fileName);
+
 
             return pubFiles;
         }

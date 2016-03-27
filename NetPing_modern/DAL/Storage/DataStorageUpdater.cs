@@ -73,7 +73,7 @@ namespace NetPing.DAL
                     LoadDocumentTypeTerms,
                     LoadHtmlInjections,
                     LoadSiteTexts);
-
+                    
                 Log.Trace($"Step 1 data loaded. From start: {loadTimeMeasurer.ElapsedMilliseconds} ms");
 
                 #endregion
@@ -93,7 +93,7 @@ namespace NetPing.DAL
                 #endregion
 
                 #region :: Step 3 ::
-
+    
                 LoadFirmwareFiles();
 
                 LoadDevices();
@@ -520,7 +520,7 @@ namespace NetPing.DAL
                     {
                         try
                         {
-                            var converted = converter.Convert(item);
+                            var converted = converter.Convert(item,sp);
 
                             if (converted != null)
                             {

@@ -4,6 +4,6 @@ namespace NetPing.DAL
 {
     internal interface IListItemConverter<out T>
     {
-        T Convert(ListItem listItem);
+        T Convert(ListItem listItem, SharepointClient sp=null);
     }
 }

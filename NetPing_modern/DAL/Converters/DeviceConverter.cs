@@ -36,7 +36,7 @@ namespace NetPing.DAL
             _deviceStockUpdate = deviceStockUpdate;
         }
 
-        public Device Convert(ListItem listItem)
+        public Device Convert(ListItem listItem,SharepointClient sp)
         {
             var guidID = listItem.Get<String>(SharepointFields.DeviceStockID);
 

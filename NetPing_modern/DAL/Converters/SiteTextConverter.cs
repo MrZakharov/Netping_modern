@@ -15,7 +15,7 @@ namespace NetPing.DAL
             _confluenceClient = confluenceClient;
         }
 
-        public SiteText Convert(ListItem listItem)
+        public SiteText Convert(ListItem listItem, SharepointClient sp)
         {
             var link = listItem.Get<FieldUrlValue>(SharepointFields.BodyLink);
 

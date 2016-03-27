@@ -26,7 +26,7 @@ namespace NetPing.DAL
             _categories = categories;
         }
 
-        public Post Convert(ListItem listItem)
+        public Post Convert(ListItem listItem, SharepointClient sp)
         {
             var link = listItem.Get<FieldUrlValue>(SharepointFields.BodyLink);
 

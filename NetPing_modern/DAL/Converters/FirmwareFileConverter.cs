@@ -23,7 +23,7 @@ namespace NetPing.DAL
             _firmwarefolders = firmwarefolders;
         }
 
-        public SFile Convert(ListItem listItem)
+        public SFile Convert(ListItem listItem, SharepointClient sp)
         {
             var firmwareFileType = "4dadfd09-f883-4f42-9178-ded2fe88016b";
             var firmwareFileType2 = "e3de2072-1eb2-4b6d-a7e2-3319bf89836d";
@@ -59,6 +59,10 @@ namespace NetPing.DAL
                 Created = createDate,
                 Url = url
             };
+
+            var fileRef = listItem.Get<String>(SharepointFields.FileRef);
+            sp.DownloadFileToLocal(fileRef, UrlBuilder.LocalPath_firmwares, name);
+
 
             return firmwareFile;
         }
