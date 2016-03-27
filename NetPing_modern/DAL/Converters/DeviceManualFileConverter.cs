@@ -84,7 +84,7 @@ namespace NetPing.DAL
                     
                 } else
                 {
-                    //var fileRef= listItem.Get<FieldUrlValue>(SharepointFields.UrlUpperCase).Url;
+                   
                     sp.DownloadFileToLocal(fileUrl, UrlBuilder.LocalPath_pubfiles, fileName);
                 }
 
