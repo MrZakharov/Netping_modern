@@ -239,7 +239,7 @@
                                 <ul>
                                     @foreach (SFile file in files.ToList())
                                     {
-                                        <li> <a href="@file.Url.Replace("%2F", "!2F")" class="file doc">@file.Title</a></li>
+                                        <li> <a href="@file.Url.Replace("%2F", "!2F")" target="_blank" class="file doc">@file.Title</a></li>
                                     }
                                     @*@if (grp.OwnNameFromPath == "User guide")
                                     {

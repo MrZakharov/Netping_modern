@@ -97,7 +97,7 @@ namespace NetPing.DAL
                 LoadFirmwareFiles();
 
                 LoadDevices();
-
+                
                 #endregion
 
                 loadTimeMeasurer.Stop();

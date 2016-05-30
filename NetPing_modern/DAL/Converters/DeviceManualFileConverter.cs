@@ -59,35 +59,44 @@ namespace NetPing.DAL
                     Created = created,
                     Url = UrlBuilder.GetPublicFilesUrl(fileName).ToString()
             };
-
-                if (fileType.OwnNameFromPath == userGuideFileName)
+                if (fileType.OwnNameFromPath != userGuideFileName)
                 {
-                    var contentId = _confluenceClient.GetContentIdFromUrl(fileUrl);
+                   sp.DownloadFileToLocal(fileUrl, UrlBuilder.LocalPath_pubfiles, fileName);
+                }
+                else
+                {
+                    sFile.Url = fileUrl;
+                }
+                /*
+                if (fileType.OwnNameFromPath == userGuideFileName)
+            {
+                var contentId = _confluenceClient.GetContentIdFromUrl(fileUrl);
 
-                    if (contentId.HasValue)
-                    {
-                        var content = _confluenceClient.GetUserManual(contentId.Value, listItem.Id);
+                if (contentId.HasValue)
+                {
+                    var content = _confluenceClient.GetUserManual(contentId.Value, listItem.Id);
 
-                        _manualSaver(content);
+                    _manualSaver(content);
 
-                        var url = UrlBuilder.GetRelativeDeviceGuideUrl(PrepareUrlName(content)).ToString();
+                    var url = UrlBuilder.GetRelativeDeviceGuideUrl(PrepareUrlName(content)).ToString();
 
-                        sFile.Url = url;
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"End loading manual '{fileUrl}'");
-                        Log.Trace($"End loading manual '{fileUrl}'");
+                    sFile.Url = url;
+                }
+                else
+                {
+                    Debug.WriteLine($"End loading manual '{fileUrl}'");
+                    Log.Trace($"End loading manual '{fileUrl}'");
 
-                        return null;
-                    }
-                    
-                } else
+                    return null;
+                }
+
+
+            } else
                 {
                    
                     sp.DownloadFileToLocal(fileUrl, UrlBuilder.LocalPath_pubfiles, fileName);
                 }
-
+*/
                 Debug.WriteLine($"End loading manual '{fileUrl}'");
                 Log.Trace($"End loading manual '{fileUrl}'");
 
