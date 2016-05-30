@@ -77,10 +77,10 @@ namespace NetPing.DAL
             
             try
             {
+                var isCultureRus = Helpers.IsCultureRus;
+
                 if (name == "GenerateYml")
                 {
-                    var isCultureRus = Helpers.IsCultureRus;
-
                     Log.Trace($"GenerateYml action requested. IsCultureRus: {isCultureRus}");
 
                     if (isCultureRus)
@@ -91,6 +91,11 @@ namespace NetPing.DAL
                 else if (name == "PushAll")
                 {
                     _dataUpdater.Update();
+                    if (isCultureRus)
+                    {
+                        _productCatalogManager.GenerateYml();
+                    }
+
                 }
                 else
                 {
