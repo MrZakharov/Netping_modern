@@ -53,6 +53,7 @@ namespace NetPing.DAL
 
         public void Update()
         {
+           
             try
             {
                 Log.Trace("Start data loading");

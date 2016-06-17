@@ -55,7 +55,7 @@ namespace NetPing.DAL
                 }
             }
 
-            shop.LocalDeliveryCost = 350;
+            shop.LocalDeliveryCost = 0;
 
             YmlGenerator.Generate(catalog, StaticFilePaths.CatalogFilePath);
         }
@@ -93,6 +93,12 @@ namespace NetPing.DAL
 
             var deviceUrl = UrlBuilder.GetDeviceUrl(offerNode.Device.Url).ToString();
 
+            bool stock = true;
+            if (offerNode.Device.DeviceStock<=0)
+            {
+                stock = false;
+            }
+
             shop.Offers.Add(new Offer
             {
                 Id = offerNode.Id,
@@ -103,6 +109,7 @@ namespace NetPing.DAL
                 TypePrefix = "",
                 VendorCode = offerNode.Name,
                 Model = offerNode.Name,
+                Store = stock,
                 Description = descr
             });
         }
