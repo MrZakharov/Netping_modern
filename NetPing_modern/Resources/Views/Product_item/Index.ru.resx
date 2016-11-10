@@ -121,7 +121,7 @@
     <value>Устройство</value>
   </data>
   <data name="Path_main" xml:space="preserve">
-    <value>Netping</value>
+    <value>NetPing</value>
   </data>
   <data name="Sec_description" xml:space="preserve">
     <value>Описание</value>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Category_access" xml:space="preserve">
-    <value>Аксессуары для устройств Netping</value>
+    <value>Аксессуары для устройств NetPing</value>
   </data>
   <data name="Category_monitoring" xml:space="preserve">
     <value>Мониторинг датчиков</value>
@@ -127,7 +127,7 @@
     <value>Управление электропитанием</value>
   </data>
   <data name="Category_sensors" xml:space="preserve">
-    <value>Датчики устройств Netping</value>
+    <value>Датчики устройств NetPing</value>
   </data>
   <data name="Category_switch" xml:space="preserve">
     <value>Коммутаторы Ethernet и POE устройства</value>
@@ -175,10 +175,10 @@
     <value>Ответы на часто задаваемые вопросы</value>
   </data>
   <data name="Menu_news" xml:space="preserve">
-    <value>Новости Netping</value>
+    <value>Новости NetPing</value>
   </data>
   <data name="Menu_solutions" xml:space="preserve">
-    <value>Примеры применения устройств Netping</value>
+    <value>Примеры применения устройств NetPing</value>
   </data>
   <data name="Menu_support" xml:space="preserve">
     <value>Поддержка</value>

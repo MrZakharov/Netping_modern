@@ -139,13 +139,13 @@
     <value>Управляемые и неуправляемые коммутаторы Ethernet, и POE устройства</value>
   </data>
   <data name="Sec_sub_access" xml:space="preserve">
-    <value>Аксессуары&lt;br/&gt;для устройств Netping</value>
+    <value>Аксессуары&lt;br/&gt;для устройств NetPing</value>
   </data>
   <data name="Sec_sub_devices" xml:space="preserve">
     <value>Устройства</value>
   </data>
   <data name="Sec_sub_sensors" xml:space="preserve">
-    <value>Датчики устройств Netping</value>
+    <value>Датчики устройств NetPing</value>
   </data>
   <data name="Sec_sub_solutions" xml:space="preserve">
     <value>Готовые решения</value>
@@ -172,10 +172,10 @@
     <value>Идеи, находящиеся в стадии воплощения</value>
   </data>
   <data name="Sec_sub_access_descr" xml:space="preserve">
-    <value>Аксессуары, дополняющие функционирование устройств Netping</value>
+    <value>Аксессуары, дополняющие функционирование устройств NetPing</value>
   </data>
   <data name="Sec_sub_sensors_descr" xml:space="preserve">
-    <value>Датчики, применяемые в схемах функционирования устройств Netping</value>
+    <value>Датчики, применяемые в схемах функционирования устройств NetPing</value>
   </data>
   <data name="Sec_sub_solutions_descr" xml:space="preserve">
     <value>Конфигурации для решения типовых задач</value>

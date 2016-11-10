@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Page_description" xml:space="preserve">
-    <value>О компании Netping, история компании и основные достижения</value>
+    <value>О компании ООО ＂Алентис Электроникс＂, история компании и основные достижения</value>
   </data>
   <data name="Page_head" xml:space="preserve">
-    <value>О компании Netping</value>
+    <value>О компании ООО ＂Алентис Электроникс＂</value>
   </data>
   <data name="Page_keywords" xml:space="preserve">
-    <value>netping, о компании</value>
+    <value>NetPing, о компании</value>
   </data>
   <data name="Page_title" xml:space="preserve">
-    <value>О компании Netping</value>
+    <value>О компании ООО ＂Алентис Электроникс＂</value>
   </data>
 </root>
