@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Page_description" xml:space="preserve">
-    <value>Примеры применения, типовые схемы использования устройств Netping</value>
+    <value>Примеры применения, типовые схемы использования устройств NetPing</value>
   </data>
   <data name="Page_head" xml:space="preserve">
     <value>Примеры применения устройств NetPing</value>

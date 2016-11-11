@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Page_description" xml:space="preserve">
-    <value>Как стать партнёром, дилером компании Netping</value>
+    <value>Как стать партнёром, дилером компании NetPing</value>
   </data>
   <data name="Page_head" xml:space="preserve">
     <value>Как стать нашим партнёром?</value>
   </data>
   <data name="Page_keywords" xml:space="preserve">
-    <value>как стать дилером Netping, как стать партнёром Netping</value>
+    <value>как стать дилером Netping, как стать партнёром NetPing</value>
   </data>
   <data name="Page_title" xml:space="preserve">
-    <value>Как стать партнёром компании Netping?</value>
+    <value>Как стать партнёром компании NetPing?</value>
   </data>
 </root>

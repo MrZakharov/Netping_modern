@@ -146,8 +146,8 @@ namespace NetPing.Controllers
 
             ViewBag.Head = "Мы ищем сотрудников!";
             ViewBag.Text = text;
-            ViewBag.Title = "Вакансии компании Netping";
-            ViewBag.Description = "список вакансий компании Netping";
+            ViewBag.Title = "Вакансии компании NetPing";
+            ViewBag.Description = "список вакансий компании NetPing";
             ViewBag.Keywords = "вакансии";
 
             return View("InnerPage");
