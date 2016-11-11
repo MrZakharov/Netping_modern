@@ -184,7 +184,7 @@
     <value>Каталог</value>
   </data>
   <data name="Path_main" xml:space="preserve">
-    <value>Netping</value>
+    <value>NetPing</value>
   </data>
   <data name="Sec_archive" xml:space="preserve">
     <value>Архив устройств</value>
