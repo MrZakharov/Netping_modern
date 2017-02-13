@@ -168,7 +168,7 @@ namespace NetPing_modern.Services.Confluence
             {
                 var srcGroup = match.Groups["src"];
                 var baseurlGroup = match.Groups["baseurl"];
-                if (srcGroup.Success && baseurlGroup.Success)
+                if (srcGroup.Success && baseurlGroup.Success && !srcGroup.Value.StartsWith(baseurlGroup.Value))
                 {
                     var url = baseurlGroup.Value;
                     if (url.LastIndexOf(WikiPrefix, StringComparison.InvariantCultureIgnoreCase) != -1)
