@@ -63,9 +63,8 @@ namespace NetPing.DAL
             {
                 foreach (var url in urls)
                 {
-                    var newFileName = SaveFileFromUrlToLocal(url, UrlBuilder.LocalPath_blogFiles);
+                    var newFileName = SaveFileFromUrlToLocal(url, UrlBuilder.LocalPath_blogTempFiles);
                     var newUrl = url.Remove(url.IndexOf('?'));
-
                     newContent = newContent.Replace(newUrl, UrlBuilder.GetblogFilesUrlUrl() + newFileName);
                 }
             }
@@ -80,12 +79,12 @@ namespace NetPing.DAL
             using (WebClient client = new WebClient())
             {
                 int counter = 0;
-                while (File.Exists(path + filename))
+                while (File.Exists(Path.Combine(path, filename)))
                 {
                     counter++;
-                    filename = System.IO.Path.GetFileNameWithoutExtension(uri.LocalPath) + counter.ToString() + System.IO.Path.GetExtension(uri.LocalPath);
+                    filename = Path.GetFileNameWithoutExtension(uri.LocalPath) + counter.ToString() + Path.GetExtension(uri.LocalPath);
                 }
-                client.DownloadFile("https://netping.atlassian.net" + uri.AbsolutePath, path + filename);
+                client.DownloadFile("https://netping.atlassian.net" + uri.AbsolutePath, Path.Combine(path, filename));
                 return filename;
             }
         }

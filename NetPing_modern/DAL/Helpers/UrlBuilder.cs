@@ -16,6 +16,8 @@ namespace NetPing.DAL
         private static readonly Uri _firmwares = new Uri("Pub/Firmwares/", UriKind.Relative);
         private static readonly Uri _userGuide = new Uri("UserGuide/", UriKind.Relative);
         private static readonly Uri _blogFiles = new Uri("/Pub/Blog/", UriKind.Relative);
+        private static readonly Uri _blogBackupFiles = new Uri("/Pub/Blog_Backup/", UriKind.Relative);
+        private static readonly Uri _blogTempFiles = new Uri("/Pub/Blog_Backup/Temp", UriKind.Relative);
 
         private static readonly Uri _productsUrl = new Uri(SiteRoot, _products);
         private static readonly Uri _pubFilesUrl = new Uri(SiteRoot, _pubFiles);
@@ -31,7 +33,8 @@ namespace NetPing.DAL
         public static string LocalPath_photos = (_appPath + _photos.ToString().Replace("/", "\\"));
         public static string LocalPath_firmwares = (_appPath + _firmwares.ToString().Replace("/", "\\"));
         public static string LocalPath_blogFiles = (_appPath + _blogFiles.ToString().Replace("/", "\\"));
-
+        public static string LocalPath_blogBackupFiles = (_appPath + _blogBackupFiles.ToString().Replace("/", "\\"));
+        public static string LocalPath_blogTempFiles = (_appPath + _blogTempFiles.ToString().Replace("/", "\\"));
 
         public static Uri GetPathToBlogFiles
         {
