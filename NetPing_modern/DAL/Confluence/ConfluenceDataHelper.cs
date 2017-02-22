@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NLog;
 using System.Text;
+using HtmlAgilityPack;
+using System.Linq;
 
 namespace NetPing.DAL
 {
@@ -34,6 +36,62 @@ namespace NetPing.DAL
             return newContent;
         }
 
+        private static string CopyAttachments(string content)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(content);
+
+            var nodes = doc.DocumentNode.Descendants().Where(d => d.Attributes.Where( a => a.Value.Contains("https://netping.atlassian.net/wiki/download/")).Count() > 0);
+
+            foreach (var node in nodes)
+            {
+                var attributesWithFullUri = node.Attributes.Where(a => a.Value.Contains("https://netping.atlassian.net/wiki/download/"));
+                foreach (var attribute in attributesWithFullUri)
+                {
+                    if (attribute.Value.Contains("https://netping.atlassian.net/wiki/download/"))
+                    {
+                        string oldFileName;
+                        var newFileName = SaveFileFromUrlToLocal(attribute.Value, UrlBuilder.LocalPath_blogTempFiles, out oldFileName);
+                        var oldUrl = attribute.Value.Remove(attribute.Value.IndexOf('?'));
+                        attribute.Value = attribute.Value.Replace(oldUrl, UrlBuilder.GetblogFilesUrl() + newFileName);
+
+                        ChangeLinksToDownloadedFileFromNode(node, oldFileName, newFileName, oldUrl);
+                    }
+                }
+
+                if(node.Attributes["data-base-url"] != null && node.Attributes["data-base-url"].Value == "https://netping.atlassian.net/wiki")
+                {
+                    node.Attributes["data-base-url"].Value = UrlBuilder.GetblogFilesUrl().ToString();
+                }
+            }
+
+            return doc.DocumentNode.OuterHtml;
+        }
+
+        private static void ChangeLinksToDownloadedFileFromNode(HtmlNode node, string oldFileName, string newFileName, string oldUrl)
+        {
+            //rewrite the atrributes which have wiki/download/ to https://netping.atlassian.net/wiki/download/
+            //solve srcset issue
+
+            var wikiDownloadsAttributes = node.Attributes.Where(a => a.Name == "srcset" && a.Value.Contains("/wiki/download/") && a.Value.Contains(oldFileName));
+            foreach (var attribute in wikiDownloadsAttributes)
+            {
+                attribute.Value = attribute.Value.Replace("/wiki/download/", "https://netping.atlassian.net/wiki/download/");
+            }
+
+            var theSameFileNameAttributes = node.Attributes.Where(a => a.Value.Contains("https://netping.atlassian.net/wiki/download/") && a.Value.Contains(oldFileName));
+
+            //rewrite the atrributes with the same file name
+            foreach (var attribute in theSameFileNameAttributes)
+            {
+                if (attribute.Value.Contains(oldUrl))
+                {
+                    attribute.Value = attribute.Value.Replace(oldUrl, UrlBuilder.GetblogFilesUrl() + newFileName);
+
+                }
+            }
+        }
+
         public static String GetTitleByUrl(this IConfluenceClient client, String url)
         {
             Int32? contentID = null;
@@ -54,27 +112,12 @@ namespace NetPing.DAL
             return content;
         }
 
-        private static string CopyAttachments(string content)
-        {
-            var newContent = new StringBuilder(content);
-
-            var urls = GelListUrlFromContent(content);
-            if (urls.Count > 0)
-            {
-                foreach (var url in urls)
-                {
-                    var newFileName = SaveFileFromUrlToLocal(url, UrlBuilder.LocalPath_blogTempFiles);
-                    var newUrl = url.Remove(url.IndexOf('?'));
-                    newContent = newContent.Replace(newUrl, UrlBuilder.GetblogFilesUrlUrl() + newFileName);
-                }
-            }
-            return newContent.ToString();
-        }
-
-        private static string SaveFileFromUrlToLocal(string url, string path)
+        private static string SaveFileFromUrlToLocal(string url, string path, out string oldFileName)
         {
             Uri uri = new Uri(url);
             string filename = System.IO.Path.GetFileName(uri.LocalPath);
+
+            oldFileName = filename;
 
             using (WebClient client = new WebClient())
             {
@@ -87,18 +130,6 @@ namespace NetPing.DAL
                 client.DownloadFile("https://netping.atlassian.net" + uri.AbsolutePath, Path.Combine(path, filename));
                 return filename;
             }
-        }
-
-        private static List<string> GelListUrlFromContent(string content)
-        {
-            var linkParser = new Regex(@"\b(https://netping.atlassian.net/wiki/download/)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var matches = linkParser.Matches(content);
-            List<string> urls = new List<string>();
-            foreach (var match in matches)
-            {
-                urls.Add(match.ToString());
-            }
-            return urls;
         }
     }
 }

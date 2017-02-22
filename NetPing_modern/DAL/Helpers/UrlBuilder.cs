@@ -15,9 +15,9 @@ namespace NetPing.DAL
         private static readonly Uri _blog = new Uri("Blog/", UriKind.Relative);
         private static readonly Uri _firmwares = new Uri("Pub/Firmwares/", UriKind.Relative);
         private static readonly Uri _userGuide = new Uri("UserGuide/", UriKind.Relative);
-        private static readonly Uri _blogFiles = new Uri("/Pub/Blog/", UriKind.Relative);
-        private static readonly Uri _blogBackupFiles = new Uri("/Pub/Blog_Backup/", UriKind.Relative);
-        private static readonly Uri _blogTempFiles = new Uri("/Pub/Blog_Backup/Temp", UriKind.Relative);
+        private static readonly Uri _blogFiles = new Uri("Pub/Blog/", UriKind.Relative);
+        private static readonly Uri _blogBackupFiles = new Uri("Pub/Blog_Backup/", UriKind.Relative);
+        private static readonly Uri _blogTempFiles = new Uri("Pub/Blog_Backup/Temp/", UriKind.Relative);
 
         private static readonly Uri _productsUrl = new Uri(SiteRoot, _products);
         private static readonly Uri _pubFilesUrl = new Uri(SiteRoot, _pubFiles);
@@ -41,7 +41,7 @@ namespace NetPing.DAL
             get { return _blogFiles; }
         }
 
-        public static Uri GetblogFilesUrlUrl()
+        public static Uri GetblogFilesUrl()
         {
             var fullUrl = new Uri(SiteRoot, _blogFiles);
 
