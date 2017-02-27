@@ -101,18 +101,7 @@ namespace NetPing.DAL
 
             var propertyInfo = typeof(Device).GetProperty(meta.PropertyName);
 
-            var id = _confluenceClient.GetContentIdFromUrl(url);
-
-            if (id == null)
-            {
-                propertyInfo.SetValue(device, String.Empty);
-
-                return;
-            }
-
-            var contentTask = _confluenceClient.GetContenAsync((Int32)id);
-
-            var content = contentTask.Result;
+            var content = _confluenceClient.GetContentByUrl(url);
 
             if (!String.IsNullOrWhiteSpace(content))
             {
