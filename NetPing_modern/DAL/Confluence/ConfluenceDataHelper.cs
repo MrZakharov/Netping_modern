@@ -41,6 +41,7 @@ namespace NetPing.DAL
             var doc = new HtmlDocument();
             doc.LoadHtml(content);
 
+            //process all nodes
             var nodes = doc.DocumentNode.Descendants().Where(d => d.Attributes.Where( a => a.Value.Contains("https://netping.atlassian.net/wiki/download/")).Count() > 0);
 
             foreach (var node in nodes)
@@ -65,6 +66,24 @@ namespace NetPing.DAL
                 }
             }
 
+            //change srcset attribute (workaround)
+            nodes = doc.DocumentNode.Descendants().Where(d => d.Attributes.Any(a => a.Name == "srcset") && d.Attributes.Any(a => a.Name == "src") && d.Attributes.Any(a => a.Name == "data-image-src"));
+            foreach (var node in nodes)
+            {
+                if(node.Attributes["src"] != null && node.Attributes["src"].Value.StartsWith(UrlBuilder.GetblogFilesUrl().ToString())
+                    && node.Attributes["data-image-src"] != null && node.Attributes["data-image-src"].Value.StartsWith(UrlBuilder.GetblogFilesUrl().ToString()))
+                {
+                    var oldUrl = node.Attributes["src"].Value.Remove(node.Attributes["src"].Value.IndexOf('?'));
+                    var newUrl = node.Attributes["data-image-src"].Value.Remove(node.Attributes["data-image-src"].Value.IndexOf('?'));
+
+                    if (Uri.IsWellFormedUriString(oldUrl, UriKind.Absolute) && Uri.IsWellFormedUriString(newUrl, UriKind.Absolute))
+                    {
+                        node.Attributes["srcset"].Value = node.Attributes["srcset"].Value.Replace(oldUrl, newUrl);
+                    }
+                }
+            }
+
+
             return doc.DocumentNode.OuterHtml;
         }
 
@@ -87,7 +106,6 @@ namespace NetPing.DAL
                 if (attribute.Value.Contains(oldUrl))
                 {
                     attribute.Value = attribute.Value.Replace(oldUrl, UrlBuilder.GetblogFilesUrl() + newFileName);
-
                 }
             }
         }
