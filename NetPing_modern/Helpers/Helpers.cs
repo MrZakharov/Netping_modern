@@ -165,7 +165,7 @@ namespace NetpingHelpers
             //value=value.Replace("src=\"/web/Catalog/Lists/Photos/", "src=\"https://netpingeastcoltd-public.sharepoint.com/Pub/Photos/Old_catalog/");
             //value = value.Replace("src=\"/web/Lists/Photos/", "src=\"https://netpingeastcoltd-public.sharepoint.com/Pub/Photos/");
 
-            value = value.Replace("=\"/wiki/download/", "=\"https://netping.atlassian.net/wiki/download/");
+            value = value.Replace("src=\"/wiki/download/", "src=\"https://netping.atlassian.net/wiki/download/");
             return value;
         }
 

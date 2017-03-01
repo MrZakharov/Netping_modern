@@ -199,6 +199,7 @@
     <Compile Include="Controllers\Product_itemController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="DAL\Cache\CacheKeys.cs" />
+    <Compile Include="DAL\Storage\BlogFilesUpdater.cs" />
     <Compile Include="DAL\Storage\DataStorageExtensions.cs" />
     <Compile Include="DAL\Sharepoint\SharepointFields.cs" />
     <Compile Include="DAL\Helpers\ListItemExtensions.cs" />
@@ -713,6 +714,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Pub\Blog\.gitignore" />
+    <Content Include="Pub\Blog_Backup\.gitignore" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

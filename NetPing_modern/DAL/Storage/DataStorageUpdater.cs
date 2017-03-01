@@ -12,6 +12,10 @@ using NetPing_modern.Resources;
 using NetPing_modern.Services.Confluence;
 using NLog;
 using File = System.IO.File;
+using System.Web;
+using NetPing.Tools;
+using System.IO;
+using NetPing_modern.DAL.Storage;
 
 namespace NetPing.DAL
 {
@@ -27,6 +31,7 @@ namespace NetPing.DAL
         private readonly Dictionary<String, Action> _updateActions = new Dictionary<String, Action>();
 
         private static readonly Logger Log = LogManager.GetLogger(LogNames.Loader);
+        private static readonly object _lockObj = new object();
 
         public DataStorageUpdater(IDataStorage storage, ISharepointClientFactory sharepointClientFactory, IConfluenceClient confluenceClient)
         {
@@ -53,17 +58,41 @@ namespace NetPing.DAL
 
         public void Update()
         {
-           
+            try
+            {
+                //thread safe double-check locking to guarantee that update is ran once only
+                if (!GetUpdateCommandStatus())
+                {
+                    lock (_lockObj)
+                    {
+                        if (!GetUpdateCommandStatus()) // avoid invokes of new run inside running
+                        {
+                            SetUpdateCommandStatus(true);
+                            RunUpdate();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                SetUpdateCommandStatus(false);
+            }
+        }
+
+        private void RunUpdate()
+        {
             try
             {
                 Log.Trace("Start data loading");
-                
+
                 var loadTimeMeasurer = Stopwatch.StartNew();
 
                 System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.CurrentCulture;
                 System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
 
+
                 #region :: Step 1 ::
+                BlogFilesUpdater.PrepareBackupFolders();
 
                 Parallel.Invoke(
                     LoadNameTerms,
@@ -74,31 +103,33 @@ namespace NetPing.DAL
                     LoadDocumentTypeTerms,
                     LoadHtmlInjections,
                     LoadSiteTexts);
-                    
+
                 Log.Trace($"Step 1 data loaded. From start: {loadTimeMeasurer.ElapsedMilliseconds} ms");
 
                 #endregion
-                
+
                 #region :: Step 2 ::
-    
-    
+
+
                 Parallel.Invoke(
                     LoadDevicePhotos,
                     LoadDeviceParameters,
                     LoadPubFiles,
                     LoadPosts,
                     LoadDeviceManualFiles);
-                  
+
                 Log.Trace($"Step 2 data loaded. From start: {loadTimeMeasurer.ElapsedMilliseconds} ms");
-               
+
                 #endregion
 
                 #region :: Step 3 ::
-    
+
                 LoadFirmwareFiles();
 
                 LoadDevices();
-                
+
+                BlogFilesUpdater.MoveTempToBlog();
+
                 #endregion
 
                 loadTimeMeasurer.Stop();
@@ -639,5 +670,47 @@ namespace NetPing.DAL
 
             return csvData;
         }
+
+        #region tread-safe HttpRuntime.Cache
+        //TODO: We could use CachingProxy, but this class and also SPOnlineRepository class is not thread safe
+
+        private static readonly object _accessToCacheLockObj = new object();
+        const string _statusOfUpdateCommandSettingName = "statusOfUpdateCommandSettingName";
+
+        private bool GetUpdateCommandStatus()
+        {
+            var cache = HttpRuntime.Cache;
+            var status = cache[_statusOfUpdateCommandSettingName] as bool?;
+
+            // double check...if-lock-if
+            if (!status.HasValue)
+            {
+                lock (_accessToCacheLockObj)
+                {
+                    if(!status.HasValue)
+                    {
+                        status = new bool?(false);
+                    }
+                    cache.Insert(_statusOfUpdateCommandSettingName, status, new TimerCacheDependency());
+                }
+            }
+
+            return status.Value;
+        }
+
+        private bool SetUpdateCommandStatus(bool newSatus)
+        {
+            var cache = HttpRuntime.Cache;
+            var status = cache[_statusOfUpdateCommandSettingName] as bool?;
+
+            lock (_accessToCacheLockObj)
+            {
+                status = new bool?(newSatus);
+                cache.Insert(_statusOfUpdateCommandSettingName, status, new TimerCacheDependency());
+            }
+
+            return status.Value;
+        }
+        #endregion 
     }
 }
