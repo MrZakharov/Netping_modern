@@ -34,7 +34,7 @@ namespace NetPing.DAL
 
                 _productCatalogManager = new ProductCatalogManager(this);
 
-                Log.Trace($"Instance of '{nameof(SPOnlineRepository)}' was created");
+                //Log.Trace($"Instance of '{nameof(SPOnlineRepository)}' was created");
             }
             catch (Exception ex)
             {
@@ -74,7 +74,9 @@ namespace NetPing.DAL
         public String UpdateAllAsync(String name)
         {
             Log.Trace($"Starting to execute update action with name '{name}'");
-            
+            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
+
             try
             {
                 var isCultureRus = Helpers.IsCultureRus;
@@ -99,6 +101,7 @@ namespace NetPing.DAL
                 }
                 else
                 {
+                   // _dataUpdater.LoadDevices();
                     var updateAction = _dataUpdater.GetUpdateActionByKey(name);
 
                     if (updateAction != null)
@@ -150,7 +153,7 @@ namespace NetPing.DAL
 
                 var devices = Devices.Where(d => d.Name.IsUnderOther(group.Name) && !d.Name.IsGroup());
 
-                Log.Trace($"Filtered devices collection was returned. ID: {id} Group: {groupId}");
+                // Log.Trace($"Filtered devices collection was returned. ID: {id} Group: {groupId}");
 
                 return devices;
             }
@@ -248,11 +251,11 @@ namespace NetPing.DAL
         {
             try
             {
-                Log.Trace($"Requested repository collection '{name}'. Item type: {typeof(T)}");
+                // Log.Trace($"Requested repository collection '{name}'. Item type: {typeof(T)}");
 
                 var collection = _dataProxy.GetAndCache<T>(name);
 
-                Log.Trace($"Collection was returned. Name: '{name}' Item type: {typeof(T)}");
+                //Log.Trace($"Collection was returned. Name: '{name}' Item type: {typeof(T)}");
 
                 return collection;
             }

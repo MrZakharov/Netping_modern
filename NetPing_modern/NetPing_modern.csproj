@@ -714,8 +714,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Pub\Blog\.gitignore" />
-    <Content Include="Pub\Blog_Backup\.gitignore" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -788,6 +786,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Data\" />
     <Folder Include="Helper\" />
+    <Folder Include="Pub\Blog\" />
+    <Folder Include="Pub\Blog_Backup\" />
     <Folder Include="Pub\Files\" />
     <Folder Include="Pub\Photos\" />
     <Folder Include="Views\Cart\" />

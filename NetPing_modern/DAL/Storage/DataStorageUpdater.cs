@@ -17,6 +17,7 @@ using NetPing.Tools;
 using System.IO;
 using NetPing_modern.DAL.Storage;
 
+
 namespace NetPing.DAL
 {
     internal class DataStorageUpdater
@@ -90,6 +91,7 @@ namespace NetPing.DAL
                 System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.CurrentCulture;
                 System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
 
+               // LoadDevices();
 
                 #region :: Step 1 ::
                 BlogFilesUpdater.PrepareBackupFolders();
@@ -146,7 +148,7 @@ namespace NetPing.DAL
 
         #region :: Load Methods ::
 
-        private void LoadDevices()
+        public void LoadDevices()
         {
             try
             {
@@ -535,6 +537,8 @@ namespace NetPing.DAL
 
         private IEnumerable<T> GetSharepointList<T>(String listName, String query, IListItemConverter<T> converter, String sharepointName = null, bool isfirmware = false)
         {
+            
+
             try
             {
                 using (var sp = _sharepointClientFactory.Create(isfirmware))
@@ -548,11 +552,16 @@ namespace NetPing.DAL
 
                     var convertedList = new List<T>();
 
+                    Log.Trace($"GetSharepointList is '{listName}' Count: '{items.Count}");
+                    
                     foreach (var item in items)
                     {
+                       // Log.Trace($"Convert SharepointList is '{listName}' Item: {(item.FieldValues["Name"] as Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValue).Label}'");
                         try
                         {
-                            var converted = converter.Convert(item,sp);
+
+
+                            var converted = converter.Convert(item, sp);
 
                             if (converted != null)
                             {
@@ -561,8 +570,10 @@ namespace NetPing.DAL
                         }
                         catch (Exception ex)
                         {
-                            Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' Item: '{item.DisplayName}'");
+                            // Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' Item: '{(item.FieldValues["Name"] as Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValue).Label}' List: '{listName}'");
+                            Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' {listName}'");
                         }
+                        finally { }
                     }
                     
                     return convertedList;
@@ -570,8 +581,7 @@ namespace NetPing.DAL
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Unable to get sharepoint list");
-
+                Log.Error(ex, $"Unable to get sharepoint list'{listName}'");
                 throw;
             }
         }
