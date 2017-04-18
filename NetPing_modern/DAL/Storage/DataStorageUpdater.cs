@@ -572,8 +572,9 @@ namespace NetPing.DAL
                         {
                             // Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' Item: '{(item.FieldValues["Name"] as Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValue).Label}' List: '{listName}'");
                             Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' {listName}'");
+                            throw;
                         }
-                        finally { }
+                       
                     }
                     
                     return convertedList;

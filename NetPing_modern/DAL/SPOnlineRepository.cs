@@ -101,7 +101,8 @@ namespace NetPing.DAL
                 }
                 else
                 {
-                   // _dataUpdater.LoadDevices();
+                    _dataUpdater.Update();
+                    /*
                     var updateAction = _dataUpdater.GetUpdateActionByKey(name);
 
                     if (updateAction != null)
@@ -113,7 +114,7 @@ namespace NetPing.DAL
                         Log.Warn($"Update action with name '{name}' does not exist");
 
                         return "404";
-                    }
+                    }*/
                 }
 
                 Log.Trace($"Execution of action with name'{name}' completed");
