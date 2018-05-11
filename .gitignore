@@ -62,3 +62,23 @@
 
 
 # /NetPing.PriceGeneration/obj
+/NetPing.PriceGeneration/bin
+/NetPing.PriceGeneration/obj/Debug
+/NetPing.PriceGeneration/obj/Release
+/NetPing_modern/bin/ru
+/NetPing_modern/bin
+/NetPing_modern/Content/Data
+/NetPing_modern/Content/logs/2018-05-10
+/NetPing_modern/obj/Debug/CSAutoParameterize/original/bin
+/NetPing_modern/obj/Debug/CSAutoParameterize/original/Views
+/NetPing_modern/obj/Debug/CSAutoParameterize/original
+/NetPing_modern/obj/Debug/CSAutoParameterize/transformed/bin
+/NetPing_modern/obj/Debug/CSAutoParameterize/transformed/Views
+/NetPing_modern/obj/Debug/Package
+/NetPing_modern/obj/Debug
+/NetPing_modern/Pub/Blog
+/NetPing_modern/Pub/Firmwares
+/NetPing_modern/Pub/Photos
+/NetPing_modern/Pub/Pub
+/.vs/Netping_modern/DesignTimeBuild
+/.vs

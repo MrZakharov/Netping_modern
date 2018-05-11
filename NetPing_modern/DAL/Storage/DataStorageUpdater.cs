@@ -105,7 +105,7 @@ namespace NetPing.DAL
                     LoadDocumentTypeTerms,
                     LoadHtmlInjections,
                     LoadSiteTexts);
-
+                    
                 Log.Trace($"Step 1 data loaded. From start: {loadTimeMeasurer.ElapsedMilliseconds} ms");
 
                 #endregion

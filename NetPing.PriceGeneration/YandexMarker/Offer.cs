@@ -14,7 +14,7 @@ namespace NetPing.PriceGeneration.YandexMarker
             Pickup = true;
             Delivery = true;
             Vendor = "NetPing";
-            SalesNotes = "предоплата";
+            SalesNotes = "Необходима предоплата 100%. Для более подробной информации с вами свяжется менеджер.";
             ManufacturerWarranty = "P2Y";
             Country = "Россия";
             CurrencyId = "RUR";

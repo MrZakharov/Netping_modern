@@ -34,7 +34,7 @@ namespace NetPing.DAL
 
                 _productCatalogManager = new ProductCatalogManager(this);
 
-                //Log.Trace($"Instance of '{nameof(SPOnlineRepository)}' was created");
+                //Log.Trace($"Instance of '{nameof(SPOnlineRepository)}' was created"); 11
             }
             catch (Exception ex)
             {
