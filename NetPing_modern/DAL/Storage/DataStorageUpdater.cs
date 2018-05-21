@@ -553,6 +553,8 @@ namespace NetPing.DAL
                     var convertedList = new List<T>();
 
                     Log.Trace($"GetSharepointList is '{listName}' Count: '{items.Count}");
+
+                    
                     
                     foreach (var item in items)
                     {
@@ -560,7 +562,11 @@ namespace NetPing.DAL
                         try
                         {
 
-
+                            /*
+                            if (item.Id>349) {
+                            var    converted = converter.Convert(item, sp);
+                            }
+                            */
                             var converted = converter.Convert(item, sp);
 
                             if (converted != null)
@@ -571,8 +577,8 @@ namespace NetPing.DAL
                         catch (Exception ex)
                         {
                             // Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' Item: '{(item.FieldValues["Name"] as Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValue).Label}' List: '{listName}'");
-                            Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' {listName}'");
-                            throw;
+                            Log.Error(ex, $"Conversion from ListItem error. Result type: '{typeof(T)}' {listName}' ");
+                            //throw;
                         }
                        
                     }

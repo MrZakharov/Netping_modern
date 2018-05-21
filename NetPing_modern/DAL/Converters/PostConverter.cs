@@ -112,9 +112,9 @@ namespace NetPing.DAL
                 if (table != null)
                 {
                     var result = new Dictionary<String, String>();
-                    
-                    var trNodes = table.ChildNodes[0].ChildNodes.Where(x => x.Name == trTag);
 
+                    //var trNodes = table.ChildNodes[0].ChildNodes.Where(x => x.Name == trTag);
+                    var trNodes = table.ChildNodes[1].ChildNodes.Where(x => x.Name == trTag);   // Because 
                     foreach (var tr in trNodes)
                     {
                         var tdNodes = tr.ChildNodes.Where(x => x.Name == tdTag).ToArray();

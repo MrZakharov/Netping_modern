@@ -25,6 +25,8 @@ namespace NetPing_modern.Services.Confluence
 
         private readonly Regex _spaceTitleRegex = new Regex(@"\/display\/(?<spaceKey>[\w \.\-\+%]+)\/(?<title>[\w \.\-\+%]+)?");
 
+        private readonly Regex _contentIdRegex_ver2 = new Regex(@"pages/(?<id>\d+)");
+
         public class ContentNotFoundException : Exception
         {
             public ContentNotFoundException(Int32 contentId) : base(
@@ -35,6 +37,11 @@ namespace NetPing_modern.Services.Confluence
 
             public ContentNotFoundException(String spaceKey, String title)
                 : base($"Confluence content with space key = '{spaceKey}' and title = '{title}' was not found")
+            {
+            }
+
+            public ContentNotFoundException(String url)
+                : base($"Confluence content by url : '{url}' was not found")
             {
             }
         }
@@ -240,25 +247,44 @@ namespace NetPing_modern.Services.Confluence
             }
             else
             {
-                mc = _spaceTitleRegex.Matches(url);
+
+                mc = _contentIdRegex_ver2.Matches(url);
                 if (mc.Count > 0)
                 {
                     Match m = mc[0];
                     if (m.Success)
                     {
-                        Group spaceKeyGroup = m.Groups["spaceKey"];
-                        String spaceKey = spaceKeyGroup.Value;
+                        Group group = m.Groups["id"];
+                        Int32 id = Int32.Parse(group.Value);
+                        if (id > 0) return id;
+                    }
+                }
+                else
+                {
 
-                        Group titleGroup = m.Groups["title"];
-                        String title = titleGroup.Value;
 
-                        var contentTask = GetContentBySpaceAndTitle(spaceKey, title);
-                        Int32 contentId = contentTask.Result;
-                        if (contentId > 0) return contentId;
+                    mc = _spaceTitleRegex.Matches(url);
+                    if (mc.Count > 0)
+                    {
+                        Match m = mc[0];
+                        if (m.Success)
+                        {
+                            Group spaceKeyGroup = m.Groups["spaceKey"];
+                            String spaceKey = spaceKeyGroup.Value;
+
+                            Group titleGroup = m.Groups["title"];
+                            String title = titleGroup.Value;
+
+                            var contentTask = GetContentBySpaceAndTitle(spaceKey, title);
+                            Int32 contentId = contentTask.Result;
+                            if (contentId > 0) return contentId;
+                        }
                     }
                 }
             }
-            return null;
+
+            throw new ContentNotFoundException(url);
+          
         }
 
         public UserManualModel GetUserManual(Int32 id, Int32 itemId)
