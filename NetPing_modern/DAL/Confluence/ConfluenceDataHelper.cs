@@ -92,7 +92,8 @@ namespace NetPing.DAL
             //rewrite the atrributes which have wiki/download/ to https://netping.atlassian.net/wiki/download/
             //solve srcset issue
 
-            var wikiDownloadsAttributes = node.Attributes.Where(a => a.Name == "srcset" && a.Value.Contains("/wiki/download/") && a.Value.Contains(oldFileName));
+            //var wikiDownloadsAttributes = node.Attributes.Where(a => a.Name == "srcset" && a.Value.Contains("/wiki/download/") && a.Value.Contains(oldFileName));
+            var wikiDownloadsAttributes = node.Attributes.Where(a => a.Name == "srcset" && a.Value.Contains("/wiki/download/") && !a.Value.Contains("https://netping.atlassian.net/wiki/download/") && a.Value.Contains(oldFileName));
             foreach (var attribute in wikiDownloadsAttributes)
             {
                 attribute.Value = attribute.Value.Replace("/wiki/download/", "https://netping.atlassian.net/wiki/download/");
