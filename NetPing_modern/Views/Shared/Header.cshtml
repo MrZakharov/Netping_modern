@@ -81,7 +81,7 @@
                                 <li class="item_list"><a href="/products/kommutatory-ethernet">@Header.Category_switch</a></li>
                                 <li class="item_list"><a href="/products/monitoring-servernoj/sensors">@Header.Category_sensors</a></li>
                                 <li class="item_list"><a href="/products/monitoring-servernoj/accessories">@Header.Category_access</a></li>
-                                <li class="item_list"><a href="/dev">@Header.Dev</a></li>
+                                <!-- <li class="item_list"><a href="/dev">@Header.Dev</a></li> -->
                             </ul>
                         </div>
                     </li>
@@ -103,9 +103,10 @@
                             <ul class="down_list">
                                 <li class="item_list"><a href="/contacts">@Header.Menu_contacts</a></li>
                                 <li class="item_list"><a href="/Blog/Category/News">@Header.Menu_news</a></li>
+
                                 @if (!NetpingHelpers.Helpers.IsCultureEng)
                                 {
-                                    <li class="item_list"><a href="/vacancy">@Header.Menu_vacancy</a></li>
+                                    <!--    <li class="item_list"><a href="/vacancy">@Header.Menu_vacancy</a></li>-->
                                 }
                             </ul>
                         </div>
@@ -124,43 +125,42 @@
                             <ul class="down_list">
                                 <li class="item_list"><a href="/Blog/Category/FAQ">@Header.Menu_faq</a></li>
                                 <li class="item_list"><a href="/Blog/Category/Tutorial">@Header.Menu_solutions</a></li>
-                                @if (!NetpingHelpers.Helpers.IsCultureEng)
-                                {
-                                    <li class="item_list"><a href="http://ideas.netping.ru/forums/213180-ideas" target="_blank">Предложите новую идею для NetPing!</a></li>
-                                }@*<li><div class="clear"></div></li>*@</ul>
-                        </div>
-                    </li>
-                    <li class="nav_li">
-                        <a class="@(Request.RawUrl.ToLower().Contains("/Blog") == true ? "nav_element active" : "nav_element")" href="/Blog">@Header.Menu_blog</a>
-                        <div class="nav_element_border"></div>
-                    </li>
+                              
+                                @*<li><div class="clear"></div></li>*@
+                            </ul>
+                            </div>
+                        </li>
+                        <li class="nav_li">
+                            <a class="@(Request.RawUrl.ToLower().Contains("/Blog") == true ? "nav_element active" : "nav_element")" href="/Blog">@Header.Menu_blog</a>
+                            <div class="nav_element_border"></div>
+                        </li>
 
 
 
-                </ul>
+                    </ul>
 
-            </div>
-            <form class="search" name="search" action="http://www.google.com/cse" target="_blank">
-                <div class="search_text" id="search-box">
-                    @if (Helpers.IsCultureRus)
-                    {
-                        <input placeholder="Поиск по сайту..." class="search_text_vvod" size="28" name="q"></input>
-                        <input class="search_img"type="image" src="~/Content/Images/search.png"></input>
-                        <input type="hidden" name="cx" value="006534849235046585456:eqktuqsoi58"/>
-                        <input name="ie" type="hidden" value="UTF-8"/>
-                    }
-                    @if (Helpers.IsCultureEng)
-                    {
-                        <input placeholder="Поиск по сайту..." class="search_text_vvod" size="28" name="q"></input>
-                        <input class="search_img"type="image" src="~/Content/Images/search.png"></input>
-                        <input type="hidden" name="cx" value="006534849235046585456:ndjvcf8s5r8"/>
-                        <input name="ie" type="hidden" value="UTF-8"/>
-                    }
-                    
                 </div>
-            </form>
-        </div>
-    </div>
+                <form class="search" name="search" action="http://www.google.com/cse" target="_blank">
+                    <div class="search_text" id="search-box">
+                        @if (Helpers.IsCultureRus)
+                        {
+                            <input placeholder="Поиск по сайту..." class="search_text_vvod" size="28" name="q"></input>
+                            <input class="search_img"type="image" src="~/Content/Images/search.png"></input>
+                            <input type="hidden" name="cx" value="006534849235046585456:eqktuqsoi58"/>
+                            <input name="ie" type="hidden" value="UTF-8"/>
+                        }
+                        @if (Helpers.IsCultureEng)
+                        {
+                            <input placeholder="Поиск по сайту..." class="search_text_vvod" size="28" name="q"></input>
+                            <input class="search_img"type="image" src="~/Content/Images/search.png"></input>
+                            <input type="hidden" name="cx" value="006534849235046585456:ndjvcf8s5r8"/>
+                            <input name="ie" type="hidden" value="UTF-8"/>
+                        }
 
-    <div class="clear"></div>
-</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
