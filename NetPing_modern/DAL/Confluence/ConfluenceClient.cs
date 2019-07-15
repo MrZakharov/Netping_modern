@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using NetPing.Global.Config;
 using Newtonsoft.Json.Linq;
 using NetPing_modern.DAL.Model;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace NetPing_modern.Services.Confluence
 {
@@ -50,6 +52,14 @@ namespace NetPing_modern.Services.Confluence
         {
             _config = config;
         }
+        public bool AcceptAllCertifications(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
+        private static bool AlwaysGoodCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors policyErrors)
+        {
+            return true;
+        }
 
         private async Task<String> GetContentAsync(Int32 id, Func<Int32, String, String> parser)
         {
@@ -64,6 +74,11 @@ namespace NetPing_modern.Services.Confluence
             var base64Auth = System.Convert.ToBase64String(plainTextBytes);
 
             NetworkCredential credential = new NetworkCredential(_config.ConfluenceSettings.Login, _config.ConfluenceSettings.Password);
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
+            ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(AlwaysGoodCertificate);
+
             var handler = new HttpClientHandler { Credentials = credential };
             using (var client = new HttpClient(handler))
             {
