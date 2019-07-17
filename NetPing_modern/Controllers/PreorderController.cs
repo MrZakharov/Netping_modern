@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace NetPing_modern.Controllers
 {
@@ -55,10 +57,18 @@ namespace NetPing_modern.Controllers
         {
             try
             {
+                NameValueCollection settings = (NameValueCollection)ConfigurationManager.GetSection("EmailSettings");
+                string server, login, password;
+                int port = 2525;
+                server = settings["Server"];
+                login = settings["Login"];
+                password = settings["Password"];
+                int.TryParse(settings["Port"], out port);
+
                 var mail = new MailMessage();
-                var client = new SmtpClient("smtpcorp.com", 2525) //Port 8025, 587 and 25 can also be used.
+                var client = new SmtpClient(server, port) //Port 8025, 587 and 25 can also be used.
                 {
-                    Credentials = new NetworkCredential("sp@netping.ru", "JKWEop349f"),
+                    Credentials = new NetworkCredential(login, password),
                     EnableSsl = true
                 };
 
